@@ -1,1 +1,1 @@
-# CITS5206-Capstone-Group-5
+# CITS5206-Capstone-Study Plan
