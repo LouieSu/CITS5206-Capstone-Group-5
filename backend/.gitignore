@@ -1,0 +1,24 @@
+# Ignore the virtual environment directory (common naming conventions)
+venv/
+env/
+
+# Ignore Python bytecode files
+*.pyc
+__pycache__/
+
+# Ignore SQLite database file (if using SQLite)
+db.sqlite3
+
+# Ignore log files
+*.log
+
+# Ignore Django migration files (if not needed in version control)
+*.sqlite3
+*.db
+
+
+# Ignore Python distribution packaging files
+*.egg
+*.egg-info
+dist/
+build/
