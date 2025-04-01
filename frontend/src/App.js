@@ -1,5 +1,7 @@
 import UserForm from './components/UserForm';
 
+console.log('App.js is loaded');
+
 function App() {
   return (
     <div>
