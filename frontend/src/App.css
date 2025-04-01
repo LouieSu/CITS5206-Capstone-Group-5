@@ -21,7 +21,7 @@
   gap: 15px;
 }
 
-select, button {
+input, select {
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
@@ -30,18 +30,46 @@ select, button {
   width: 100%;
 }
 
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
 button {
-  background-color: #007BFF;
-  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
   border: none;
+  cursor: pointer;
   transition: 0.3s;
 }
 
+.prev-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.next-btn {
+  background-color: #007BFF;
+  color: white;
+}
+
+.submit-btn {
+  background-color: #28a745;
+  color: white;
+}
+
 button:hover {
-  background-color: #0056b3;
+  opacity: 0.8;
 }
 
 h2 {
   font-size: 20px;
   color: #333;
+}
+
+p {
+  font-size: 16px;
+  color: #555;
 }
