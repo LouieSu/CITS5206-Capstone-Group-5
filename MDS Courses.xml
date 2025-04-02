@@ -1,0 +1,305 @@
+<courses> <!-- Basically all the courses in the handbook, except for the NA or NS courses, and Biostatistics I and II is not included because the prerequisites are not clear. -->
+    <course>
+        <availability_year>2024 2025</availability_year> <!-- year information -->
+        <availability_semester>S1 S2</availability_semester> <!-- semester -->
+        <unit_code>CITS1401</unit_code>
+        <unit_name>Computational Thinking with Python</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Conversion</type_of_unit>
+        <unit_level>L1</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1 S2</availability_semester>
+        <unit_code>CITS1402</unit_code>
+        <unit_name>Relational Database Management Systems</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Conversion</type_of_unit>
+        <unit_level>L1</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>STAT2401</unit_code>
+        <unit_name>Analysis of Experiments</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Conversion</type_of_unit>
+        <unit_level>L2</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>STAT2402</unit_code>
+        <unit_name>Analysis of Observations</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Conversion</type_of_unit>
+        <unit_level>L2</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>CITS4009</unit_code>
+        <unit_name>Computational Data Analysis</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>CITS4407</unit_code>
+        <unit_name>Open Source Tools and Scripting</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>CITS4012</unit_code>
+        <unit_name>Natural Language Processing</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>CITS5504</unit_code>
+        <unit_name>Data Warehousing</unit_name>
+        <unit_requirements>CITS1401 CITS1402</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>CITS5508</unit_code>
+        <unit_name>Machine Learning</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>CITS5553</unit_code> 
+        <unit_name>Data Science Capstone Project</unit_name>
+        <unit_requirements>
+            <requirement>
+                <type>Credit Requirement</type>
+                <description>Completion of at least 24 credit points from Level 4 and Level 5 units</description>
+            </requirement>
+        </unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>STAT4064</unit_code>
+        <unit_name>Applied Predictive Modelling</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>STAT4066</unit_code>
+        <unit_name>Bayesian Computing and Statistics</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1 S2</availability_semester>
+        <unit_code>BUSN5003</unit_code>
+        <unit_name>Data Storytelling</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>CITS4402</unit_code>
+        <unit_name>Computer Vision</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>CITS4403</unit_code>
+        <unit_name>Computational Modelling</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>CITS4404</unit_code>
+        <unit_name>Artificial Intelligence and Adaptive Systems</unit_name>
+        <unit_requirements>CITS1401 and CITS4009</unit_requirements> <!-- both course -->
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1 S2</availability_semester>
+        <unit_code>CITS5014</unit_code> 
+        <unit_name>Data and Information Technologies Research Project Part 1</unit_name>
+        <unit_requirements>
+            <requirement>
+                <type>Credit and WAM Requirement</type>
+                <description>Completion of at least 24 points of level 4/5 CITS/STAT/PHIL units and UWA weighted average mark (WAM) of at least 70 percent across ALL completed level 4 / level 5 CITS/STAT/PHIL units</description>
+            </requirement>
+        </unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1 S2</availability_semester>
+        <unit_code>	CITS5015</unit_code>
+        <unit_name>	Data and Information Technologies Research Project Part 2</unit_name>
+        <unit_requirements>CITS5014</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>CITS5017</unit_code>
+        <unit_name>Deep Learning</unit_name>
+        <unit_requirements>CITS5508</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>CITS5503</unit_code>
+        <unit_name>Cloud Computing</unit_name>
+        <unit_requirements>CITS1401 and CITS4009</unit_requirements>  <!-- completed both course -->
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>CITS5505</unit_code>
+        <unit_name>Agile Web Development</unit_name>
+        <unit_requirements>CITS1401</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>CITS5506</unit_code>
+        <unit_name>The Internet of Things</unit_name>
+        <unit_requirements>CITS1401</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>CITS5507</unit_code>
+        <unit_name>High Performance Computing</unit_name>
+         <unit_requirements>
+            <requirement>
+                <type>Rrogramming-based Units Requirement</type>
+                <description>12 points of programming-based units</description>
+            </requirement>
+        </unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>ECON5570</unit_code>
+        <unit_name>Health Analytics</unit_name>
+        <unit_requirements>None</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1 S2</availability_semester>
+        <unit_code>GENG5505</unit_code>
+        <unit_name>Project Management and Engineering Practice</unit_name>
+        <unit_requirements>None</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1 S2</availability_semester>
+        <unit_code>INMT5526</unit_code>
+        <unit_name>Business Intelligence</unit_name>
+        <unit_requirements>CITS1401</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1 S2</availability_semester>
+        <unit_code>MGMT5504</unit_code>
+        <unit_name>Data Analysis and Decision Making</unit_name>
+        <unit_requirements>None</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>PHYS4021</unit_code>
+        <unit_name>Quantum Information and Computing</unit_name>
+        <unit_requirements>None</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>STAT4063</unit_code>
+        <unit_name>Computationally Intensive Methods in Statistics</unit_name>
+        <unit_requirements>STAT4064</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1</availability_semester>
+        <unit_code>STAT4065</unit_code>
+        <unit_name>Multilevel and Mixed-Effects Modelling</unit_name>
+        <unit_requirements>STAT2401 and STAT2402</unit_requirements> <!-- completed both course -->
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S2</availability_semester>
+        <unit_code>STAT5061</unit_code>
+        <unit_name>Statistical Data Science</unit_name>
+        <unit_requirements>STAT2401 and STAT2402</unit_requirements> <!-- completed both course -->
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1 S2</availability_semester>
+        <unit_code>SVLG5001</unit_code>
+        <unit_name>	McCusker Centre for Citizenship Internship</unit_name>
+        <unit_requirements>None</unit_requirements> 
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+</courses>
