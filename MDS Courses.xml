@@ -144,7 +144,7 @@
         <availability_semester>S1</availability_semester>
         <unit_code>CITS4404</unit_code>
         <unit_name>Artificial Intelligence and Adaptive Systems</unit_name>
-        <unit_requirements>CITS1401 and CITS4009</unit_requirements> <!-- both course -->
+        <unit_requirements>CITS1401,CITS4009</unit_requirements> <!-- completed both course -->
         <type_of_unit>Option</type_of_unit>
         <unit_level>L4</unit_level>
     </course>
@@ -185,7 +185,7 @@
         <availability_semester>S2</availability_semester>
         <unit_code>CITS5503</unit_code>
         <unit_name>Cloud Computing</unit_name>
-        <unit_requirements>CITS1401 and CITS4009</unit_requirements>  <!-- completed both course -->
+        <unit_requirements>CITS1401,CITS4009</unit_requirements>  <!-- completed both course -->
         <type_of_unit>Option</type_of_unit>
         <unit_level>L5</unit_level>
     </course>
@@ -280,7 +280,7 @@
         <availability_semester>S1</availability_semester>
         <unit_code>STAT4065</unit_code>
         <unit_name>Multilevel and Mixed-Effects Modelling</unit_name>
-        <unit_requirements>STAT2401 and STAT2402</unit_requirements> <!-- completed both course -->
+        <unit_requirements>STAT2401,STAT2402</unit_requirements> <!-- completed both course -->
         <type_of_unit>Option</type_of_unit>
         <unit_level>L4</unit_level>
     </course>
@@ -289,7 +289,7 @@
         <availability_semester>S2</availability_semester>
         <unit_code>STAT5061</unit_code>
         <unit_name>Statistical Data Science</unit_name>
-        <unit_requirements>STAT2401 and STAT2402</unit_requirements> <!-- completed both course -->
+        <unit_requirements>STAT2401,STAT2402</unit_requirements> <!-- completed both course -->
         <type_of_unit>Option</type_of_unit>
         <unit_level>L5</unit_level>
     </course>
