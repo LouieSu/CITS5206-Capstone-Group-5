@@ -1,0 +1,374 @@
+<courses> <!-- The specialisation of applied computer is to choose 4 subjects from the electives, so 24 points out of 48 points must be at level 5 or above. Other specialisation students only need 12 points out of 24 points-->
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>CITS1401</unit_code>
+        <unit_name>Computational Thinking with Python</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Conversion</type_of_unit>
+        <unit_level>L1</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>CITS1003</unit_code>
+        <unit_name>Introduction to Cybersecurity</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Conversion</type_of_unit>
+        <unit_level>L1</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>CITS1402</unit_code>
+        <unit_name>Relational Database Management Systems</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Conversion</type_of_unit>
+        <unit_level>L1</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS2002</unit_code>
+        <unit_name>Systems Programming</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Conversion</type_of_unit>
+        <unit_level>L2</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS2005</unit_code>
+        <unit_name>Object Oriented Programming</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Conversion</type_of_unit>
+        <unit_level>L2</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS4401</unit_code>
+        <unit_name>Software Requirements and Design</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+        <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS5505</unit_code>
+        <unit_name>Agile Web Development</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year>
+        <availability_semester>S1 S2</availability_semester>
+        <unit_code>CITS5206</unit_code> 
+        <unit_name>Information Technology Capstone Project</unit_name>
+        <unit_requirements>
+            <requirement>
+                <type>Credit Requirement</type>
+                <description>Completion of at least 48 credit points from Level 4 and Level 5 units</description>
+            </requirement>
+        </unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+   </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>PHIL4100</unit_code>
+        <unit_name>Ethics and Critical Thinking</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Core</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS4012</unit_code>
+        <unit_name>Natural Language Processing</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Artificial Intelligence specialisation</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS4404</unit_code>
+        <unit_name>Artificial Intelligence and Adaptive Systems</unit_name>
+        <unit_requirements>CITS2002,CITS2005,CITS4009,CITS1401</unit_requirements>
+        <type_of_unit>Artificial Intelligence specialisation</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS5017</unit_code>
+        <unit_name>Deep Learning</unit_name>
+        <unit_requirements>CITS5508</unit_requirements>
+        <type_of_unit>Artificial Intelligence specialisation</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS5508</unit_code>
+        <unit_name>Machine Learning</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Artificial Intelligence specialisation</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS5501</unit_code>
+        <unit_name>Software Testing and Quality Assurance</unit_name>
+        <unit_requirements>CITS2002,CITS2005</unit_requirements>
+        <type_of_unit>Software Systems specialisation</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS5503</unit_code>
+        <unit_name>Cloud Computing</unit_name>
+        <unit_requirements>CITS2002,CITS2005,CITS1401,CITS4009</unit_requirements>
+        <type_of_unit>Software Systems specialisation</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS5506</unit_code>
+        <unit_name>The Internet of Things</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Software Systems specialisation</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS5507</unit_code>
+        <unit_name>High Performance Computing</unit_name>
+        <unit_requirements>
+            <requirement>
+                <type>Rrogramming-based Units Requirement</type>
+                <description>12 points of programming-based units</description>
+            </requirement>
+        </unit_requirements>
+        <type_of_unit>Software Systems specialisation</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>AUTO4508</unit_code>
+        <unit_name>Mobile Robots</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS4009</unit_code>
+        <unit_name>Computational Data Analysis</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS4012</unit_code>
+        <unit_name>Natural Language Processing</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS4402</unit_code>
+        <unit_name>Computer Vision</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS4403</unit_code>
+        <unit_name>Computational Modelling</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS4404</unit_code>
+        <unit_name>Artificial Intelligence and Adaptive Systems</unit_name>
+        <unit_requirements>CITS2002,CITS2005,CITS4009,CITS1401</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS4407</unit_code>
+        <unit_name>Open Source Tools and Scripting</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>CITS5014</unit_code>
+        <unit_name>Data and Information Technologies Research Project Part 1</unit_name>
+        <unit_requirements>
+            <requirement>
+                <type>Credit and WAM Requirement</type>
+                <description>Completion of at least 24 points of level 4/5 CITS/STAT/PHIL units and UWA weighted average mark (WAM) of at least 70 percent across ALL completed level 4 / level 5 CITS/STAT/PHIL units</description>
+            </requirement>
+        </unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>CITS5014</unit_code>
+        <unit_name>Data and Information Technologies Research Project Part 2</unit_name>
+        <unit_requirements>CITS5014</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS5017</unit_code>
+        <unit_name>Deep Learning</unit_name>
+        <unit_requirements>CITS5508</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS5501</unit_code>
+        <unit_name>Software Testing and Quality Assurance</unit_name>
+        <unit_requirements>CITS2002,CITS2005</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS5503</unit_code>
+        <unit_name>Cloud Computing</unit_name>
+        <unit_requirements>CITS2002,CITS2005,CITS1401,CITS4009</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS5504</unit_code>
+        <unit_name>Data Warehousing</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS5506</unit_code>
+        <unit_name>The Internet of Things</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S2</availability_semester> 
+        <unit_code>CITS5507</unit_code>
+        <unit_name>High Performance Computing</unit_name>
+        <unit_requirements>
+            <requirement>
+                <type>Rrogramming-based Units Requirement</type>
+                <description>12 points of programming-based units</description>
+            </requirement>
+        </unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1</availability_semester> 
+        <unit_code>CITS5508</unit_code>
+        <unit_name>Machine Learning</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>ENVT4411</unit_code>
+        <unit_name>Geographic Information Systems Applications</unit_name>
+        <unit_requirements>CITS1401</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L4</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>GENG5507</unit_code>
+        <unit_name>Risk Reliability and Safety</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>INMT5518</unit_code>
+        <unit_name>Supply Chain Analytics</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>INMT5518</unit_code>
+        <unit_name>Business Intelligence</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>MGMT5504</unit_code>
+        <unit_name>Data Analysis and Decision Making</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+    <course>
+        <availability_year>2024 2025</availability_year> 
+        <availability_semester>S1 S2</availability_semester> 
+        <unit_code>SVLG5001</unit_code>
+        <unit_name>McCusker Centre for Citizenship Internship</unit_name>
+        <unit_requirements>None</unit_requirements>
+        <type_of_unit>Option</type_of_unit>
+        <unit_level>L5</unit_level>
+    </course>
+</courses>
