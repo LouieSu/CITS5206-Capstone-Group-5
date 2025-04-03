@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 让按钮可以跳转页面
 import '../App.css';
 
 function UserForm() {
+  const navigate = useNavigate(); // 获取 `navigate` 函数
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
@@ -9,6 +11,7 @@ function UserForm() {
   const [course, setCourse] = useState('');
   const [specialisation, setSpecialisation] = useState('');
 
+  // 处理输入的函数
   const handleNameChange = (e) => setName(e.target.value);
   const handleYearChange = (e) => setYear(e.target.value);
   const handleSemesterChange = (e) => setSemester(e.target.value);
@@ -17,7 +20,12 @@ function UserForm() {
 
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
-  const handleSubmit = () => console.log({ name, year, semester, course, specialisation });
+
+  // 点击提交时，跳转到 CourseSchedule 页面，并传递用户信息
+  const handleSubmit = () => {
+    const userData = { name, year, semester, course, specialisation };
+    navigate('/schedule', { state: userData }); // 跳转到 /schedule 并传递数据
+  };
 
   return (
     <div className="app-container">
