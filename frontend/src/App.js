@@ -1,56 +1,19 @@
 import './App.css';
 import axios from 'axios';
-
-function App() {
-
-  // initial API call for test purpose
-  axios.get('api/setup_signal')
-  .then(response => {
-    console.log(response.data);  // Response from Django API
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
-
-
-  return (
-    <div className="App" style={styles.app}>
-      <div style={styles.rectangle}>
-        <div style={styles.textLine}>UWA</div>
-        <div style={styles.textLine}>Study Planner</div>
-      </div>
-      <div style={styles.formContainer}>
-        <div style={styles.dropdownContainer}>
-          <div style={styles.dropdownTitle}>Select Your Course</div>
-          <select style={styles.dropdown}>
-            <option value="mit">Master of Information Technology</option>
-            <option value="mds">Master of Data Science</option>
-          </select>
-        </div>
-        <div style={styles.dropdownContainer}>
-          <div style={styles.dropdownTitle}>Start Year</div>
-          <select style={styles.dropdown}>
-            <option value="2024-s1">2024 S1</option>
-            <option value="2024-s2">2024 S2</option>
-            <option value="2025-s1">2025 S1</option>
-            <option value="2025-s2">2025 S2</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  );
-}
+import React, { useEffect } from 'react';
+import TimetableDragDrop from './components/TimetableDragDrop';
 
 const styles = {
   app: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'start',
     alignItems: 'center',
-    height: '100vh',
+    minHeight: '100vh',
     backgroundColor: '#f9f9f9',
     margin: 0,
     fontFamily: 'Arial, sans-serif',
+    paddingTop: '40px',
   },
   rectangle: {
     backgroundColor: '#333',
@@ -68,9 +31,10 @@ const styles = {
   },
   formContainer: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '20px',
+    gap: '40px',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginBottom: '40px',
   },
   dropdownContainer: {
     display: 'flex',
@@ -96,4 +60,52 @@ const styles = {
   },
 };
 
+function App() {
+  // 👇 API call when component mounts
+  useEffect(() => {
+    axios
+      .get('/api/setup_signal')
+      .then((response) => {
+        console.log('API connected:', response.data);
+      })
+      .catch((error) => {
+        console.error('API error:', error);
+      });
+  }, []);
+
+  return (
+    <div className="App" style={styles.app}>
+      <div style={styles.rectangle}>
+        <div style={styles.textLine}>UWA</div>
+        <div style={styles.textLine}>Study Planner</div>
+      </div>
+
+      {/* Dropdown Form */}
+      <div style={styles.formContainer}>
+        <div style={styles.dropdownContainer}>
+          <div style={styles.dropdownTitle}>Select Your Course</div>
+          <select style={styles.dropdown}>
+            <option value="mit">Master of Information Technology</option>
+            <option value="mds">Master of Data Science</option>
+          </select>
+        </div>
+
+        <div style={styles.dropdownContainer}>
+          <div style={styles.dropdownTitle}>Start Year</div>
+          <select style={styles.dropdown}>
+            <option value="2024-s1">2024 S1</option>
+            <option value="2024-s2">2024 S2</option>
+            <option value="2025-s1">2025 S1</option>
+            <option value="2025-s2">2025 S2</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Drag-and-Drop Timetable */}
+      <TimetableDragDrop />
+    </div>
+  );
+}
+
 export default App;
+
