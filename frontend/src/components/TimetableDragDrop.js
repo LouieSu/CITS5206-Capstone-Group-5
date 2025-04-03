@@ -18,10 +18,10 @@ import { CSS } from "@dnd-kit/utilities";
 
 // Initial data
 const initialData = {
-  "Semester 1": ["CITS5501", "CITS5505", "CITS5551", "CITS5100"],
+  "Semester 1": ["CITS5501", "CITS5505", "CITS5551", "CITS4001"],
   "Semester 2": ["CITS6001", "CITS5206", "CITS5552", "CITS6101"],
-  "Semester 3": ["CITS6201", "CITS6202", "CITS6301", "CITS6302"],
-  "Semester 4": ["CITS6401", "CITS6402", "CITS6501", "CITS6502"]
+  "Semester 3": ["INMT5506", "CITS6202", "CITS6301", "CITS6302"],
+  "Semester 4": ["CITS6401", "CITS6402", "MGMT5509", "CITS6502"]
 };
 
 // Droppable semester
