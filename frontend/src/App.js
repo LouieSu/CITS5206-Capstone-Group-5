@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UserForm from './components/UserForm';
 import CourseSchedule from './components/CourseSchedule';
 
-
 function App() {
   return (
     <Router>
