@@ -6,7 +6,7 @@ function CourseSchedule() {
   const location = useLocation();
   const { name, year, semester, course, specialisation } = location.state || {};
 
-  // 课程安排示例（请替换成真实数据）
+  // example for the study plan
   const courses = [
     ["Course 1", "Course 2", "Course 3", "Course 4"],
     ["Course 5", "Course 6", "Course 7", "Course 8"],
@@ -14,7 +14,7 @@ function CourseSchedule() {
     ["Course 13", "Course 14", "Course 15", "Course 16"],
   ];
 
-  // 根据入学学期调整顺序
+  // base on the student information change the semester
   const semesters = semester === "S1"
     ? ["Y1S1", "Y1S2", "Y2S1", "Y2S2"]
     : ["Y1S2", "Y1S1", "Y2S2", "Y2S1"];

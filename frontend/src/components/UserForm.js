@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ 用于跳转页面
-import '../App.css'; // 如果你移动了 App.css，要注意路径
+import { useNavigate } from 'react-router-dom'; 
+import '../App.css'; 
 
 function UserForm() {
-  const navigate = useNavigate(); // ✅ 跳转 hook
+  const navigate = useNavigate(); // jump to the study plan page
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
@@ -15,7 +15,7 @@ function UserForm() {
   const prevStep = () => setStep((prev) => prev - 1);
 
   const handleSubmit = () => {
-    // ✅ 提交后跳转并传数据
+    // Jump after submission and transfer data
     navigate('/schedule', {
       state: {
         name,
