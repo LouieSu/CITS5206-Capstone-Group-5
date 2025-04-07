@@ -1,12 +1,15 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UserForm from './components/UserForm';
-
-console.log('App.js is loaded');
+import CourseSchedule from './components/CourseSchedule';
 
 function App() {
   return (
-    <div>
-      <UserForm />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<UserForm />} />
+        <Route path="/schedule" element={<CourseSchedule />} />
+      </Routes>
+    </Router>
   );
 }
 
