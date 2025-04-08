@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rulesets>
+
+    <!-- courses or programmes, currently only MIT and MDS, attributes may be expanded as needed.-->
+    <programme>
+        <code>MIT</code>
+        <name>Master of Information Technology</name>
+    </programme>
+    <programme>
+        <code>MDS</code>
+        <name>Master of Data Science</name>
+    </programme>
+
+
+
+    <!-- rule set part -->
+    <!-- 1. MIT, 2025 rule set-->
+    <ruleset>
+        <code>MIT-2025</code>
+        <name>Master of Information Technology, 2025 ruleset</name>
+        <programmeCode>MIT</programmeCode>
+        <totalPoints>96</totalPoints>
+
+
+        <sections>
+
+            <section>
+                <code>conversion</code>
+                <name>Conversion</name>
+                <description>
+                    Students who have completed degree studies in a non-cognate area, or equivalent as recognised by the School, must complete relevant conversion units up to the value of 24 points as determined by the School upon offer of admission and by the scope of a student's prior study. Students choose either CITS2002 or CITS2005.
+                </description>
+
+                <!-- for front-end display purpose -->
+                <units>
+                    CITS1003, CITS1401, CITS1402, CITS2002, CITS2005
+                </units>
+
+                <!-- all conditions must be satisfied -->
+                <conditions>
+
+                    <!-- 18 points from these two units or take all three units-->
+                    <condition>
+                        <!-- start with a capital letter, can be UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber -->
+                        <!-- in a rule set, only UnitPoint/LevelPoint will be used, others is designed for describing prerequisites -->
+                        <type>UnitPoint</type>
+                        <points>18</points>
+                        <units>CITS1003, CITS1401, CITS1402</units>
+                    </condition>
+
+                    <!-- 6 points from these two units.-->
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>6</points>
+                        <units>CITS2002, CITS2005</units>
+
+                        <!-- description is alwasy optional-->
+                        <description></description>
+
+                    </condition>
+                </conditions>
+            </section>
+
+            <section>
+                <code>core</code>
+                <name>Core</name>
+                <descriptio>Take all units (24 points)</descriptio>
+
+                <units>CITS4401, CITS5206, CITS5505, PHIL4100</units>
+
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>CITS4401, CITS5206, CITS5505, PHIL4100</units>
+                    </condition>
+                </conditions>
+            </section>
+
+            <section>
+                <code>optionA</code>
+                <name>Option - Group A</name>
+                <descriptio>Take unit(s) to the value of 24 points, including a minimum of 12 points at Level 5.</descriptio>
+
+                <units>AUTO4508, CITS4009, CITS4012, CITS4402, CITS4403, CITS4404, CITS4407, CITS4419, CITS5014, CITS5015, CITS5017, CITS5501, CITS5503, CITS5504, CITS5506, CITS5507, CITS5508, ENVT4411, GENG5507, INMT5518, INMT5526, MGMT5504, SVLG5001</units>
+
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>AUTO4508, CITS4009, CITS4012, CITS4402, CITS4403, CITS4404, CITS4407, CITS4419, CITS5014, CITS5015, CITS5017, CITS5501, CITS5503, CITS5504, CITS5506, CITS5507, CITS5508, ENVT4411, GENG5507, INMT5518, INMT5526, MGMT5504, SVLG5001</units>
+                    </condition>
+                    <condition>
+                        <type>LevelPoint</type>
+                        <level>5</level>
+                        <points></points>
+                    </condition>
+                </conditions>
+            </section>
+
+            <!-- specialisation is a special type of section, same structure with section -->
+            <specialisation>
+                <code>ac</code>
+                <name>Applied Computing specialisation</name>
+                <descriptio>Take unit(s) to the value of 24 points, including a minimum of 12 points at Level 5.</descriptio>
+
+                <units>CITS4009, CITS4012, CITS4402, CITS4403, CITS4404, CITS4407, CITS4419, CITS5017, CITS5501, CITS5503, CITS5504, CITS5506, CITS5507, CITS5508</units>
+
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>CITS4009, CITS4012, CITS4402, CITS4403, CITS4404, CITS4407, CITS4419, CITS5017, CITS5501, CITS5503, CITS5504, CITS5506, CITS5507, CITS5508</units>
+                    </condition>
+                    <condition>
+                        <type>LevelPoint</type>
+                        <level>5</level>
+                        <points></points>
+                    </condition>
+                </conditions>
+            </specialisation>
+
+            <specialisation>
+                <code>ai</code>
+                <name>Artificial Intelligence specialisation</name>
+                <descriptio>Take all units (24 points):</descriptio>
+
+                <units>CITS4012, CITS4404, CITS5017, CITS5508</units>
+
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>CITS4012, CITS4404, CITS5017, CITS5508</units>
+                    </condition>
+                </conditions>
+            </specialisation>
+
+
+            <specialisation>
+                <code>ss</code>
+                <name>Software Systems specialisation</name>
+                <descriptio>Take all units (24 points):</descriptio>
+
+                <units>CITS5501, CITS5503, CITS5506, CITS5507</units>
+
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>CITS5501, CITS5503, CITS5506, CITS5507</units>
+                    </condition>
+                </conditions>
+            </specialisation>
+            
+        </sections>
+        
+    </ruleset>
+
+
+    <!-- 2. MDS 2025 rule set-->
+
+
+</rulesets>
