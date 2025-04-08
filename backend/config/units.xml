@@ -1,0 +1,197 @@
+<units>
+
+    <!-- 1. pre-defined Condition/ConditionGroups-->
+    <!-- frequently used conditions, to be referenced to in unit definitions -->
+    <conditions>
+        <condition>
+            <code>Prog-MIT</code>
+            <type>Programme</type>
+            <programme>MIT</programme>
+        </condition>
+
+        <condition>
+            <code>Prog-MDS</code>
+            <type>Programme</type>
+            <programme>MDS</programme>
+        </condition>
+    </conditions>
+
+    <conditionGroups>
+        <conditionGroup>
+            <!-- code is necessary when declared as non-enbedded -->
+            <code>Prog-MIT-MDS</code>
+            <!-- only one condition under this ConditionGroup need to be satisfied. -->
+            <type>or</type>
+
+            <conditions>
+                <condition ref="Prog-MIT"/>
+                <condition ref="Prog-MDS"/>
+            </conditions>
+        </conditionGroup>
+
+
+        <conditionGroup>
+            <code>Basic-Progr-Prer</code>
+            <type>or</type>
+            <conditions>
+                <condition>
+                    <type>Unit</type>
+                    <unit>CITS1401</unit>
+                </condition>
+                <condition>
+                    <type>Unit</type>
+                    <unit>CITX1401</unit>
+                </condition>
+                <condition>
+                    <type>Unit</type>
+                    <unit>CITS2401</unit>
+                </condition>
+            </conditions>
+        </conditionGroup>
+        
+
+    </conditionGroups>
+
+
+    <!-- 2. Units-->
+
+    <unit>
+        <code>CITS1003</code>
+        <point>6</point>
+        <name>Introduction to Cybersecurity</name>
+        <availability>25S1, 25S2</availability>
+
+        <!-- this one has no prerequisite-->
+
+        <incompability>CITS3004</incompability>
+    </unit>
+
+
+    <unit>
+        <code>CITS1401</code>
+        <point>6</point>
+        <name>Computational Thinking with Python</name>
+        <availability>25S1, 25S2</availability>
+
+        
+        <prerequisites>
+            <!-- refer to a pre-defined ConditionGroup -->
+            <conditionGroup ref="Prog-MIT-MDS"/>
+        </prerequisites>
+
+        <incompability>CITS2401, CITS1501</incompability>
+    </unit>
+
+    <unit>
+        <code>CITS1402</code>
+        <point>6</point>
+        <name>Relational Database Management Systems</name>
+        <availability>25S1, 25S2</availability>
+
+        
+        <prerequisites>
+            <!-- refer to a pre-defined ConditionGroup -->
+            <conditionGroup ref="Prog-MIT-MDS"/>
+        </prerequisites>
+
+        <incompability>CITS2232</incompability>
+    </unit>
+
+    <unit>
+        <code>CITS2002</code>
+        <point>6</point>
+        <name>Systems Programming </name>
+        <availability>25S2</availability>
+
+        <prerequisites>
+            <conditionGroup ref="Basic-Progr-Prer"/>
+        </prerequisites>
+
+        <incompability>CITS1002</incompability>
+    </unit>
+
+    <unit>
+        <code>CITS2005</code>
+        <point>6</point>
+        <name>Object Oriented Programming</name>
+        <availability>25S1</availability>
+
+        <prerequisites>
+            <conditionGroup ref="Basic-Progr-Prer"/>
+        </prerequisites>
+
+        <incompability>CITS1001, CITX1001</incompability>
+    </unit>
+
+
+
+
+    <unit>
+        <code>CITS5206</code>
+        <point>6</point>
+        <name>Information Technology Capstone Project</name>
+
+        <availability>25S1, 25S2</availability>
+        
+        <prerequisites>
+            <!-- ConditionGroup not needed, as conditions here have relationship "and" -->
+            <condition>
+                <!-- start with a capital letter, can be UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber -->
+                <type>Programme</type>
+                <programme>MIT</programme>
+            </condition>
+
+            <condition>
+                <type>LevelPoint</type>
+                <level>4,5</level>
+                <points>48</points>
+            </condition>
+
+        </prerequisites>
+
+        <incompability>CITS3200</incompability>
+    </unit>
+
+    <unit>
+        <code>CITS4012</code>
+        <point>6</point>
+        <name>Natural Language Processing</name>
+
+        <availability>25S2</availability>
+        
+        <!-- to simplify our project, all prerequisites are limited to MIT and MDS, conditions related to other programmes is not considered. -->
+        <prerequisites>
+
+            <!-- everything inside a prerequisites should be satisfied, their relationship is 'and' -->
+            <!-- to depict or and other relationship, using ConditionGroups -->
+
+            <!-- refer to a pre-defined ConditionGroup -->
+            <conditionGroup ref="Prog-MIT-MDS"/>
+
+            <conditionGroup>
+                <type>or</type>
+                <conditions>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS1401 </unit>
+                    </condition>
+
+                    <!-- the below condtions are not available for MIT/MDS, ignored. This is only an example. 
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2401 </unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITX1401  </unit>
+                    </condition>
+                    -->
+                </conditions>
+            </conditionGroup>
+        </prerequisites>
+
+        <!-- no incompability-->
+    </unit>
+
+
+</units>
