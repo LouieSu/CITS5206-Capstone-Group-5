@@ -1,50 +1,67 @@
 <units>
 
+
+    <!-- to simplify our project, all prerequisites are limited to MIT and MDS, conditions related to other programmes is not considered. -->
+
     <!-- 1. pre-defined Condition/ConditionGroups-->
     <!-- frequently used conditions, to be referenced to in unit definitions -->
     <conditions>
+
+        <!-- enrolled in MIT-->
         <condition>
-            <code>Prog-MIT</code>
+            <code>ProgMIT</code>
+
+            <!-- start with a capital letter, can be UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber -->
             <type>Programme</type>
             <programme>MIT</programme>
         </condition>
 
+        <!-- enrolled in MDS -->
         <condition>
-            <code>Prog-MDS</code>
+            <code>ProgMDS</code>
             <type>Programme</type>
             <programme>MDS</programme>
         </condition>
     </conditions>
 
+    
     <conditionGroups>
+
+        <!-- enrolled in MIT or MDS -->
         <conditionGroup>
             <!-- code is necessary when declared as non-enbedded -->
-            <code>Prog-MIT-MDS</code>
+            <code>ProgMITMDS</code>
             <!-- only one condition under this ConditionGroup need to be satisfied. -->
             <type>or</type>
 
             <conditions>
-                <condition ref="Prog-MIT"/>
-                <condition ref="Prog-MDS"/>
+                <condition ref="ProgMIT"/>
+                <condition ref="ProgMDS"/>
             </conditions>
         </conditionGroup>
 
-
+        <!-- enrolled in MIT and completed CITS1401 -->
         <conditionGroup>
-            <code>Basic-Progr-Prer</code>
-            <type>or</type>
+            <code>PythonCompleted</code>
+            <type>and</type>
             <conditions>
+                
                 <condition>
                     <type>Unit</type>
                     <unit>CITS1401</unit>
                 </condition>
+            </conditions>
+        </conditionGroup>
+
+        <!-- enrolled in MIT or MDS and completed CITS1401-->
+        <conditionGroup>
+            <code>PythonCompletedMITMDS</code>
+            <type>and</type>
+            <conditions>
+                <conditionGroup ref="ProgMITMDS"/>
                 <condition>
                     <type>Unit</type>
-                    <unit>CITX1401</unit>
-                </condition>
-                <condition>
-                    <type>Unit</type>
-                    <unit>CITS2401</unit>
+                    <unit>CITS1401</unit>
                 </condition>
             </conditions>
         </conditionGroup>
@@ -72,11 +89,14 @@
         <point>6</point>
         <name>Computational Thinking with Python</name>
         <availability>25S1, 25S2</availability>
-
         
         <prerequisites>
+
+            <!-- everything inside a prerequisites should be satisfied, their relationship is 'and' -->
+            <!-- to depict or and other relationship, using ConditionGroups -->
+
             <!-- refer to a pre-defined ConditionGroup -->
-            <conditionGroup ref="Prog-MIT-MDS"/>
+            <conditionGroup ref="ProgMITMDS"/>
         </prerequisites>
 
         <incompability>CITS2401, CITS1501</incompability>
@@ -91,7 +111,7 @@
         
         <prerequisites>
             <!-- refer to a pre-defined ConditionGroup -->
-            <conditionGroup ref="Prog-MIT-MDS"/>
+            <conditionGroup ref="ProgMITMDS"/>
         </prerequisites>
 
         <incompability>CITS2232</incompability>
@@ -104,7 +124,7 @@
         <availability>25S2</availability>
 
         <prerequisites>
-            <conditionGroup ref="Basic-Progr-Prer"/>
+            <conditionGroup ref="PythonCompleted"/>
         </prerequisites>
 
         <incompability>CITS1002</incompability>
@@ -117,14 +137,24 @@
         <availability>25S1</availability>
 
         <prerequisites>
-            <conditionGroup ref="Basic-Progr-Prer"/>
+            <conditionGroup ref="PythonCompleted"/>
         </prerequisites>
 
         <incompability>CITS1001, CITX1001</incompability>
     </unit>
 
 
+    <unit>
+        <code>CITS4401</code>
+        <point>6</point>
+        <name>Software Requirements and Design</name>
+        <availability>25S1</availability>
 
+        <prerequisites>
+            <conditionGroup ref="PythonCompleted"/>
+        </prerequisites>
+
+    </unit>
 
     <unit>
         <code>CITS5206</code>
@@ -153,45 +183,486 @@
     </unit>
 
     <unit>
+        <code>CITS5505</code>
+        <point>6</point>
+        <name>Agile Web Development</name>
+
+        <availability>25S1</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="PythonCompletedMITMDS"/>
+        </prerequisites>
+
+        <incompability>CITS3403</incompability>
+    </unit>
+
+    <unit>
+        <code>PHIL4100</code>
+        <point>6</point>
+        <name>Ethics and Critical Thinking</name>
+
+        <availability>25S1</availability>
+        
+        <prerequisites>
+            <condition ref="ProgMIT"/>
+        </prerequisites>
+
+
+    </unit>
+
+    <unit>
+        <code>AUTO4508</code>
+        <point>6</point>
+        <name>Mobile Robots</name>
+
+        <availability>25S1</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="PythonCompleted"/>
+        </prerequisites>
+
+        <incompability>GENG5508</incompability>
+    </unit>
+
+
+    <unit>
+        <code>CITS4009</code>
+        <point>6</point>
+        <name>Computational Data Analysis</name>
+
+        <availability>25S2</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="ProgMITMDS"/>
+        </prerequisites>
+
+    </unit>
+
+
+    <unit>
         <code>CITS4012</code>
         <point>6</point>
         <name>Natural Language Processing</name>
 
         <availability>25S2</availability>
         
-        <!-- to simplify our project, all prerequisites are limited to MIT and MDS, conditions related to other programmes is not considered. -->
         <prerequisites>
 
-            <!-- everything inside a prerequisites should be satisfied, their relationship is 'and' -->
-            <!-- to depict or and other relationship, using ConditionGroups -->
-
             <!-- refer to a pre-defined ConditionGroup -->
-            <conditionGroup ref="Prog-MIT-MDS"/>
-
-            <conditionGroup>
-                <type>or</type>
-                <conditions>
-                    <condition>
-                        <type>Unit</type>
-                        <unit>CITS1401 </unit>
-                    </condition>
-
-                    <!-- the below condtions are not available for MIT/MDS, ignored. This is only an example. 
-                    <condition>
-                        <type>Unit</type>
-                        <unit>CITS2401 </unit>
-                    </condition>
-                    <condition>
-                        <type>Unit</type>
-                        <unit>CITX1401  </unit>
-                    </condition>
-                    -->
-                </conditions>
-            </conditionGroup>
+            <conditionGroup ref="PythonCompletedMITMDS"/>
         </prerequisites>
 
         <!-- no incompability-->
     </unit>
 
+    <unit>
+        <code>CITS4402</code>
+        <point>6</point>
+        <name>Computer Vision</name>
+
+        <availability>25S1</availability>
+        
+        <prerequisites>
+
+            <!-- Prerequisites of this units is not updated on website, it should be available to MIT and MDS now -->
+            <conditionGroup ref="ProgMITMDS"/>
+        </prerequisites>
+
+        <incompability>CITS4240</incompability>
+    </unit>
+
+    <unit>
+        <code>CITS4403</code>
+        <point>6</point>
+        <name>Computational Modelling</name>
+
+        <availability>25S2</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="PythonCompletedMITMDS"/>
+        </prerequisites>
+
+        <incompability>CITS4240</incompability>
+    </unit>
+
+
+    <unit>
+        <code>CITS4404</code>
+        <point>6</point>
+        <name>Artificial Intelligence and Adaptive Systems</name>
+
+        <availability>25S1</availability>
+        
+        <prerequisites>
+            <!-- Successful completion of
+                CITS2002 Systems Programming
+                or CITS2005 Object Oriented Programming
+                or CITS2402 Introduction to Data Science
+                or ELEC3020 Embedded Systems
+                or ( CITS1401 Computational Thinking with Python
+                and CITS4009 Computational Data Analysis
+                )
+            -->
+            <conditionGroup>
+                <type>or</type>
+                <conditions>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2002</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2005</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2402</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>ELEC3020</unit>
+                    </condition>
+                    
+                    <!-- a sub condition group -->
+                    <conditionGroup>
+                        <type>and</type>
+                        <conditions>
+                            <condition>
+                                <type>Unit</type>
+                                <unit>CITS1401</unit>
+                            </condition>
+                            <condition>
+                                <type>Unit</type>
+                                <unit>CITS4009</unit>
+                            </condition>
+                        </conditions>
+                    </conditionGroup>
+                </conditions>
+            </conditionGroup>
+        </prerequisites>
+    </unit>
+
+
+    <unit>
+        <code>CITS4407</code>
+        <point>6</point>
+        <name>Open Source Tools and Scripting</name>
+
+        <availability>25S1</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="ProgMITMDS"/>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>CITS4419</code>
+        <point>6</point>
+        <name>Mobile and Wireless Computing</name>
+
+        <availability>NA</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="ProgMITMDS"/>
+        </prerequisites>
+    </unit>
+
+
+    <unit>
+        <code>CITS5014</code>
+        <point>6</point>
+        <name>Data and Information Technologies Research Project Part 1</name>
+
+        <availability>25S1, 25S2</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="ProgMITMDS"/>
+            <condition>
+                <type>TotalPoint</type>
+                <points>24</points>
+            </condition>
+        </prerequisites>
+
+        <description>UWA weighted average mark (WAM) of at least 70 percent across ALL completed level 4 / level 5 CITS/STAT/PHIL units</description>
+    </unit>
+
+    <unit>
+        <code>CITS5015</code>
+        <point>6</point>
+        <name>Data and Information Technologies Research Project Part 2</name>
+
+        <availability>25S1, 25S2</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="ProgMITMDS"/>
+            <condition>
+                <type>Unit</type>
+                <unit>CITS5014</unit>
+            </condition>
+        </prerequisites>
+
+        <description>UWA weighted average mark (WAM) of at least 70 percent across ALL completed level 4 / level 5 CITS/STAT/PHIL units</description>
+    </unit>
+
+    <unit>
+        <code>CITS5017</code>
+        <point>6</point>
+        <name>Deep Learning</name>
+
+        <availability>25S2</availability>
+        
+        <prerequisites>
+            <condition>
+                <type>Unit</type>
+                <unit>CITS5508</unit>
+            </condition>
+        </prerequisites>
+    </unit>
+
+
+    <unit>
+        <code>CITS5501</code>
+        <point>6</point>
+        <name>Software Testing and Quality Assurance</name>
+
+        <availability>25S2</availability>
+        
+        <prerequisites>
+            <condition ref="ProgMIT"/>
+            <conditionGroup>
+                <type>or</type>
+                <conditions>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2002</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2005</unit>
+                    </condition>
+                </conditions>
+            </conditionGroup>
+        </prerequisites>
+    </unit>
+
+
+
+    <unit>
+        <code>CITS5503</code>
+        <point>6</point>
+        <name>Cloud Computing</name>
+
+        <availability>25S2</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="ProgMITMDS"/>
+            <!-- Successful completion of
+                CITS2002 Systems Programming
+                or CITS2005 Object Oriented Programming
+                or CITS2200 Data Structures and Algorithms
+                or CITS2402 Introduction to Data Science
+                or ELEC3020 Embedded Systems
+                or ( CITS1401 Computational Thinking with Python
+                and CITS4009 Computational Data Analysis
+                )
+            -->
+            <conditionGroup>
+                <type>or</type>
+                <conditions>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2002</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2005</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2200</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS2402</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>ELEC3020</unit>
+                    </condition>
+                    
+                    <!-- a sub condition group -->
+                    <conditionGroup>
+                        <type>and</type>
+                        <conditions>
+                            <condition>
+                                <type>Unit</type>
+                                <unit>CITS1401</unit>
+                            </condition>
+                            <condition>
+                                <type>Unit</type>
+                                <unit>CITS4009</unit>
+                            </condition>
+                        </conditions>
+                    </conditionGroup>
+                </conditions>
+            </conditionGroup>
+        </prerequisites>
+    </unit>
+
+
+    <unit>
+        <code>CITS5504</code>
+        <point>6</point>
+        <name>Data Warehousing</name>
+
+        <availability>25S1</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="ProgMITMDS"/>
+            <condition>
+                <type>Unit</type>
+                <unit>CITS1401</unit>
+            </condition>
+            <condition>
+                <type>Unit</type>
+                <unit>CITS1402</unit>
+            </condition>
+        </prerequisites>
+    </unit>
+
+
+    <unit>
+        <code>CITS5506</code>
+        <point>6</point>
+        <name>The Internet of Things</name>
+
+        <availability>25S1</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="PythonCompletedMITMDS"/>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>CITS5507</code>
+        <point>6</point>
+        <name>High Performance Computing</name>
+
+        <availability>25S2</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="ProgMITMDS"/>
+            <condition>
+                <type>UnitPoint</type>
+                <points>12</points>
+                <units>CITS2002, CITS2005, CITS1401</units>
+            </condition>
+        </prerequisites>
+    </unit>
+
+
+    <unit>
+        <code>CITS5508</code>
+        <point>6</point>
+        <name>Machine Learning</name>
+
+        <availability>25S1</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="PythonCompletedMITMDS"/>
+        </prerequisites>
+    </unit>
+
+
+    <unit>
+        <code>ENVT4411</code>
+        <point>6</point>
+        <name>Geographic Information Systems Applications</name>
+
+        <availability>25S1, 25S2</availability>
+
+        <!-- no prerequisite -->
+
+        <incompability>GEOG2201 </incompability>
+    </unit>
+
+    <unit>
+        <code>GENG5507</code>
+        <point>6</point>
+        <name>Risk, Reliability and Safety</name>
+
+        <availability>25S1, 25S2</availability>
+        
+        <prerequisites>
+            <condition ref="ProgMIT"/>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>INMT5518</code>
+        <point>6</point>
+        <name>Supply Chain Analytics</name>
+
+        <availability>25S1, 25S2</availability>
+        
+        <!-- no prerequisite -->
+    </unit>
+
+    <unit>
+        <code>INMT5526</code>
+        <point>6</point>
+        <name>Business Intelligence</name>
+
+        <availability>25S1, 25S2</availability>
+        <prerequisites>
+            <conditionGroup>
+                <type>or</type>
+                <conditions>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>INMT5518</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>BUSN5002</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>BUSN5101</unit>
+                    </condition>
+                    <condition>
+                        <type>Unit</type>
+                        <unit>CITS1401</unit>
+                    </condition>
+                </conditions>
+            </conditionGroup>
+        </prerequisites>
+        
+    </unit>
+    
+
+    <unit>
+        <code>MGMT5504</code>
+        <point>6</point>
+        <name>Data Analysis and Decision Making</name>
+
+        <availability>25S1, 25S2</availability>
+        
+        <!-- no prerequisite -->
+    </unit>
+
+    <unit>
+        <code>SVLG5001</code>
+        <point>6</point>
+        <name>McCusker Centre for Citizenship Internship</name>
+
+        <availability>25S1, 25S2, N1, N2</availability>
+        
+        <!-- no prerequisite -->
+        
+        <description>application required</description>
+    </unit>
+
+    
 
 </units>
