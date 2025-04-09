@@ -73,3 +73,37 @@ p {
   font-size: 16px;
   color: #555;
 }
+
+.hero-section {
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  width: 100%;
+}
+
+
+
+.overlay {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+  color: #3810a6;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+
+.overlay h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.overlay p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: rgba(9, 9, 9, 0.85);
+  margin: 0;
+}
+
