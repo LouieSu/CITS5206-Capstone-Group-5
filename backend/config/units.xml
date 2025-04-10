@@ -1,22 +1,20 @@
 <units>
+    <!-- To simplify our project, all prerequisites are limited to MIT or MDS. Conditions related to other programmes are not considered. -->
 
-
-    <!-- to simplify our project, all prerequisites are limited to MIT and MDS, conditions related to other programmes is not considered. -->
-
-    <!-- 1. pre-defined Condition/ConditionGroups-->
-    <!-- frequently used conditions, to be referenced to in unit definitions -->
+    <!-- 1. Pre-defined Condition/ConditionGroups-->
+    <!-- Frequently used conditions to be referred to in unit definitions -->
     <conditions>
 
-        <!-- enrolled in MIT-->
+        <!-- Enrolled in MIT-->
         <condition>
             <code>ProgMIT</code>
 
-            <!-- start with a capital letter, can be UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber -->
+            <!-- Starting with a capital letter. Can be UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber -->
             <type>Programme</type>
             <programme>MIT</programme>
         </condition>
 
-        <!-- enrolled in MDS -->
+        <!-- Enrolled in MDS -->
         <condition>
             <code>ProgMDS</code>
             <type>Programme</type>
@@ -27,11 +25,12 @@
     
     <conditionGroups>
 
-        <!-- enrolled in MIT or MDS -->
+        <!-- Enrolled in MIT or MDS -->
         <conditionGroup>
-            <!-- code is necessary when declared as non-enbedded -->
+            <!-- Code is necessary when declared as non-embedded -->
             <code>ProgMITMDS</code>
-            <!-- only one condition under this ConditionGroup need to be satisfied. -->
+
+            <!-- Only one condition under this ConditionGroup needs to be satisfied -->
             <type>or</type>
 
             <conditions>
@@ -40,12 +39,12 @@
             </conditions>
         </conditionGroup>
 
-        <!-- enrolled in MIT and completed CITS1401 -->
+        <!-- Enrolled in MIT and completed CITS1401 -->
         <conditionGroup>
             <code>PythonCompleted</code>
             <type>and</type>
             <conditions>
-                
+                <conditionGroup ref="ProgMIT"/>
                 <condition>
                     <type>Unit</type>
                     <unit>CITS1401</unit>
@@ -53,7 +52,7 @@
             </conditions>
         </conditionGroup>
 
-        <!-- enrolled in MIT or MDS and completed CITS1401-->
+        <!-- Enrolled in MIT or MDS and completed CITS1401-->
         <conditionGroup>
             <code>PythonCompletedMITMDS</code>
             <type>and</type>
@@ -78,7 +77,7 @@
         <name>Introduction to Cybersecurity</name>
         <availability>25S1, 25S2</availability>
 
-        <!-- this one has no prerequisite-->
+        <!-- No prerequisite-->
 
         <incompability>CITS3004</incompability>
     </unit>
@@ -91,11 +90,10 @@
         <availability>25S1, 25S2</availability>
         
         <prerequisites>
+            <!-- Everything inside <prerequisites> should be satisfied, where the relationship is 'and' -->
+            <!-- To denote "or" or other relationships, use ConditionGroups -->
 
-            <!-- everything inside a prerequisites should be satisfied, their relationship is 'and' -->
-            <!-- to depict or and other relationship, using ConditionGroups -->
-
-            <!-- refer to a pre-defined ConditionGroup -->
+            <!-- Refer to a pre-defined ConditionGroup -->
             <conditionGroup ref="ProgMITMDS"/>
         </prerequisites>
 
@@ -108,9 +106,8 @@
         <name>Relational Database Management Systems</name>
         <availability>25S1, 25S2</availability>
 
-        
         <prerequisites>
-            <!-- refer to a pre-defined ConditionGroup -->
+            <!-- Refer to a pre-defined ConditionGroup -->
             <conditionGroup ref="ProgMITMDS"/>
         </prerequisites>
 
@@ -120,7 +117,7 @@
     <unit>
         <code>CITS2002</code>
         <point>6</point>
-        <name>Systems Programming </name>
+        <name>Systems Programming</name>
         <availability>25S2</availability>
 
         <prerequisites>
@@ -166,7 +163,7 @@
         <prerequisites>
             <!-- ConditionGroup not needed, as conditions here have relationship "and" -->
             <condition>
-                <!-- start with a capital letter, can be UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber -->
+                <!-- Starting with a capital letter. Can be UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber -->
                 <type>Programme</type>
                 <programme>MIT</programme>
             </condition>
@@ -248,7 +245,7 @@
         
         <prerequisites>
 
-            <!-- refer to a pre-defined ConditionGroup -->
+            <!-- Refer to a pre-defined ConditionGroup -->
             <conditionGroup ref="PythonCompletedMITMDS"/>
         </prerequisites>
 
@@ -264,7 +261,7 @@
         
         <prerequisites>
 
-            <!-- Prerequisites of this units is not updated on website, it should be available to MIT and MDS now -->
+            <!-- Prerequisites of this units is not updated on website. It should be available to MIT and MDS students now -->
             <conditionGroup ref="ProgMITMDS"/>
         </prerequisites>
 
@@ -323,7 +320,7 @@
                         <unit>ELEC3020</unit>
                     </condition>
                     
-                    <!-- a sub condition group -->
+                    <!-- A sub condition group -->
                     <conditionGroup>
                         <type>and</type>
                         <conditions>
@@ -581,9 +578,9 @@
 
         <availability>25S1, 25S2</availability>
 
-        <!-- no prerequisite -->
+        <!-- No prerequisite -->
 
-        <incompability>GEOG2201 </incompability>
+        <incompability>GEOG2201</incompability>
     </unit>
 
     <unit>
@@ -605,7 +602,7 @@
 
         <availability>25S1, 25S2</availability>
         
-        <!-- no prerequisite -->
+        <!-- No prerequisite -->
     </unit>
 
     <unit>
@@ -648,7 +645,7 @@
 
         <availability>25S1, 25S2</availability>
         
-        <!-- no prerequisite -->
+        <!-- No prerequisite -->
     </unit>
 
     <unit>
@@ -658,11 +655,8 @@
 
         <availability>25S1, 25S2, N1, N2</availability>
         
-        <!-- no prerequisite -->
+        <!-- No prerequisite -->
         
         <description>application required</description>
     </unit>
-
-    
-
 </units>
