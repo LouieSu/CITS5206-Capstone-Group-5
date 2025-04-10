@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rulesets>
 
-    <!-- courses or programmes, currently only MIT and MDS, attributes may be expanded as needed.-->
+    <!-- Courses or programmes (currently MIT and MDS only). Attributes may be expanded as needed.-->
     <programme>
         <code>MIT</code>
         <name>Master of Information Technology</name>
     </programme>
+
     <programme>
         <code>MDS</code>
         <name>Master of Data Science</name>
     </programme>
 
 
-
-    <!-- rule set part -->
+    <!-- Ruleset part -->
     <!-- 1. MIT, 2025 rule set-->
     <ruleset>
         <code>MIT-2025</code>
@@ -31,18 +31,18 @@
                     Students who have completed degree studies in a non-cognate area, or equivalent as recognised by the School, must complete relevant conversion units up to the value of 24 points as determined by the School upon offer of admission and by the scope of a student's prior study. Students choose either CITS2002 or CITS2005.
                 </description>
 
-                <!-- for front-end display purpose -->
+                <!-- For front-end display purposes -->
                 <units>
                     CITS1003, CITS1401, CITS1402, CITS2002, CITS2005
                 </units>
 
-                <!-- all conditions must be satisfied -->
+                <!-- All conditions must be satisfied -->
                 <conditions>
 
                     <!-- 18 points from these two units or take all three units-->
                     <condition>
-                        <!-- start with a capital letter, can be UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber -->
-                        <!-- in a rule set, only UnitPoint/LevelPoint will be used, others is designed for describing prerequisites -->
+                        <!-- Starting with a capital letter. Can be UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber -->
+                        <!-- In a rule set, only UnitPoint/LevelPoint will be used. Others are designed for describing prerequisites -->
                         <type>UnitPoint</type>
                         <points>18</points>
                         <units>CITS1003, CITS1401, CITS1402</units>
@@ -54,7 +54,7 @@
                         <points>6</points>
                         <units>CITS2002, CITS2005</units>
 
-                        <!-- description is alwasy optional-->
+                        <!-- Description is optional-->
                         <description></description>
 
                     </condition>
@@ -98,7 +98,7 @@
                 </conditions>
             </section>
 
-            <!-- specialisation is a special type of section, same structure with section -->
+            <!-- Specialisation is a special type of section with the same structure -->
             <specialisation>
                 <code>ac</code>
                 <name>Applied Computing specialisation</name>
