@@ -1,7 +1,11 @@
 import './App.css';
 import axios from 'axios';
 import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import TimetableDragDrop from './components/TimetableDragDrop';
+import UserForm from './components/UserForm';
+import CourseSchedule from './components/CourseSchedule';
 
 const styles = {
   app: {
@@ -60,19 +64,7 @@ const styles = {
   },
 };
 
-function App() {
-  // 👇 API call when component mounts
-  useEffect(() => {
-    axios
-      .get('/api/setup_signal')
-      .then((response) => {
-        console.log('API connected:', response.data);
-      })
-      .catch((error) => {
-        console.error('API error:', error);
-      });
-  }, []);
-
+function HomePage() {
   return (
     <div className="App" style={styles.app}>
       <div style={styles.rectangle}>
@@ -107,5 +99,27 @@ function App() {
   );
 }
 
-export default App;
+function App() {
+  useEffect(() => {
+    axios
+      .get('/api/setup_signal')
+      .then((response) => {
+        console.log('API connected:', response.data);
+      })
+      .catch((error) => {
+        console.error('API error:', error);
+      });
+  }, []);
 
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/form" element={<UserForm />} />
+        <Route path="/schedule" element={<CourseSchedule />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
