@@ -1,22 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './CourseSchedule.css'; // 引入样式
 
 function CourseSchedule() {
   const location = useLocation();
-  const { name, year, semester, course, specialisation } = location.state || {};
+  const initialState = location.state || {};
 
-  // 模拟课程数据
+  const [name] = useState(initialState.name || '');
+  const [year, setYear] = useState(initialState.year || '2025');
+  const [semester, setSemester] = useState(initialState.semester || 'S1');
+  const [course, setCourse] = useState(initialState.course || 'MIT');
+  const [specialisation, setSpecialisation] = useState(initialState.specialisation || 'Artificial Intelligence');
+
+
+  useEffect(() => {
+    if (year === '2025' && course === 'MIT') {
+      if (!specialisation) {
+        setSpecialisation('Applied Computing'); // 默认选项
+      }
+    } else {
+      setSpecialisation('');
+    }
+  }, [year, course, specialisation]);
+  
+  const semesterOrder = semester === "S1"
+    ? ["Y1S1", "Y1S2", "Y2S1", "Y2S2"]
+    : ["Y1S2", "Y1S1", "Y2S2", "Y2S1"];
+
   const courses = [
     ["Course 1", "Course 2", "Course 3", "Course 4"],
     ["Course 5", "Course 6", "Course 7", "Course 8"],
     ["Course 9", "Course 10", "Course 11", "Course 12"],
     ["Course 13", "Course 14", "Course 15", "Course 16"],
   ];
-
-  const semesterOrder = semester === "S1"
-    ? ["Y1S1", "Y1S2", "Y2S1", "Y2S2"]
-    : ["Y1S2", "Y1S1", "Y2S2", "Y2S1"];
 
   const altCourses = [
     "Course1", "Course2", "Course3",
@@ -62,6 +78,7 @@ function CourseSchedule() {
           </div>
         )}
       </div>
+
       <div className="schedule-container">
         <h2>Course Schedule for {name}</h2>
         <div className="schedule-info">
