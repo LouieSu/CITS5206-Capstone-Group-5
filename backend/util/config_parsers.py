@@ -48,9 +48,9 @@ class RulesetParser(XmlParser):
                 _code = ruleset.find("code").text
                 rulesets[_code] = {
                     "code": _code,
-                    "name": ruleset.find("name").text,
-                    "programmeCode": ruleset.find("programmeCode").text,
-                    "totalPoints": int(ruleset.find("totalPoints").text),
+                    "name": ruleset.find("name").text.strip(),
+                    "programmeCode": ruleset.find("programmeCode").text.strip(),
+                    "totalPoints": int(ruleset.find("totalPoints").text.strip()),
                     "sections": self.get_sections(ruleset),
                     "specialisations": self.get_specialisations(ruleset),
                 }
@@ -70,12 +70,12 @@ class RulesetParser(XmlParser):
         sections_element = ruleset.find("sections")
         if sections_element is not None:
             for section in sections_element.findall("specialisation" if specilisation else "section"):
-                _code = section.find("code").text
+                _code = section.find("code").text.strip()
                 sections[_code] = {
                     "code": _code,
-                    "name": section.find("name").text,
+                    "name": section.find("name").text.strip(),
                     "description": section.find("description").text.strip() if section.find("description") is not None else "",
-                    "units": section.find("units").text.split(",") if section.find("units") is not None else [],
+                    "units": [unit.strip() for unit in section.find("units").text.split(",")] if section.find("units") is not None else [],
                     "conditions": self._get_conditions(section),
                 }
         return sections
@@ -102,20 +102,22 @@ class UnitParser(XmlParser):
             self._enrich_reference(key="conditionGroups", sub_key="conditionGroup")
 
             # parse units
-            units = []
+            units = {}
             unit_nodes = self.root.findall("unit")
             for node in unit_nodes:
-                units.append(self._parse_unit(node))
+                unit = self._parse_unit(node)
+                if unit is not None:
+                    units[unit['code']] = unit
             return units
 
     def _parse_unit(self, node):
         if node is not None:
             unit = {
-                "code": node.find("code").text,
-                "name": node.find("name").text,
-                "points": int(node.find("points").text.strip()) if node.find("points") is not None else 0,
-                "availability": node.find("availability").text.split(",") if node.find("availability") is not None else [],
-                "incompability": node.find("incompability").text.split(",") if node.find("incompability") is not None else [],
+                "code": node.find("code").text.strip(),
+                "name": node.find("name").text.strip(),
+                "points": int(node.find("points").text.strip()) if node.find("points") is not None and node.find("points").text.strip().isdigit() else 0,
+                "availability": [item.strip() for item in node.find("availability").text.split(",")] if node.find("availability") is not None else [],
+                "incompability": [item.strip() for item in node.find("incompability").text.split(",")] if node.find("incompability") is not None else [],
             }
             pre_node = node.find("prerequisites")
             if pre_node is not None:
@@ -183,28 +185,28 @@ class ConditionParser:
         }
         _code = node.find("code")
         if _code is not None:
-            condition["code"] = _code.text
+            condition["code"] = _code.text.strip()
 
         # type can be: UnitPoint/LevelPoint/UnitNumber/Unit/TotalPoint/Programme/LevelNumber
 
         if _type == "UnitPoint":
             condition["points"] = int(node.find("points").text.strip()) if node.find("points") is not None else 0
-            condition["units"] = node.find("units").text.split(",") if node.find("units") is not None else [],
+            condition['units'] = [unit.strip() for unit in node.find("units").text.split(",")] if node.find("units") is not None else [],
         elif _type == "LevelPoint":
             condition["points"] = int(node.find("points").text.strip()) if node.find("points") is not None else 0
-            condition["level"] = node.find("level").text
+            condition["level"] = node.find("level").text.strip()
         elif _type == "Programme":
             condition["programme"] = node.find("programme").text.strip() if node.find("programme") is not None else ""
         elif _type == "Unit":
-            condition["unit"] = node.find("unit").text
+            condition["unit"] = node.find("unit").text.strip()
         elif _type == "TotalPoint":
             condition["points"] = int(node.find("points").text.strip()) if node.find("points") is not None else 0
         elif _type == "UnitNumber":
             condition["number"] = int(node.find("number").text.strip()) if node.find("number") is not None else 0
-            condition["units"] = node.find("units").text.split(",") if node.find("units") is not None else [],
+            condition['units'] = [unit.strip() for unit in node.find("units").text.split(",")] if node.find("units") is not None else [],
         elif _type == "LevelNumber":
             condition["number"] = int(node.find("number").text.strip()) if node.find("number") is not None else 0
-            condition["level"] = node.find("level").text
+            condition["level"] = node.find("level").text.strip()
 
         return condition
 

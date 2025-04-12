@@ -25,16 +25,23 @@ def get_ruleset(rulset_code):
         load_conf()
     if rulset_code is None:
         return {}
-    return _ruelsets[rulset_code]
+    if rulset_code in _ruelsets:
+        return _ruelsets[rulset_code]
+    return {}
 
  
 def load_conf():
 
+    global _units, _ruelsets, _conf_loaded
+
     # load rulesets
     ruleset_parser = RulesetParser(_BASE_DIR / "ruleset.xml")
+    ruleset_parser.load_xml()
     _ruelsets = ruleset_parser.get_rulesets()
 
     # load units
     unit_parser = UnitParser(_BASE_DIR / "units.xml")
+    unit_parser.load_xml()
+    _units = unit_parser.get_units()
 
     _conf_loaded = True

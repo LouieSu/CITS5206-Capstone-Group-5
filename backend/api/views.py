@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from util.config_manager import get_ruleset, get_units
 
 def setup_signal(request):
     return JsonResponse({"message": "UWA Study Planner, Backend communication good!"})
@@ -15,11 +16,16 @@ def save_user_info(request):
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 
-def rules_set(request, ruleset):
-
-
-    return JsonResponse({"error": "Invalid request"})
+def rules_set(request, ruleset_code):
+    ruleset = get_ruleset(ruleset_code)
+    # releset is guaranteed to be non-None
+    return JsonResponse(ruleset)
 
 
 def units(request, unit_codes):
-    pass
+    if unit_codes is None:
+        return JsonResponse({})
+    codes = unit_codes.split(",")
+    units = get_units(codes)
+    # units is guaranteed to be non-None
+    return JsonResponse(units)
