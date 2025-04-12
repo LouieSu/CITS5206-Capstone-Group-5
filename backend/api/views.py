@@ -13,3 +13,13 @@ def save_user_info(request):
         return JsonResponse({"message": "User info saved successfully!"})
 
     return JsonResponse({"error": "Invalid request"}, status=400)
+
+
+def rules_set(request, ruleset):
+
+
+    return JsonResponse({"error": "Invalid request"})
+
+
+def units(request, unit_codes):
+    pass
