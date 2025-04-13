@@ -10,5 +10,5 @@ urlpatterns = [
     #restfule APIs providing ruleset and units.
     path('ruleset/<str:ruleset_code>', view=rules_set, name="rule_set"),
     path('units/<str:unit_codes>', view=units, name="units"),
-    path('plan/<str:ruleset_code>/<str:start>/<str:specialisation>/', view=default_plan, name="default_plan"),
+    path('plan/<str:ruleset_code>/<str:start>/<str:specialisation>', view=default_plan, name="default_plan"),
 ]
