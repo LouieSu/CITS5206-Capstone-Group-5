@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from util.config_manager import get_ruleset, get_units
+from util.config_manager import get_ruleset, get_units, get_default_plan
 
 def setup_signal(request):
     return JsonResponse({"message": "UWA Study Planner, Backend communication good!"})
@@ -29,3 +29,8 @@ def units(request, unit_codes):
     units = get_units(codes)
     # units is guaranteed to be non-None
     return JsonResponse(units)
+
+
+def default_plan(request, ruleset_code, start, specialisation):
+    return JsonResponse(get_default_plan(ruleset_code, start, specialisation))
+
