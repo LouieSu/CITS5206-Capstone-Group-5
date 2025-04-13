@@ -127,7 +127,8 @@ function CourseSchedule() {
           <ul className="alt-course-list">
             {courseRules.sections.conversion.units.map((u, i) => (
               <li key={i} className="alt-course">
-                <span className="course-dot other"></span>{u}
+                <span className="course-dot other"></span>
+                {u.code} {u.name}
               </li>
             ))}
           </ul>
@@ -136,7 +137,8 @@ function CourseSchedule() {
           <ul className="alt-course-list">
             {courseRules.sections.core.units.map((u, i) => (
               <li key={i} className="alt-course">
-                <span className="course-dot core"></span>{u}
+                <span className="course-dot core"></span>
+                {u.code} {u.name}
               </li>
             ))}
           </ul>
@@ -148,7 +150,8 @@ function CourseSchedule() {
                 {courseRules.specialisations &&
                   courseRules.specialisations[getSpecKey(specialisation)]?.units.map((u, i) => (
                     <li key={i} className="alt-course">
-                      <span className="course-dot specialisation"></span>{u}
+                      <span className="course-dot specialisation"></span>
+                      {u.code} {u.name}
                     </li>
                   ))
                 }
@@ -160,7 +163,8 @@ function CourseSchedule() {
           <ul className="alt-course-list">
             {courseRules.sections.optionA.units.map((u, i) => (
               <li key={i} className="alt-course">
-                <span className="course-dot elective"></span>{u}
+                <span className="course-dot elective"></span>
+                {u.code} {u.name}
               </li>
             ))}
           </ul>
