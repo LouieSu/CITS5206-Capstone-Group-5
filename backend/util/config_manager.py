@@ -56,20 +56,45 @@ def _load_default_plan():
     except json.JSONDecodeError as e:
         print(f"Error parsing JSON file: {e}")
 
+
+def _add_unit(section):
+    if 'units' in section:
+        units = section['units']
+        details = [_units[unit_code] for unit_code in units if unit_code in _units]
+        section['units'] = details
+        section['unit_codes'] = units
+
+
+def _enrich_ruleset_units():
+    for _, ruleset in _ruelsets.items():
+        if 'sections' in ruleset:
+            sections = ruleset['sections']
+            for _, section in sections.items():
+                _add_unit(section)
+        if 'specialisations' in ruleset:
+            specialisations = ruleset['specialisations']
+            for _, specialisation in specialisations.items():
+                _add_unit(specialisation)
+            
+
  
 def load_conf():
 
     global _units, _ruelsets, _conf_loaded
+
+    # load units
+    unit_parser = UnitParser(_BASE_DIR / "units.xml")
+    unit_parser.load_xml()
+    _units = unit_parser.get_units()
+
 
     # load rulesets
     ruleset_parser = RulesetParser(_BASE_DIR / "ruleset.xml")
     ruleset_parser.load_xml()
     _ruelsets = ruleset_parser.get_rulesets()
 
-    # load units
-    unit_parser = UnitParser(_BASE_DIR / "units.xml")
-    unit_parser.load_xml()
-    _units = unit_parser.get_units()
+    # for rulesets, replace unit codes with detailed unit info
+    _enrich_ruleset_units()
 
     # load default plans
     _load_default_plan()
