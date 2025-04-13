@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import './CourseSchedule.css'; // 引入样式
+import axios from 'axios';
+import './CourseSchedule.css';
 
 function CourseSchedule() {
   const location = useLocation();
@@ -12,17 +13,28 @@ function CourseSchedule() {
   const [course, setCourse] = useState(initialState.course || 'MIT');
   const [specialisation, setSpecialisation] = useState(initialState.specialisation || 'Artificial Intelligence');
 
+  const [courseRules, setCourseRules] = useState(null);
+
+  useEffect(() => {
+    if (year === '2025' && course === 'MIT') {
+      axios.get('http://localhost:8000/api/ruleset/MIT-2025')
+        .then(res => setCourseRules(res.data))
+        .catch(err => console.error(err));
+    } else {
+      setCourseRules(null); // 其它情况清空
+    }
+  }, [year, course]);
 
   useEffect(() => {
     if (year === '2025' && course === 'MIT') {
       if (!specialisation) {
-        setSpecialisation('Applied Computing'); // 默认选项
+        setSpecialisation('Applied Computing');
       }
     } else {
       setSpecialisation('');
     }
   }, [year, course, specialisation]);
-  
+
   const semesterOrder = semester === "S1"
     ? ["Y1S1", "Y1S2", "Y2S1", "Y2S2"]
     : ["Y1S2", "Y1S1", "Y2S2", "Y2S1"];
@@ -34,11 +46,8 @@ function CourseSchedule() {
     ["Course 13", "Course 14", "Course 15", "Course 16"],
   ];
 
-  const altCourses = [
-    "Course1", "Course2", "Course3",
-    "Course4", "Course5", "Course6",
-    "Course7", "Course8", "Course9"
-  ];
+  const getSpecKey = (spec) =>
+    spec.toLowerCase().split(' ').map(word => word[0]).join('');
 
   return (
     <div className="schedule-page">
@@ -99,11 +108,11 @@ function CourseSchedule() {
             </tr>
           </thead>
           <tbody>
-            {semesterOrder.map((sem, index) => (
+            {semesterOrder.map((sem, idx) => (
               <tr key={sem}>
                 <td><strong>{sem}</strong></td>
-                {courses[index].map((course, i) => (
-                  <td key={i}>{course}</td>
+                {courses[idx].map((c, i) => (
+                  <td key={i}>{c}</td>
                 ))}
               </tr>
             ))}
@@ -111,14 +120,52 @@ function CourseSchedule() {
         </table>
       </div>
 
-      <div className="alt-courses-container">
-        <h3>Optional Courses</h3>
-        <ul className="alt-course-list">
-          {altCourses.map((alt, idx) => (
-            <li key={idx} className="alt-course">{alt}</li>
-          ))}
-        </ul>
-      </div>
+      {/* 课程分类（仅 2025 MIT） */}
+      {courseRules && year === '2025' && course === 'MIT' && (
+        <div className="alt-courses-container">
+          <h3>Conversion Units</h3>
+          <ul className="alt-course-list">
+            {courseRules.sections.conversion.units.map((u, i) => (
+              <li key={i} className="alt-course">
+                <span className="course-dot other"></span>{u}
+              </li>
+            ))}
+          </ul>
+
+          <h3>Core Units</h3>
+          <ul className="alt-course-list">
+            {courseRules.sections.core.units.map((u, i) => (
+              <li key={i} className="alt-course">
+                <span className="course-dot core"></span>{u}
+              </li>
+            ))}
+          </ul>
+
+          {specialisation && (
+            <div>
+              <h3>{specialisation} Units</h3>
+              <ul className="alt-course-list">
+                {courseRules.specialisations &&
+                  courseRules.specialisations[getSpecKey(specialisation)]?.units.map((u, i) => (
+                    <li key={i} className="alt-course">
+                      <span className="course-dot specialisation"></span>{u}
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          )}
+
+          <h3>Option A Units</h3>
+          <ul className="alt-course-list">
+            {courseRules.sections.optionA.units.map((u, i) => (
+              <li key={i} className="alt-course">
+                <span className="course-dot elective"></span>{u}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
