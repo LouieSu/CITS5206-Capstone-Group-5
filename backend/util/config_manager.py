@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 from .config_parsers import RulesetParser, UnitParser
 from django.conf import settings
@@ -5,6 +6,7 @@ from django.conf import settings
 
 _units = {}
 _ruelsets = {}
+_default_plans = {}
 _conf_loaded = False
 
 _BASE_DIR = Path(settings.BASE_DIR) / "config"
@@ -29,6 +31,31 @@ def get_ruleset(rulset_code):
         return _ruelsets[rulset_code]
     return {}
 
+
+def get_default_plan(ruleset, start, specialisation=None):
+    global _default_plans, _conf_loaded
+    if not _conf_loaded:
+        load_conf()
+    if ruleset is None or start is None:
+        return {}
+    key = f"{ruleset}-{start}"
+    if specialisation is not None:
+        key = f"{key}-{specialisation}"
+    if key in _default_plans:
+        return _default_plans[key]
+    return {}
+
+
+def _load_default_plan():
+    global _default_plans
+    try:
+        with open(_BASE_DIR / "default_plans.json") as file:
+            _default_plans = json.load(file)
+    except FileNotFoundError:
+        print(f"Error: File not found at {_BASE_DIR / 'default_plans.json'}")
+    except json.JSONDecodeError as e:
+        print(f"Error parsing JSON file: {e}")
+
  
 def load_conf():
 
@@ -44,4 +71,8 @@ def load_conf():
     unit_parser.load_xml()
     _units = unit_parser.get_units()
 
+    # load default plans
+    _load_default_plan()
+
     _conf_loaded = True
+
