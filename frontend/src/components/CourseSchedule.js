@@ -11,7 +11,7 @@ function CourseSchedule() {
   const [year, setYear] = useState(initialState.year || '2025');
   const [semester, setSemester] = useState(initialState.semester || 'S1');
   const [course, setCourse] = useState(initialState.course || 'MIT');
-  const [specialisation, setSpecialisation] = useState(initialState.specialisation || 'Artificial Intelligence');
+  const [specialisation, setSpecialisation] = useState(initialState.specialisation || 'Software Systems');
 
   const [courseRules, setCourseRules] = useState(null);
 
@@ -25,15 +25,15 @@ function CourseSchedule() {
     }
   }, [year, course]);
 
-  useEffect(() => {
-    if (year === '2025' && course === 'MIT') {
-      if (!specialisation) {
-        setSpecialisation('Applied Computing');
-      }
-    } else {
-      setSpecialisation('');
-    }
-  }, [year, course, specialisation]);
+  // useEffect(() => {
+  //   if (year === '2025' && course === 'MIT') {
+  //     if (!specialisation) {
+  //       setSpecialisation('ss');
+  //     }
+  //   } else {
+  //     setSpecialisation('');
+  //   }
+  // }, [year, course, specialisation]);
 
   const semesterOrder = semester === "S1"
     ? ["Y1S1", "Y1S2", "Y2S1", "Y2S2"]
@@ -120,8 +120,42 @@ function CourseSchedule() {
         </table>
       </div>
 
-      {/* 课程分类（仅 2025 MIT） */}
-      {courseRules && year === '2025' && course === 'MIT' && (
+      <div className="alt-courses-container">
+        {courseRules && (
+          Object.keys(courseRules.sections).map((key, i) => (
+            <div key={i}>
+              <h3>{courseRules.sections[key].name}</h3>
+              <ul className="alt-course-list">
+                {courseRules.sections[key].units.map((u, j) => (
+                  <li key={j} className="alt-course">
+                    <span className="course-dot specialisation"></span>
+                    {u.code} {u.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        )}
+
+        {courseRules && specialisation && (
+          <div>
+              <h3>{courseRules.specialisations[getSpecKey(specialisation)]?.name}</h3>
+              <ul className="alt-course-list">
+                {courseRules.specialisations &&
+                  courseRules.specialisations[getSpecKey(specialisation)]?.units.map((u, i) => (
+                    <li key={i} className="alt-course">
+                      <span className="course-dot specialisation"></span>
+                      {u.code} {u.name}
+                    </li>
+                  ))
+                }
+              </ul>
+          </div>
+        )}
+      </div>
+
+      
+      {/* courseRules && year === '2025' && course === 'MIT' && (
         <div className="alt-courses-container">
           <h3>Conversion Units</h3>
           <ul className="alt-course-list">
@@ -169,7 +203,7 @@ function CourseSchedule() {
             ))}
           </ul>
         </div>
-      )}
+      )*/ }
     </div>
   );
 }
