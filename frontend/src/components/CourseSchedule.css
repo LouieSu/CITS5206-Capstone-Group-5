@@ -3,9 +3,9 @@
   display: flex;
   justify-content: space-between;
   padding: 40px;
-  gap: 40px;
+  gap: 32px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
+  background-color: #f0f2f5;
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -14,26 +14,34 @@
 .schedule-container {
   flex: 2;
   background: #ffffff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 80px);
+  overflow: hidden;
+}
+
+/* 课表标题 */
+.schedule-container h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #34495e;
 }
 
 /* 用户信息部分 */
+.schedule-info {
+  margin-bottom: 20px;
+}
+
 .schedule-info p {
   margin: 4px 0;
   font-size: 14px;
   color: #555;
 }
 
-/* 课表标题 */
-.schedule-container h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #2c3e50;
-}
-
-/* 表格样式 */
+/* 课表表格部分区域滚动 */
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
@@ -61,46 +69,35 @@
   color: #34495e;
 }
 
+/* 课表表格包裹容器，添加内部滚动 */
+.schedule-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding-right: 4px;
+}
+
 /* 右侧备选课程容器 */
 .alt-courses-container {
   flex: 1;
   background: #ffffff;
-  padding: 24px 28px;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-  height: fit-content;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto; /* 改为允许垂直滚动 */
 }
 
+/* 右侧标题 */
 .alt-courses-container h3 {
   font-size: 20px;
-  margin-bottom: 16px;
-  color: #2c3e50;
+  margin-bottom: 14px;
+  color: #34495e;
 }
 
-/* 备选课程列表 */
-.alt-course-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.alt-course {
-  background-color: #f0f4ff;
-  color: #1a237e;
-  padding: 10px 14px;
-  margin: 10px 0;
-  border-radius: 8px;
-  font-size: 14px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.04);
-  transition: background-color 0.2s ease;
-}
-
-.alt-course:hover {
-  background-color: #dbe4ff;
-  cursor: pointer;
-}
-
-/* 备选课程列表 */
+/* 备选课程列表，添加滚动 */
 .alt-course-list {
   list-style: none;
   padding: 0;
@@ -108,6 +105,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow-y: auto;  /* 保证垂直滚动 */
+  flex: 1;  /* 使其充满剩余空间 */
+  height: 100%;  /* 填充父容器高度 */
+  padding-right: 4px;
 }
 
 /* 单个课程项 */
@@ -115,17 +116,19 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 4px 0; 
-  background-color: #f9fbfd;
+  padding: 10px 14px;
+  margin: 0;
+  background-color: #f5f8ff;
   font-size: 14px;
   color: #2c3e50;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.04);
   transition: background-color 0.2s ease;
   cursor: pointer;
 }
 
 .alt-course:hover {
-  background-color: #eef3fa;
+  background-color: #e3ecf9;
 }
 
 /* 彩色圆点 */
@@ -151,4 +154,21 @@
 
 .other {
   background-color: #ab47bc;
+}
+
+/* 滚动条样式优化（可选） */
+.alt-course-list::-webkit-scrollbar,
+.schedule-table-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.alt-course-list::-webkit-scrollbar-thumb,
+.schedule-table-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+
+.alt-course-list::-webkit-scrollbar-track,
+.schedule-table-wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
 }
