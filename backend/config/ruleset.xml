@@ -93,7 +93,7 @@
                     <condition>
                         <type>LevelPoint</type>
                         <level>5</level>
-                        <points></points>
+                        <points>24</points>
                     </condition>
                 </conditions>
             </section>
@@ -115,7 +115,7 @@
                     <condition>
                         <type>LevelPoint</type>
                         <level>5</level>
-                        <points></points>
+                        <points>12</points>
                     </condition>
                 </conditions>
             </specialisation>

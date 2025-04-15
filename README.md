@@ -115,13 +115,13 @@ The Django dev server will run on port `:8000` by default. Open http://localhost
 
 #### To start frontend server
 
-In dev environment, frontend should normally run through a separate server provided by React:
+In dev environment, frontend should normally run through a separate server provided by Webpack:
 
 ```bash
 npm start
 ```
 
-The React dev server will run on port `:3000` by default. Open http://localhost:3000/ to see if your environment is working.
+The Webpack Dev Server will run on port `:3000` by default. Open http://localhost:3000/ to see if your environment is working.
 
 The reson to use a separate server is to leverage the benefits of **Hot Module Replacement (HMR)**. 
 
@@ -131,7 +131,7 @@ The dev environment has been configured to support cross-origin requests using r
 
 During development, if you need to call backend API, then backend server should be started. Otherwise, it is **possible** to run only frontend server if you don't need to interact with backend.
 
-To test if your environment has successfully configured to support frontend/backend communication, start backend server first, then start fontend server, go to http://localhost:3000/, open the console of your browser, refresh the page, if you see `{"message": "UWA Study Planner, Backend communication good!"}`, then it's all good.
+To test if your environment has successfully configured to support frontend/backend communication, start Django dev server first, then start Webpack Dev Server, go to http://localhost:3000/, open the console of your browser, refresh the page, if you see `{"message": "UWA Study Planner, Backend communication good!"}`, then it's all good.
 
 ### Git related
 

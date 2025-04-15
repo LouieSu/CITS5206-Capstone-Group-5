@@ -1,67 +1,174 @@
-/* CourseSchedule.css */
+/* 整体页面布局 */
+.schedule-page {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  gap: 32px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
 
-/* 整个页面的容器 */
+/* 左侧课表容器 */
 .schedule-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #ffffff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-  
-  /* 标题样式 */
-  .schedule-container h2 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 16px;
-  }
-  
-  /* 信息块 */
-  .schedule-info {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-  
-  .schedule-info p {
-    font-size: 16px;
-    margin: 5px 0;
-  }
-  
-  /* 课程表格 */
-  .schedule-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
-  }
-  
-  /* 表头样式 */
-  .schedule-table thead {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .schedule-table th {
-    padding: 12px;
-    border: 1px solid #ccc;
-  }
-  
-  /* 表格内容样式 */
-  .schedule-table td {
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-  
-  /* 斑马纹效果 */
-  .schedule-table tbody tr:nth-child(odd) {
-    background-color: #f8f9fa;
-  }
-  
-  /* 让学期名称加粗 */
-  .schedule-table td:first-child {
-    font-weight: bold;
-  }
-  
+  flex: 2;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 80px);
+  overflow: hidden;
+}
+
+/* 课表标题 */
+.schedule-container h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #34495e;
+}
+
+/* 用户信息部分 */
+.schedule-info {
+  margin-bottom: 20px;
+}
+
+.schedule-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* 课表表格部分区域滚动 */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid #e0e0e0;
+  padding: 12px 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.schedule-table thead th {
+  background-color: #e3f2fd;
+  color: #1e88e5;
+}
+
+.schedule-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.schedule-table td strong {
+  color: #34495e;
+}
+
+/* 课表表格包裹容器，添加内部滚动 */
+.schedule-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding-right: 4px;
+}
+
+/* 右侧备选课程容器 */
+.alt-courses-container {
+  flex: 1;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto; /* 改为允许垂直滚动 */
+}
+
+/* 右侧标题 */
+.alt-courses-container h3 {
+  font-size: 20px;
+  margin-bottom: 14px;
+  color: #34495e;
+}
+
+/* 备选课程列表，添加滚动 */
+.alt-course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;  /* 保证垂直滚动 */
+  flex: 1;  /* 使其充满剩余空间 */
+  height: 100%;  /* 填充父容器高度 */
+  padding-right: 4px;
+}
+
+/* 单个课程项 */
+.alt-course {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  margin: 0;
+  background-color: #f5f8ff;
+  font-size: 14px;
+  color: #2c3e50;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.04);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.alt-course:hover {
+  background-color: #e3ecf9;
+}
+
+/* 彩色圆点 */
+.course-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* 分类颜色 */
+.core {
+  background-color: #42a5f5;
+}
+
+.elective {
+  background-color: #66bb6a;
+}
+
+.specialisation {
+  background-color: #ffa726;
+}
+
+.other {
+  background-color: #ab47bc;
+}
+
+/* 滚动条样式优化（可选） */
+.alt-course-list::-webkit-scrollbar,
+.schedule-table-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.alt-course-list::-webkit-scrollbar-thumb,
+.schedule-table-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+
+.alt-course-list::-webkit-scrollbar-track,
+.schedule-table-wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
+}

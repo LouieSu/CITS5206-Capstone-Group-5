@@ -1,0 +1,54 @@
+{
+    "MIT-2025-25S1-ai": {
+        "programme_code": "MIT",
+        "ruleset_code": "MIT-2025",
+        "start": "25S1",
+        "validated": false,
+        "specialisation": "ai",
+        "plan": [
+            {"semester": "25S1", "units": ["CITS1003", "CITS1401", "CITS1402", "PHIL4100"]},
+            {"semester": "25S2", "units": ["CITS2002", "CITS4012"]},
+            {"semester": "26S1", "units": ["CITS4401", "CITS5505", "CITS5508", "CITS4404"]},
+            {"semester": "26S2", "units": ["CITS5206", "CITS5017"]}
+        ]
+    },
+    "MIT-2025-25S2-ai": {
+        "programme_code": "MIT",
+        "ruleset_code": "MIT-2025",
+        "start": "25S2",
+        "validated": false,
+        "specialisation": "ai",
+        "plan": [
+            {"semester": "25S2", "units": ["CITS1003", "CITS1401", "CITS1402", "PHIL4100"]},
+            {"semester": "26S1", "units": ["CITS2005", "CITS5505", "CITS4401", "CITS5508"]},
+            {"semester": "26S2", "units": ["CITS4012", "CITS5017"]},
+            {"semester": "27S1", "units": ["CITS5206", "CITS4404"]}
+        ]
+    },
+    "MIT-2025-25S1-ss": {
+        "programme_code": "MIT",
+        "ruleset_code": "MIT-2025",
+        "start": "25S1",
+        "validated": false,
+        "specialisation": "ss",
+        "plan": [
+            {"semester": "25S1", "units": ["CITS1003", "CITS1401", "CITS1402", "PHIL4100"]},
+            {"semester": "25S2", "units": ["CITS2002"]},
+            {"semester": "26S1", "units": ["CITS4401", "CITS5505", "CITS5506"]},
+            {"semester": "26S2", "units": ["CITS5206", "CITS5507", "CITS5501", "CITS5503"]}
+        ]
+    },
+    "MIT-2025-25S2-ss": {
+        "programme_code": "MIT",
+        "ruleset_code": "MIT-2025",
+        "start": "25S2",
+        "validated": false,
+        "specialisation": "ss",
+        "plan": [
+            {"semester": "25S2", "units": ["CITS1003", "CITS1401", "CITS1402", "PHIL4100"]},
+            {"semester": "26S1", "units": ["CITS2005", "CITS5505", "CITS4401", "CITS5506"]},
+            {"semester": "26S2", "units": ["CITS5501", "CITS5503", "CITS5507"]},
+            {"semester": "27S1", "units": ["CITS5206"]}
+        ]
+    }
+}

@@ -86,8 +86,8 @@ function UserForm() {
             <h2>Select Your Course</h2>
             <select value={course} onChange={(e) => setCourse(e.target.value)}>
               <option value="">Select Course</option>
-              <option value="mit">Master of Information Technology</option>
-              <option value="mds">Master of Data Science</option>
+              <option value="MIT">Master of Information Technology</option>
+              <option value="MDS">Master of Data Science</option>
             </select>
             <div className="button-group">
               <button className="prev-btn" onClick={prevStep}>Previous</button>
@@ -98,7 +98,7 @@ function UserForm() {
           </div>
         )}
 
-        {step === 5 && year === "2025" && course === "mit" && (
+        {step === 5 && year === "2025" && course === "MIT" && (
           <div className="step-container">
             <h2>Select Your Specialisation</h2>
             <select value={specialisation} onChange={(e) => setSpecialisation(e.target.value)}>
@@ -120,7 +120,7 @@ function UserForm() {
           </div>
         )}
 
-        {(step === 5 && !(year === "2025" && course === "mit")) && (
+        {(step === 5 && !(year === "2025" && course === "MIT")) && (
           <div className="step-container">
             <h2>Confirm Your Details</h2>
             <p><strong>Name:</strong> {name}</p>
