@@ -77,7 +77,7 @@
             {"semester": "27S1", "units": ["CITS5206"]}
         ]
     },
-    "MDS-2025-25S1": {
+    "MDS-2025-25S1-none": {
         "programme_code": "MDS",
         "ruleset_code": "MDS-2025",
         "start": "25S1",
@@ -90,7 +90,7 @@
             {"semester": "26S2", "units": ["CITS5553", "STAT4066", "CITS4012"]}
         ]
     },
-    "MDS-2025-25S2": {
+    "MDS-2025-25S2-none": {
         "programme_code": "MDS",
         "ruleset_code": "MDS-2025",
         "start": "25S2",
@@ -103,7 +103,7 @@
             {"semester": "27S1", "units": ["STAT4064", "CITS5508"]}
         ]
     },
-    "MDS-2024-24S1": {
+    "MDS-2024-24S1-none": {
         "programme_code": "MDS",
         "ruleset_code": "MDS-2024",
         "start": "24S1",
@@ -116,7 +116,7 @@
             {"semester": "25S2", "units": ["CITS5553", "STAT4066", "CITS4012"]}
         ]
     },
-    "MDS-2024-24S2": {
+    "MDS-2024-24S2-none": {
         "programme_code": "MDS",
         "ruleset_code": "MDS-2024",
         "start": "24S2",
@@ -129,7 +129,7 @@
             {"semester": "26S1", "units": ["STAT4064", "CITS5508"]}
         ]
     },
-    "MIT-2024-24S1": {
+    "MIT-2024-24S1-none": {
         "programme_code": "MIT",
         "ruleset_code": "MIT-2024",
         "start": "24S1",
@@ -142,7 +142,7 @@
             {"semester": "25S2", "units": ["CITS5501", "CITS5503", "CITS5206"]}
         ]
     },
-    "MIT-2024-24S2": {
+    "MIT-2024-24S2-none": {
         "programme_code": "MIT",
         "ruleset_code": "MIT-2024",
         "start": "24S2",
