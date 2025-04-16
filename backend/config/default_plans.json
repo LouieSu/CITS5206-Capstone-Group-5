@@ -82,6 +82,7 @@
         "ruleset_code": "MDS-2025",
         "start": "25S1",
         "validated": false,
+        "specialisation": "none",
         "plan": [
             {"semester": "25S1", "units": ["STAT2401", "CITS1401", "CITS1402", "CITS4407"]},
             {"semester": "25S2", "units": ["STAT2402", "CITS4009"]},
@@ -94,6 +95,7 @@
         "ruleset_code": "MDS-2025",
         "start": "25S2",
         "validated": false,
+        "specialisation": "none",
         "plan": [
             {"semester": "25S2", "units": ["STAT2402", "CITS1401", "CITS1402", "CITS4009"]},
             {"semester": "26S1", "units": ["STAT2401", "CITS4407", "CITS5504"]},
@@ -106,6 +108,7 @@
         "ruleset_code": "MDS-2024",
         "start": "24S1",
         "validated": false,
+        "specialisation": "none",
         "plan": [
             {"semester": "24S1", "units": ["STAT2401", "CITS1401", "CITS1402", "CITS4407"]},
             {"semester": "24S2", "units": ["STAT2402", "CITS4009"]},
@@ -118,6 +121,7 @@
         "ruleset_code": "MDS-2024",
         "start": "24S2",
         "validated": false,
+        "specialisation": "none",
         "plan": [
             {"semester": "24S2", "units": ["STAT2402", "CITS1401", "CITS1402", "CITS4009"]},
             {"semester": "25S1", "units": ["STAT2401", "CITS4407", "CITS5504"]},
@@ -130,6 +134,7 @@
         "ruleset_code": "MIT-2024",
         "start": "24S1",
         "validated": false,
+        "specialisation": "none",
         "plan": [
             {"semester": "24S1", "units": ["CITS1401", "CITS1003", "CITS1402"]},
             {"semester": "24S2", "units": ["GENG5505", "CITS5506", "CITS2002"]},
@@ -142,6 +147,7 @@
         "ruleset_code": "MIT-2024",
         "start": "24S2",
         "validated": false,
+        "specialisation": "none",
         "plan": [
             {"semester": "24S2", "units": ["CITS1401", "CITS1003", "CITS1402"]},
             {"semester": "25S1", "units": ["CITS4401", "CITS5505", "CITS2005"]},
