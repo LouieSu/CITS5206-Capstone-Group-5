@@ -64,6 +64,55 @@
                 </condition>
             </conditions>
         </conditionGroup>
+
+        <conditionGroup>
+            <code>STAT4064Prereq</code>
+            <type>and</type>
+            <conditions>
+                <condition ref="ProgMDS"/>
+                <conditionGroup>
+                    <type>or</type>
+                    <conditions>
+                        <conditionGroup>
+                            <type>and</type>
+                            <conditions>
+                                <condition>
+                                    <type>Unit</type>
+                                    <unit>STAT2401</unit>
+                                </condition>
+                                <condition>
+                                    <type>Unit</type>
+                                    <unit>STAT2402</unit>
+                                </condition>
+                            </conditions>
+                        </conditionGroup>
+                        <condition>
+                            <type>Unit</type>
+                            <unit>STAT2062</unit>
+                        </condition>
+                    </conditions>
+                </conditionGroup>
+            </conditions>
+        </conditionGroup>
+
+        <conditionGroup>
+            <code>STAT4066Prereq</code>
+            <type>and</type>
+            <conditions>
+                <condition ref="ProgMDS"/>
+                <condition>
+                    <type>Unit</type>
+                    <unit>STAT2401</unit>
+                </condition>
+                <condition>
+                    <type>Unit</type>
+                    <unit>STAT2402</unit>
+                </condition>
+            </conditions>
+        </conditionGroup>
+
+
+
         
 
     </conditionGroups>
@@ -75,7 +124,7 @@
         <code>CITS1003</code>
         <point>6</point>
         <name>Introduction to Cybersecurity</name>
-        <availability>25S1, 25S2</availability>
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
 
         <!-- No prerequisite-->
 
@@ -87,7 +136,7 @@
         <code>CITS1401</code>
         <point>6</point>
         <name>Computational Thinking with Python</name>
-        <availability>25S1, 25S2</availability>
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
         
         <prerequisites>
             <!-- Everything inside <prerequisites> should be satisfied, where the relationship is 'and' -->
@@ -104,7 +153,7 @@
         <code>CITS1402</code>
         <point>6</point>
         <name>Relational Database Management Systems</name>
-        <availability>25S1, 25S2</availability>
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
 
         <prerequisites>
             <!-- Refer to a pre-defined ConditionGroup -->
@@ -115,10 +164,34 @@
     </unit>
 
     <unit>
+        <code>STAT2401</code>
+        <point>6</point>
+        <name>Analysis of Experiments</name>
+        <availability>24S1</availability>
+
+        <prerequisites>
+            <!-- Refer to a pre-defined ConditionGroup -->
+            <conditionGroup ref="ProgMDS"/>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>STAT2402</code>
+        <point>6</point>
+        <name>Analysis of Observations</name>
+        <availability>24S1</availability>
+
+        <prerequisites>
+            <!-- Refer to a pre-defined ConditionGroup -->
+            <conditionGroup ref="ProgMDS"/>
+        </prerequisites>
+    </unit>
+
+    <unit>
         <code>CITS2002</code>
         <point>6</point>
         <name>Systems Programming</name>
-        <availability>25S2</availability>
+        <availability>24S2, 25S2</availability>
 
         <prerequisites>
             <conditionGroup ref="PythonCompleted"/>
@@ -131,7 +204,7 @@
         <code>CITS2005</code>
         <point>6</point>
         <name>Object Oriented Programming</name>
-        <availability>25S1</availability>
+        <availability>24S1, 25S1</availability>
 
         <prerequisites>
             <conditionGroup ref="PythonCompleted"/>
@@ -145,7 +218,7 @@
         <code>CITS4401</code>
         <point>6</point>
         <name>Software Requirements and Design</name>
-        <availability>25S1</availability>
+        <availability>24S1, 25S1</availability>
 
         <prerequisites>
             <conditionGroup ref="PythonCompleted"/>
@@ -158,7 +231,7 @@
         <point>6</point>
         <name>Information Technology Capstone Project</name>
 
-        <availability>25S1, 25S2</availability>
+        <availability>24S2, 25S1, 25S2</availability>
         
         <prerequisites>
             <!-- ConditionGroup not needed, as conditions here have relationship "and" -->
@@ -180,11 +253,68 @@
     </unit>
 
     <unit>
+        <code>CITS5553</code>
+        <point>6</point>
+        <name>Data Science Capstone Project</name>
+
+        <availability>24S2, 25S2</availability>
+        
+        <prerequisites>
+            <condition>
+                <type>Programme</type>
+                <programme>MDS</programme>
+            </condition>
+
+            <condition>
+                <type>LevelPoint</type>
+                <level>4,5</level>
+                <points>24</points>
+            </condition>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>STAT4064</code>
+        <point>6</point>
+        <name>Applied Predictive Modelling</name>
+        <availability>24S1, 25S1</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="STAT4064Prereq"/>
+        </prerequisites>        
+    </unit>
+
+    <unit>
+        <code>STAT4066</code>
+        <point>6</point>
+        <name>Bayesian Computing and Statistics</name>
+        <availability>25S2</availability>
+
+        <prerequisites>
+            <conditionGroup ref="STAT4066Prereq"/>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>BUSN5003</code>
+        <point>6</point>
+        <name>Data Storytelling</name>
+
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
+        
+        <prerequisites>
+            <condition ref="ProgMDS"/>
+        </prerequisites>
+    </unit>
+
+
+    
+    <unit>
         <code>CITS5505</code>
         <point>6</point>
         <name>Agile Web Development</name>
 
-        <availability>25S1</availability>
+        <availability>24S1, 25S1</availability>
         
         <prerequisites>
             <conditionGroup ref="PythonCompletedMITMDS"/>
@@ -203,8 +333,6 @@
         <prerequisites>
             <condition ref="ProgMIT"/>
         </prerequisites>
-
-
     </unit>
 
     <unit>
@@ -212,7 +340,7 @@
         <point>6</point>
         <name>Mobile Robots</name>
 
-        <availability>25S1</availability>
+        <availability>24S1, 25S1</availability>
         
         <prerequisites>
             <conditionGroup ref="PythonCompleted"/>
@@ -227,7 +355,7 @@
         <point>6</point>
         <name>Computational Data Analysis</name>
 
-        <availability>25S2</availability>
+        <availability>24S2, 25S2</availability>
         
         <prerequisites>
             <conditionGroup ref="ProgMITMDS"/>
@@ -241,7 +369,7 @@
         <point>6</point>
         <name>Natural Language Processing</name>
 
-        <availability>25S2</availability>
+        <availability>24S1, 25S2</availability>
         
         <prerequisites>
 
@@ -257,7 +385,7 @@
         <point>6</point>
         <name>Computer Vision</name>
 
-        <availability>25S1</availability>
+        <availability>24S1, 25S1</availability>
         
         <prerequisites>
 
@@ -273,7 +401,7 @@
         <point>6</point>
         <name>Computational Modelling</name>
 
-        <availability>25S2</availability>
+        <availability>24S2, 25S2</availability>
         
         <prerequisites>
             <conditionGroup ref="PythonCompletedMITMDS"/>
@@ -288,7 +416,7 @@
         <point>6</point>
         <name>Artificial Intelligence and Adaptive Systems</name>
 
-        <availability>25S1</availability>
+        <availability>24S1, 25S1</availability>
         
         <prerequisites>
             <!-- Successful completion of
@@ -345,7 +473,7 @@
         <point>6</point>
         <name>Open Source Tools and Scripting</name>
 
-        <availability>25S1</availability>
+        <availability>24S1, 25S1</availability>
         
         <prerequisites>
             <conditionGroup ref="ProgMITMDS"/>
@@ -357,7 +485,7 @@
         <point>6</point>
         <name>Mobile and Wireless Computing</name>
 
-        <availability>NA</availability>
+        <availability>24S1, NA</availability>
         
         <prerequisites>
             <conditionGroup ref="ProgMITMDS"/>
@@ -370,7 +498,7 @@
         <point>6</point>
         <name>Data and Information Technologies Research Project Part 1</name>
 
-        <availability>25S1, 25S2</availability>
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
         
         <prerequisites>
             <conditionGroup ref="ProgMITMDS"/>
@@ -388,7 +516,7 @@
         <point>6</point>
         <name>Data and Information Technologies Research Project Part 2</name>
 
-        <availability>25S1, 25S2</availability>
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
         
         <prerequisites>
             <conditionGroup ref="ProgMITMDS"/>
@@ -406,7 +534,7 @@
         <point>6</point>
         <name>Deep Learning</name>
 
-        <availability>25S2</availability>
+        <availability>24S2, 25S2</availability>
         
         <prerequisites>
             <condition>
@@ -422,7 +550,7 @@
         <point>6</point>
         <name>Software Testing and Quality Assurance</name>
 
-        <availability>25S2</availability>
+        <availability>24S2, 25S2</availability>
         
         <prerequisites>
             <condition ref="ProgMIT"/>
@@ -449,7 +577,7 @@
         <point>6</point>
         <name>Cloud Computing</name>
 
-        <availability>25S2</availability>
+        <availability>24S2, 25S2</availability>
         
         <prerequisites>
             <conditionGroup ref="ProgMITMDS"/>
@@ -512,7 +640,7 @@
         <point>6</point>
         <name>Data Warehousing</name>
 
-        <availability>25S1</availability>
+        <availability>24S1, 25S1</availability>
         
         <prerequisites>
             <conditionGroup ref="ProgMITMDS"/>
@@ -533,10 +661,22 @@
         <point>6</point>
         <name>The Internet of Things</name>
 
-        <availability>25S1</availability>
+        <availability>24S1, 24S2, 25S1</availability>
         
         <prerequisites>
             <conditionGroup ref="PythonCompletedMITMDS"/>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>GENG5505</code>
+        <point>6</point>
+        <name>Project Management and Engineering Practice</name>
+
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
+        
+        <prerequisites>
+            <conditionGroup ref="ProgMITMDS"/>
         </prerequisites>
     </unit>
 
@@ -545,7 +685,7 @@
         <point>6</point>
         <name>High Performance Computing</name>
 
-        <availability>25S2</availability>
+        <availability>24S2, 25S2</availability>
         
         <prerequisites>
             <conditionGroup ref="ProgMITMDS"/>
@@ -557,13 +697,25 @@
         </prerequisites>
     </unit>
 
+    <unit>
+        <code>ECON5570</code>
+        <point>6</point>
+        <name>Health Analytics</name>
+
+        <availability>24S2, 25S2</availability>
+        
+        <prerequisites>
+            <condition ref="ProgMDS"/>
+        </prerequisites>
+    </unit>
+
 
     <unit>
         <code>CITS5508</code>
         <point>6</point>
         <name>Machine Learning</name>
 
-        <availability>25S1</availability>
+        <availability>24S1, 25S1</availability>
         
         <prerequisites>
             <conditionGroup ref="PythonCompletedMITMDS"/>
@@ -576,7 +728,7 @@
         <point>6</point>
         <name>Geographic Information Systems Applications</name>
 
-        <availability>25S1, 25S2</availability>
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
 
         <!-- No prerequisite -->
 
@@ -588,7 +740,7 @@
         <point>6</point>
         <name>Risk, Reliability and Safety</name>
 
-        <availability>25S1, 25S2</availability>
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
         
         <prerequisites>
             <condition ref="ProgMIT"/>
@@ -600,7 +752,7 @@
         <point>6</point>
         <name>Supply Chain Analytics</name>
 
-        <availability>25S1, 25S2</availability>
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
         
         <!-- No prerequisite -->
     </unit>
@@ -610,7 +762,7 @@
         <point>6</point>
         <name>Business Intelligence</name>
 
-        <availability>25S1, 25S2</availability>
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
         <prerequisites>
             <conditionGroup>
                 <type>or</type>
@@ -643,10 +795,123 @@
         <point>6</point>
         <name>Data Analysis and Decision Making</name>
 
-        <availability>25S1, 25S2</availability>
-        
-        <!-- No prerequisite -->
+        <availability>24S1, 24S2, 25S1, 25S2</availability>        
     </unit>
+
+    <unit>
+        <code>PHYS4021</code>
+        <point>6</point>
+        <name>Quantum Information and Computing</name>
+        
+        <availability>24S1, 25S1</availability>
+        <prerequisites>
+            <condition ref="ProgMDS"/>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>PUBH4401</code>
+        <point>6</point>
+        <name>Biostatistics I</name>
+        
+        <availability>24S1, 24S2, 25S1, 25S2</availability>
+        <prerequisites>
+            <condition ref="ProgMDS"/>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>PUBH5769</code>
+        <point>6</point>
+        <name>Biostatistics II</name>
+        
+        <availability>24S2, 25S2</availability>
+        <prerequisites>
+            <condition>
+                <type>Unit</type>
+                <unit>PUBH4401</unit>
+            </condition>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>PUBH5785</code>
+        <point>6</point>
+        <name>Analysis of Linked Health Data</name>
+        
+        <availability>NS</availability>
+    </unit>
+
+    
+    <unit>
+        <code>PUBH5802</code>
+        <point>6</point>
+        <name>Advanced Analysis of Linked Health Data</name>
+        
+        <availability>NS</availability>
+        <prerequisites>
+            <condition>
+                <type>Unit</type>
+                <unit>PUBH5785</unit>
+            </condition>
+        </prerequisites>
+    </unit>
+
+    <unit>
+        <code>STAT4063</code>
+        <point>6</point>
+        <name>Computationally Intensive Methods in Statistics</name>
+        
+        <availability>24S2, 25S2</availability>
+        <prerequisites>
+            <condition>
+                <type>Unit</type>
+                <unit>STAT4064</unit>
+            </condition>
+        </prerequisites>
+    </unit>
+
+
+    <unit>
+        <code>STAT4065</code>
+        <point>6</point>
+        <name>Multilevel and Mixed-Effects Modelling</name>
+
+        <availability>24S1, 25S1</availability>
+
+        <prerequisites>
+            <condition>
+                <type>Unit</type>
+                <unit>STAT2401</unit>
+            </condition>
+            <condition>
+                <type>Unit</type>
+                <unit>STAT2402</unit>
+            </condition>
+        </prerequisites>
+    </unit>
+
+
+    <unit>
+        <code>STAT5061</code>
+        <point>6</point>
+        <name>Statistical Data Science</name>
+
+        <availability>24S2, 25S2</availability>
+
+        <prerequisites>
+            <condition ref="ProgMDS">
+                <type>Unit</type>
+                <unit>STAT2401</unit>
+            </condition>
+            <condition>
+                <type>Unit</type>
+                <unit>STAT2402</unit>
+            </condition>
+        </prerequisites>
+    </unit>
+
+
 
     <unit>
         <code>SVLG5001</code>
