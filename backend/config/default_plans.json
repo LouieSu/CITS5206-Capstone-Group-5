@@ -50,5 +50,103 @@
             {"semester": "26S2", "units": ["CITS5501", "CITS5503", "CITS5507"]},
             {"semester": "27S1", "units": ["CITS5206"]}
         ]
+    },
+    "MIT-2025-25S1-ac": {
+        "programme_code": "MIT",
+        "ruleset_code": "MIT-2025",
+        "start": "25S1",
+        "validated": false,
+        "specialisation": "ac",
+        "plan": [
+            {"semester": "25S1", "units": ["CITS1003", "CITS1401", "CITS1402", "PHIL4100"]},
+            {"semester": "25S2", "units": ["CITS2002", "CITS4012"]},
+            {"semester": "26S1", "units": ["CITS4401", "CITS5505", "CITS5506"]},
+            {"semester": "26S2", "units": ["CITS5206", "CITS5503"]}
+        ]
+    },
+    "MIT-2025-25S2-ac": {
+        "programme_code": "MIT",
+        "ruleset_code": "MIT-2025",
+        "start": "25S2",
+        "validated": false,
+        "specialisation": "ac",
+        "plan": [
+            {"semester": "25S2", "units": ["CITS1003", "CITS1401", "CITS1402", "PHIL4100"]},
+            {"semester": "26S1", "units": ["CITS2005", "CITS4401", "CITS5505", "CITS5506"]},
+            {"semester": "26S2", "units": ["CITS5503", "CITS4012"]},
+            {"semester": "27S1", "units": ["CITS5206"]}
+        ]
+    },
+    "MDS-2025-25S1": {
+        "programme_code": "MDS",
+        "ruleset_code": "MDS-2025",
+        "start": "25S1",
+        "validated": false,
+        "plan": [
+            {"semester": "25S1", "units": ["STAT2401", "CITS1401", "CITS1402", "CITS4407"]},
+            {"semester": "25S2", "units": ["STAT2402", "CITS4009"]},
+            {"semester": "26S1", "units": ["CITS5504", "CITS5508", "STAT4064"]},
+            {"semester": "26S2", "units": ["CITS5553", "STAT4066", "CITS4012"]}
+        ]
+    },
+    "MDS-2025-25S2": {
+        "programme_code": "MDS",
+        "ruleset_code": "MDS-2025",
+        "start": "25S2",
+        "validated": false,
+        "plan": [
+            {"semester": "25S2", "units": ["STAT2402", "CITS1401", "CITS1402", "CITS4009"]},
+            {"semester": "26S1", "units": ["STAT2401", "CITS4407", "CITS5504"]},
+            {"semester": "26S2", "units": ["CITS5553", "STAT4066", "CITS4012"]},
+            {"semester": "27S1", "units": ["STAT4064", "CITS5508"]}
+        ]
+    },
+    "MDS-2024-24S1": {
+        "programme_code": "MDS",
+        "ruleset_code": "MDS-2024",
+        "start": "24S1",
+        "validated": false,
+        "plan": [
+            {"semester": "24S1", "units": ["STAT2401", "CITS1401", "CITS1402", "CITS4407"]},
+            {"semester": "24S2", "units": ["STAT2402", "CITS4009"]},
+            {"semester": "25S1", "units": ["CITS5504", "CITS5508", "STAT4064"]},
+            {"semester": "25S2", "units": ["CITS5553", "STAT4066", "CITS4012"]}
+        ]
+    },
+    "MDS-2024-24S2": {
+        "programme_code": "MDS",
+        "ruleset_code": "MDS-2024",
+        "start": "24S2",
+        "validated": false,
+        "plan": [
+            {"semester": "24S2", "units": ["STAT2402", "CITS1401", "CITS1402", "CITS4009"]},
+            {"semester": "25S1", "units": ["STAT2401", "CITS4407", "CITS5504"]},
+            {"semester": "25S2", "units": ["CITS5553", "STAT4066", "CITS4012"]},
+            {"semester": "26S1", "units": ["STAT4064", "CITS5508"]}
+        ]
+    },
+    "MIT-2024-24S1": {
+        "programme_code": "MIT",
+        "ruleset_code": "MIT-2024",
+        "start": "24S1",
+        "validated": false,
+        "plan": [
+            {"semester": "24S1", "units": ["CITS1401", "CITS1003", "CITS1402"]},
+            {"semester": "24S2", "units": ["GENG5505", "CITS5506", "CITS2002"]},
+            {"semester": "25S1", "units": ["CITS4401", "CITS5505", "CITS4407"]},
+            {"semester": "25S2", "units": ["CITS5501", "CITS5503", "CITS5206"]}
+        ]
+    },
+    "MIT-2024-24S2": {
+        "programme_code": "MIT",
+        "ruleset_code": "MIT-2024",
+        "start": "24S2",
+        "validated": false,
+        "plan": [
+            {"semester": "24S2", "units": ["CITS1401", "CITS1003", "CITS1402"]},
+            {"semester": "25S1", "units": ["CITS4401", "CITS5505", "CITS2005"]},
+            {"semester": "25S2", "units": ["CITS5501", "CITS5503", "GENG5505"]},
+            {"semester": "26S1", "units": ["CITS4407", "CITS5506", "CITS5206"]}
+        ]
     }
 }

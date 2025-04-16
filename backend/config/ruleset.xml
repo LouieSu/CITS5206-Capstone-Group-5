@@ -12,9 +12,85 @@
         <name>Master of Data Science</name>
     </programme>
 
+    <!-- Ruleset part -->
+    <!-- 1. MIT, 2024 rule set-->
+    <ruleset>
+        <code>MIT-2024</code>
+        <name>Master of Information Technology, 2024 ruleset</name>
+        <programmeCode>MIT</programmeCode>
+        <totalPoints>96</totalPoints>
+
+        <sections>
+
+            <!-- Conversion Section -->
+            <section>
+                <code>conversion</code>
+                <name>Conversion</name>
+                <description>
+                    Students who have completed degree studies in a non-cognate area, or equivalent as recognised by the School, must complete relevant conversion units up to the value of 24 points as determined by the School upon offer of admission and by the scope of a student's prior study. Students can choose either CITS2002 OR CITS2005.
+                </description>
+                <units>
+                    CITS1003, CITS1401, CITS1402, CITS2002, CITS2005
+                </units>
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>18</points>
+                        <units>CITS1003, CITS1401, CITS1402</units>
+                    </condition>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>6</points>
+                        <units>CITS2002, CITS2005</units>
+                    </condition>
+                </conditions>
+            </section>
+
+            <!-- Core Section -->
+            <section>
+                <code>core</code>
+                <name>Core</name>
+                <description>Take all units (48 points)</description>
+                <units>
+                    CITS4401, CITS4407, CITS5206, CITS5501, CITS5503, CITS5505, CITS5506, GENG5505
+                </units>
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>48</points>
+                        <units>CITS4401, CITS4407, CITS5206, CITS5501, CITS5503, CITS5505, CITS5506, GENG5505</units>
+                    </condition>
+                </conditions>
+            </section>
+
+            <!-- Option Section -->
+            <section>
+                <code>optionA</code>
+                <name>Optional Units</name>
+                <description>Select units to the value of 24 points from this group</description>
+                <units>
+                    AUTO4508, CITS4009, CITS4012, CITS4403, CITS4404, CITS5017, CITS5504, 
+                    CITS5507, CITS5508, ENVT4411, GENG5507, INMT5518, INMT5526, MGMT5504
+                </units>
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>
+                            AUTO4508, CITS4009, CITS4012, CITS4403, CITS4404, CITS5017, 
+                            CITS5504, CITS5507, CITS5508, ENVT4411, GENG5507, INMT5518, 
+                            INMT5526, MGMT5504
+                        </units>
+                    </condition>
+                </conditions>
+            </section>
+
+        </sections>
+    </ruleset>
+
 
     <!-- Ruleset part -->
-    <!-- 1. MIT, 2025 rule set-->
+    <!-- 2. MIT, 2025 rule set-->
     <ruleset>
         <code>MIT-2025</code>
         <name>Master of Information Technology, 2025 ruleset</name>
@@ -80,7 +156,7 @@
             <section>
                 <code>optionA</code>
                 <name>Option - Group A</name>
-                <descriptio>Take unit(s) to the value of 24 points, including a minimum of 12 points at Level 5.</descriptio>
+                <description>Take unit(s) to the value of 24 points, including a minimum of 12 points at Level 5.</description>
 
                 <units>AUTO4508, CITS4009, CITS4012, CITS4402, CITS4403, CITS4404, CITS4407, CITS4419, CITS5014, CITS5015, CITS5017, CITS5501, CITS5503, CITS5504, CITS5506, CITS5507, CITS5508, ENVT4411, GENG5507, INMT5518, INMT5526, MGMT5504, SVLG5001</units>
 
@@ -93,7 +169,7 @@
                     <condition>
                         <type>LevelPoint</type>
                         <level>5</level>
-                        <points>24</points>
+                        <points>12</points>
                     </condition>
                 </conditions>
             </section>
@@ -102,8 +178,7 @@
             <specialisation>
                 <code>ac</code>
                 <name>Applied Computing specialisation</name>
-                <descriptio>Take unit(s) to the value of 24 points, including a minimum of 12 points at Level 5.</descriptio>
-
+                <description>Take unit(s) to the value of 24 points, including a minimum of 12 points at Level 5.</description>
                 <units>CITS4009, CITS4012, CITS4402, CITS4403, CITS4404, CITS4407, CITS4419, CITS5017, CITS5501, CITS5503, CITS5504, CITS5506, CITS5507, CITS5508</units>
 
                 <conditions>
@@ -158,74 +233,143 @@
     </ruleset>
 
 
-    <!-- 2. MDS 2025 rule set-->
-<ruleset>
-    <code>MDS-2025</code>
-    <name>Master of Data Science, 2025 ruleset</name>
-    <programmeCode>MDS</programmeCode>
-    <totalPoints>96</totalPoints>
-    <sections>
-        <!-- Conversion Section -->
-        <section>
-            <code>conversion</code>
-            <name>Conversion</name>
-            <description>
-                Students from non-cognate backgrounds must complete up to 24 points of conversion units as advised by the School.
-            </description>
-            <units>
-                CITS1401, CITS1402, STAT2401, STAT2402
-            </units>
-            <conditions>
-                <condition>
-                    <type>UnitPoint</type>
-                    <points>24</points>
-                    <units>CITS1401, CITS1402, STAT2401, STAT2402</units>
-                </condition>
-            </conditions>
-        </section>
+        <!-- 3. MDS 2025 rule set-->
+    <ruleset>
+        <code>MDS-2025</code>
+        <name>Master of Data Science, 2025 ruleset</name>
+        <programmeCode>MDS</programmeCode>
+        <totalPoints>96</totalPoints>
+        <sections>
+            <!-- Conversion Section -->
+            <section>
+                <code>conversion</code>
+                <name>Conversion</name>
+                <description>
+                    Students from non-cognate backgrounds must complete up to 24 points of conversion units as advised by the School.
+                </description>
+                <units>
+                    CITS1401, CITS1402, STAT2401, STAT2402
+                </units>
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>CITS1401, CITS1402, STAT2401, STAT2402</units>
+                    </condition>
+                </conditions>
+            </section>
 
-        <!-- Core Section -->
-        <section>
-            <code>core</code>
-            <name>Core</name>
-            <description>Take all units (48 points)</description>
-            <units>
-                CITS4009, CITS4012, CITS4407, CITS5504, CITS5508, CITS5553, STAT4064, STAT4066
-            </units>
-            <conditions>
-                <condition>
-                    <type>UnitPoint</type>
-                    <points>48</points>
-                    <units>CITS4009, CITS4012, CITS4407, CITS5504, CITS5508, CITS5553, STAT4064, STAT4066</units>
-                </condition>
-            </conditions>
-        </section>
+            <!-- Core Section -->
+            <section>
+                <code>core</code>
+                <name>Core</name>
+                <description>Take all units (48 points)</description>
+                <units>
+                    CITS4009, CITS4012, CITS4407, CITS5504, CITS5508, CITS5553, STAT4064, STAT4066
+                </units>
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>48</points>
+                        <units>CITS4009, CITS4012, CITS4407, CITS5504, CITS5508, CITS5553, STAT4064, STAT4066</units>
+                    </condition>
+                </conditions>
+            </section>
 
-        <!-- Option Group A -->
-        <section>
-            <code>optionA</code>
-            <name>Option - Group A</name>
-            <description>Take units to the value of 24 points, including a minimum of 12 points at Level 5</description>
-            <units>
-                BUSN5003, CITS4402, CITS4403, CITS4404, CITS4419, CITS5014, CITS5015, CITS5017, CITS5503, CITS5505,
-                CITS5506, CITS5507, ECON5570, GENG5505, INMT5526, MGMT5504, PHYS4021, PUBH4401, PUBH5769, PUBH5785,
-                PUBH5802, STAT4063, STAT4065, STAT5061, SVLG5001
-            </units>
-            <conditions>
-                <condition>
-                    <type>UnitPoint</type>
-                    <points>24</points>
-                    <units>BUSN5003, CITS4402, CITS4403, CITS4404, CITS4419, CITS5014, CITS5015, CITS5017, CITS5503, CITS5505, CITS5506, CITS5507, ECON5570, GENG5505, INMT5526, MGMT5504, PHYS4021, PUBH4401, PUBH5769, PUBH5785, PUBH5802, STAT4063, STAT4065, STAT5061, SVLG5001</units>
-                </condition>
-                <condition>
-                    <type>LevelPoint</type>
-                    <level>5</level>
-                    <points>12</points>
-                </condition>
-            </conditions>
-        </section>
-    </sections>
-</ruleset>
+            <!-- Option Group A -->
+            <section>
+                <code>optionA</code>
+                <name>Option - Group A</name>
+                <description>Take units to the value of 24 points, including a minimum of 12 points at Level 5</description>
+                <units>
+                    BUSN5003, CITS4402, CITS4403, CITS4404, CITS4419, CITS5014, CITS5015, CITS5017, CITS5503, CITS5505,
+                    CITS5506, CITS5507, ECON5570, GENG5505, INMT5526, MGMT5504, PHYS4021, PUBH4401, PUBH5769, PUBH5785,
+                    PUBH5802, STAT4063, STAT4065, STAT5061, SVLG5001
+                </units>
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>BUSN5003, CITS4402, CITS4403, CITS4404, CITS4419, CITS5014, CITS5015, CITS5017, CITS5503, CITS5505, CITS5506, CITS5507, ECON5570, GENG5505, INMT5526, MGMT5504, PHYS4021, PUBH4401, PUBH5769, PUBH5785, PUBH5802, STAT4063, STAT4065, STAT5061, SVLG5001</units>
+                    </condition>
+                    <condition>
+                        <type>LevelPoint</type>
+                        <level>5</level>
+                        <points>12</points>
+                    </condition>
+                </conditions>
+            </section>
+        </sections>
+    </ruleset>
+
+    <!-- 4. MDS 2024 rule set-->
+    <ruleset>
+        <code>MDS-2024</code>
+        <name>Master of Data Science, 2024 ruleset</name>
+        <programmeCode>MDS</programmeCode>
+        <totalPoints>96</totalPoints>
+        <sections>
+            <!-- Conversion Section -->
+            <section>
+                <code>conversion</code>
+                <name>Conversion</name>
+                <description>
+                    Students from non-cognate backgrounds must complete up to 24 points of conversion units as advised by the School.
+                </description>
+                <units>
+                    CITS1401, CITS1402, STAT2401, STAT2402
+                </units>
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>CITS1401, CITS1402, STAT2401, STAT2402</units>
+                    </condition>
+                </conditions>
+            </section>
+
+            <!-- Core Section -->
+            <section>
+                <code>core</code>
+                <name>Core</name>
+                <description>Take all units (48 points)</description>
+                <units>
+                    CITS4009, CITS4012, CITS4407, CITS5504, CITS5508, CITS5553, STAT4064, STAT4066
+                </units>
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>48</points>
+                        <units>CITS4009, CITS4012, CITS4407, CITS5504, CITS5508, CITS5553, STAT4064, STAT4066</units>
+                    </condition>
+                </conditions>
+            </section>
+
+            <!-- Option Group A -->
+            <section>
+                <code>optionA</code>
+                <name>Option - Group A</name>
+                <description>Take units to the value of 24 points, including a minimum of 12 points at Level 5</description>
+                <units>
+                    BUSN5003, CITS4402, CITS4403, CITS4404, CITS4419, CITS5014, CITS5015, CITS5017, CITS5503, CITS5505,
+                    CITS5506, CITS5507, ECON5570, GENG5505, INMT5526, MGMT5504, PHYS4021, PUBH4401, PUBH5769, PUBH5785,
+                    PUBH5802, STAT4063, STAT4065, STAT5061
+                </units>
+                <conditions>
+                    <condition>
+                        <type>UnitPoint</type>
+                        <points>24</points>
+                        <units>BUSN5003, CITS4402, CITS4403, CITS4404, CITS4419, CITS5014, CITS5015, CITS5017, CITS5503, CITS5505, CITS5506, CITS5507, ECON5570, GENG5505, INMT5526, MGMT5504, PHYS4021, PUBH4401, PUBH5769, PUBH5785, PUBH5802, STAT4063, STAT4065, STAT5061</units>
+                    </condition>
+                    <condition>
+                        <type>LevelPoint</type>
+                        <level>5</level>
+                        <points>12</points>
+                    </condition>
+                </conditions>
+            </section>
+        </sections>
+    </ruleset>
 
 
 </rulesets>
