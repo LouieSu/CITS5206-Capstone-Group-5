@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './CourseSchedule.css';
+
+// Get API base URL from environment variable or use fallback for local development
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
 function CourseSchedule() {
   const location = useLocation();
@@ -17,23 +20,23 @@ function CourseSchedule() {
   const [studyPlan, setStudyPlan] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const getSpecKey = (spec) => spec.toLowerCase().split(' ').map(word => word[0]).join('');
-  const getRulesetCode = () => `${course}-${year}`;
-  const getStartCode = () => year.slice(2) + semester;
+  const getSpecKey = useCallback((spec) => spec.toLowerCase().split(' ').map(word => word[0]).join(''), []);
+  const getRulesetCode = useCallback(() => `${course}-${year}`, [course, year]);
+  const getStartCode = useCallback(() => year.slice(2) + semester, [year, semester]);
 
-  const getPlanApiUrl = () => {
+  const getPlanApiUrl = useCallback(() => {
     const specKey = (year === '2025' && course === 'MIT') ? getSpecKey(specialisation) : 'none';
-    return `http://localhost:8000/api/plan/${getRulesetCode()}/${getStartCode()}/${specKey}`;
-  };
+    return `${API_BASE_URL}/plan/${getRulesetCode()}/${getStartCode()}/${specKey}`;
+  }, [year, course, specialisation, getSpecKey, getRulesetCode, getStartCode]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/ruleset/${getRulesetCode()}`)
+    axios.get(`${API_BASE_URL}/ruleset/${getRulesetCode()}`)
       .then(res => setCourseRules(res.data))
       .catch(err => {
         console.warn('Failed to fetch course rules', err);
         setCourseRules(null);
       });
-  }, [year, course]);
+  }, [getRulesetCode]);
 
   useEffect(() => {
     setLoading(true);
@@ -47,7 +50,7 @@ function CourseSchedule() {
         setStudyPlan(null);
       })
       .finally(() => setLoading(false));
-  }, [year, course, semester, specialisation]);
+  }, [getPlanApiUrl]);
 
   const semesterLabels = studyPlan && studyPlan.plan
     ? [...new Set(studyPlan.plan.map(s => s.semester))].sort()
