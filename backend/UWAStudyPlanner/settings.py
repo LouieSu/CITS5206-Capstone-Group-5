@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ox$c_c5zx73%a_oi#pt^8lm&u-ygfu=ax#6hk2-80^tq2_os0u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.up.railway.app']
 
 
 # Application definition
@@ -55,8 +55,10 @@ MIDDLEWARE = [
 
 # CORS configuration
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Example: React frontend running locally
-]
+    "http://localhost:3000",  # Local React frontend
+    "https://uwa-study-planner.up.railway.app",  # Railway deployed frontend
+    "https://uwa-study-planner.hly0928.com",  # Custom domain
+ ]
 
 # Alternatively, to allow all origins (not recommended for production):
 # CORS_ALLOW_ALL_ORIGINS = True
