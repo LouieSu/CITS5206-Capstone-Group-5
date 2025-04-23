@@ -2,8 +2,8 @@ import xml.etree.ElementTree as ET
 import pandas as pd
 
 # Load XML files
-ruleset_tree = ET.parse(r"C:\Users\hp\CITS5206-Capstone-Group-5\CITS5206-Capstone-Group-5\backend\config\ruleset.xml")
-units_tree = ET.parse(r"C:\Users\hp\CITS5206-Capstone-Group-5\CITS5206-Capstone-Group-5\backend\config\units.xml")
+ruleset_tree = ET.parse(r"C:\\Users\\hp\\CITS5206-Capstone-Group-5\\CITS5206-Capstone-Group-5\\backend\\config\\ruleset.xml")
+units_tree = ET.parse(r"C:\\Users\\hp\\CITS5206-Capstone-Group-5\\CITS5206-Capstone-Group-5\\backend\\config\\units.xml")
 
 ruleset_root = ruleset_tree.getroot()
 units_root = units_tree.getroot()
@@ -25,13 +25,14 @@ for unit in units_root.findall(".//Unit"):
     unit_levels[code] = level
     unit_points[code] = points
 
-# Sample timetable
+# Sample timetable (valid for MDS-2025)
 student_timetable = [
-    ["CITS1003", "CITS1401", "CITS1402", "PHIL4100"],        # 25S1
-    ["CITS2002", "CITS2005", "CITS2401", "INMT5526"],        # 25S2
-    ["CITS4401", "CITS5505", "CITS5506", "CITS5508"],        # 26S1
-    ["CITS5206", "CITS5507", "CITS5501", "CITS5503"]         # 26S2
+    ["STAT2401", "STAT2402", "CITS1401", "CITS4012"],       # ✅ CITS1401 re-added here
+    ["BUSN5003", "CITS1402", "CITS5508", "CITS5504"],
+    ["CITS5505", "CITS5506", "STAT4064", "CITS5553"],
+    ["STAT4066", "CITS5507", "CITS4407", "CITS4009"]
 ]
+
 
 unit_to_semester = {}
 for sem_index, semester in enumerate(student_timetable):
@@ -50,21 +51,38 @@ for unit, semester in unit_to_semester.items():
         elif prereq_sem >= semester:
             validation_results.append((unit, f"Prerequisite {prereq} taken in same/later semester"))
 
-# Graduation and Option A validation
+# Find MDS-2025 ruleset
+target_ruleset = None
+for rs in ruleset_root.findall(".//ruleset"):
+    if rs.findtext("code") == "MDS-2025":
+        target_ruleset = rs
+        break
+
+if target_ruleset is None:
+    raise ValueError("MDS-2025 ruleset not found.")
+
+# Extract required unit lists
 def extract_required_units(section_code):
     return {
-        code.strip() for section in ruleset_root.findall(".//section")
+        code.strip()
+        for section in target_ruleset.findall(".//section")
         if section.findtext("code") == section_code
         for code in section.findtext("units", "").split(",")
     }
 
-option_a_units = extract_required_units("optionA")
-core_units = extract_required_units("core")
 conversion_units = extract_required_units("conversion")
+core_units = extract_required_units("core")
+option_a_units = extract_required_units("optionA")
 
+# Check Option A units
 taken_option_a = [u for u in unit_to_semester if u in option_a_units]
 total_points_option_a = sum(unit_points.get(u, 6) for u in taken_option_a)
-level_5_points = sum(unit_points.get(u, 6) for u in taken_option_a if unit_levels.get(u, "").startswith("5"))
+
+def get_unit_level(unit_code):
+    digits = ''.join(filter(str.isdigit, unit_code))
+    return int(digits[0]) if digits else None
+
+level_5_points = sum(unit_points.get(u, 6) for u in taken_option_a if get_unit_level(u) == 5)
 
 if total_points_option_a < 24:
     validation_results.append(("Option A", f"Only {total_points_option_a} points taken, need 24"))
@@ -87,20 +105,11 @@ for unit in missing_core:
 for unit in missing_conversion:
     validation_results.append(("Conversion", f"Missing conversion unit: {unit}"))
 
-# Check at least one specialization is completed
-specialisation_codes = {"ai", "ss", "ac"}
-completed_specs = []
-
-for spec_code in specialisation_codes:
-    spec_units = extract_required_units(spec_code)
-    spec_points = sum(unit_points.get(u, 6) for u in unit_to_semester if u in spec_units)
-    if spec_points >= 24:
-        completed_specs.append(spec_code)
-
-if not completed_specs:
-    validation_results.append(("Specialisation", "No specialisation completed (24 points minimum required)"))
-
-# Format output
+# Output
 df = pd.DataFrame(validation_results, columns=["Unit", "Issue"])
-print("Validation Results:\n")
-print(df.to_string(index=False))
+if df.empty:
+    print("✅ No validation issues found. Timetable satisfies MDS-2025 rules.")
+else:
+    print("Validation Results:\n")
+    print(df.to_string(index=False))
+
