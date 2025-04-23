@@ -1,4 +1,4 @@
-/* 整体页面布局 */
+/* ===== Overall Layout ===== */
 .schedule-page {
   display: flex;
   justify-content: space-between;
@@ -10,7 +10,7 @@
   box-sizing: border-box;
 }
 
-/* 左侧课表容器 */
+/* ===== Main Schedule Container ===== */
 .schedule-container {
   flex: 2;
   background: #ffffff;
@@ -23,14 +23,12 @@
   overflow: hidden;
 }
 
-/* 课表标题 */
 .schedule-container h2 {
   font-size: 26px;
   margin-bottom: 20px;
   color: #34495e;
 }
 
-/* 用户信息部分 */
 .schedule-info {
   margin-bottom: 20px;
 }
@@ -41,7 +39,14 @@
   color: #555;
 }
 
-/* 课表表格部分区域滚动 */
+/* ===== Study Plan Table ===== */
+.schedule-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding-right: 4px;
+}
+
 .schedule-table {
   width: 100%;
   border-collapse: collapse;
@@ -69,15 +74,7 @@
   color: #34495e;
 }
 
-/* 课表表格包裹容器，添加内部滚动 */
-.schedule-table-wrapper {
-  flex: 1;
-  overflow-y: auto;
-  margin-top: 10px;
-  padding-right: 4px;
-}
-
-/* 右侧备选课程容器 */
+/* ===== Optional Courses Panel ===== */
 .alt-courses-container {
   flex: 1;
   background: #ffffff;
@@ -87,17 +84,15 @@
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 80px);
-  overflow-y: auto; /* 改为允许垂直滚动 */
+  overflow-y: auto;
 }
 
-/* 右侧标题 */
 .alt-courses-container h3 {
   font-size: 20px;
   margin-bottom: 14px;
   color: #34495e;
 }
 
-/* 备选课程列表，添加滚动 */
 .alt-course-list {
   list-style: none;
   padding: 0;
@@ -105,19 +100,17 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow-y: auto;  /* 保证垂直滚动 */
-  flex: 1;  /* 使其充满剩余空间 */
-  height: 100%;  /* 填充父容器高度 */
+  overflow-y: auto;
+  flex: 1;
+  height: 100%;
   padding-right: 4px;
 }
 
-/* 单个课程项 */
 .alt-course {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
-  margin: 0;
   background-color: #f5f8ff;
   font-size: 14px;
   color: #2c3e50;
@@ -131,7 +124,7 @@
   background-color: #e3ecf9;
 }
 
-/* 彩色圆点 */
+/* ===== Course Type Color Dots ===== */
 .course-dot {
   width: 12px;
   height: 12px;
@@ -139,24 +132,12 @@
   flex-shrink: 0;
 }
 
-/* 分类颜色 */
-.core {
-  background-color: #42a5f5;
-}
+.core { background-color: #42a5f5; }
+.elective { background-color: #66bb6a; }
+.specialisation { background-color: #ffa726; }
+.other { background-color: #ab47bc; }
 
-.elective {
-  background-color: #66bb6a;
-}
-
-.specialisation {
-  background-color: #ffa726;
-}
-
-.other {
-  background-color: #ab47bc;
-}
-
-/* 滚动条样式优化（可选） */
+/* ===== Scrollbar Styling (Optional) ===== */
 .alt-course-list::-webkit-scrollbar,
 .schedule-table-wrapper::-webkit-scrollbar {
   width: 6px;
