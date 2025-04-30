@@ -1,9 +1,11 @@
 import xml.etree.ElementTree as ET
 import pandas as pd
+import os
 
 # Load XML files
-ruleset_tree = ET.parse(r"C:\Users\hp\CITS5206-Capstone-Group-5\CITS5206-Capstone-Group-5\backend\config\ruleset.xml")
-units_tree = ET.parse(r"C:\Users\hp\CITS5206-Capstone-Group-5\CITS5206-Capstone-Group-5\backend\config\units.xml")
+base_dir = os.path.dirname(os.path.abspath(__file__))
+ruleset_tree = ET.parse(os.path.join(base_dir, '../../config/ruleset.xml'))
+units_tree = ET.parse(os.path.join(base_dir, '../../config/units.xml'))
 
 ruleset_root = ruleset_tree.getroot()
 units_root = units_tree.getroot()
