@@ -2,9 +2,51 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './CourseSchedule.css';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-// Get API base URL from environment variable or use fallback for local development
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const ItemTypes = { UNIT: 'unit' };
+
+function DraggableUnit({ unit, children }) {
+  const [, drag] = useDrag(() => ({
+    type: ItemTypes.UNIT,
+    item: { unit },
+  }), [unit]);
+
+  return (
+    <div ref={drag} className="alt-course" draggable>
+      {children}
+    </div>
+  );
+}
+
+function DroppableCell({ onDrop, children }) {
+  const [, drop] = useDrop(() => ({
+    accept: ItemTypes.UNIT,
+    drop: (item) => onDrop(item.unit),
+  }), [onDrop]);
+
+  return (
+    <td ref={drop} className="drop-cell">
+      {children || '-'}
+    </td>
+  );
+}
+
+function DroppablePanel({ section, children, onDropUnit }) {
+  const [, drop] = useDrop(() => ({
+    accept: ItemTypes.UNIT,
+    drop: (item) => onDropUnit(item.unit),
+  }), [onDropUnit]);
+
+  return (
+    <div ref={drop}>
+      <h3>{section.name}</h3>
+      <ul className="alt-course-list">{children}</ul>
+    </div>
+  );
+}
 
 function CourseSchedule() {
   const location = useLocation();
@@ -15,15 +57,13 @@ function CourseSchedule() {
   const [semester, setSemester] = useState(initialState.semester || 'S1');
   const [course, setCourse] = useState(initialState.course || 'MIT');
   const [specialisation, setSpecialisation] = useState(initialState.specialisation || 'Software Systems');
-
   const [courseRules, setCourseRules] = useState(null);
   const [studyPlan, setStudyPlan] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const getSpecKey = useCallback((spec) => spec.toLowerCase().split(' ').map(word => word[0]).join(''), []);
+  const getSpecKey = useCallback((spec) => spec.toLowerCase().split(' ').map(w => w[0]).join(''), []);
   const getRulesetCode = useCallback(() => `${course}-${year}`, [course, year]);
   const getStartCode = useCallback(() => year.slice(2) + semester, [year, semester]);
-
   const getPlanApiUrl = useCallback(() => {
     const specKey = (year === '2025' && course === 'MIT') ? getSpecKey(specialisation) : 'none';
     return `${API_BASE_URL}/plan/${getRulesetCode()}/${getStartCode()}/${specKey}`;
@@ -32,168 +72,151 @@ function CourseSchedule() {
   useEffect(() => {
     axios.get(`${API_BASE_URL}/ruleset/${getRulesetCode()}`)
       .then(res => setCourseRules(res.data))
-      .catch(err => {
-        console.warn('Failed to fetch course rules', err);
-        setCourseRules(null);
-      });
+      .catch(() => setCourseRules(null));
   }, [getRulesetCode]);
 
   useEffect(() => {
     setLoading(true);
     axios.get(getPlanApiUrl())
-      .then(res => {
-        console.log("Study plan API result:", res.data);
-        setStudyPlan(res.data);
-      })
-      .catch(err => {
-        console.warn('Failed to fetch study plan', err);
-        setStudyPlan(null);
-      })
+      .then(res => setStudyPlan(res.data))
+      .catch(() => setStudyPlan(null))
       .finally(() => setLoading(false));
   }, [getPlanApiUrl]);
 
-  const semesterLabels = studyPlan && studyPlan.plan
-    ? [...new Set(studyPlan.plan.map(s => s.semester))].sort()
-    : [];
+  const semesterLabels = studyPlan?.plan?.map(s => s.semester) || [];
+
+  const isUnitInPlan = (code) =>
+    studyPlan?.plan?.some(sem => sem.units.includes(code));
+
+  const handleDropToCell = (semIdx, unit) => {
+    if (!studyPlan || isUnitInPlan(unit.code)) return;
+    const updatedPlan = [...studyPlan.plan];
+    if (updatedPlan[semIdx].units.length < 4) {
+      updatedPlan[semIdx].units.push(unit.code);
+      setStudyPlan({ ...studyPlan, plan: updatedPlan });
+    }
+  };
+
+  const handleRemoveFromTable = (unit) => {
+    const updatedPlan = studyPlan.plan.map(sem => ({
+      ...sem,
+      units: sem.units.filter(code => code !== unit.code),
+    }));
+    setStudyPlan({ ...studyPlan, plan: updatedPlan });
+  };
 
   return (
-    <div className="schedule-page">
-
-      <div className="filter-bar">
-        <div className="filter-group">
-          <label>Year:</label>
-          <select value={year} onChange={(e) => setYear(e.target.value)}>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-          </select>
-        </div>
-
-        <div className="filter-group">
-          <label>Semester:</label>
-          <select value={semester} onChange={(e) => setSemester(e.target.value)}>
-            <option value="S1">S1</option>
-            <option value="S2">S2</option>
-          </select>
-        </div>
-
-        <div className="filter-group">
-          <label>Course:</label>
-          <select value={course} onChange={(e) => setCourse(e.target.value)}>
-            <option value="MIT">MIT</option>
-            <option value="MDS">MDS</option>
-          </select>
-        </div>
-
-        {year === "2025" && course === "MIT" && (
+    <DndProvider backend={HTML5Backend}>
+      <div className="schedule-page">
+        {/* Filter Panel */}
+        <div className="filter-bar">
           <div className="filter-group">
-            <label>Specialisation:</label>
-            <select value={specialisation} onChange={(e) => setSpecialisation(e.target.value)}>
-              <option value="Applied Computing">Applied Computing</option>
-              <option value="Artificial Intelligence">Artificial Intelligence</option>
-              <option value="Software Systems">Software Systems</option>
+            <label>Year:</label>
+            <select value={year} onChange={(e) => setYear(e.target.value)}>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
             </select>
           </div>
-        )}
-      </div>
-
-      <div className="schedule-container">
-        <h2>Course Schedule for {name}</h2>
-        <div className="schedule-info">
-          <p><strong>Year:</strong> {year}</p>
-          <p><strong>Starting Semester:</strong> {semester}</p>
-          <p><strong>Course:</strong> {course}</p>
-          {year === "2025" && course === "MIT" && (
-            <p><strong>Specialisation:</strong> {specialisation}</p>
-          )}
-        </div>
-
-        {loading ? (
-          <p>Loading study plan...</p>
-        ) : !studyPlan ? (
-          <p>No study plan data available.</p>
-        ) : (
-          <div className="schedule-table-wrapper">
-            <table className="schedule-table">
-              <thead>
-                <tr>
-                  <th>Semester</th>
-                  <th>Course 1</th>
-                  <th>Course 2</th>
-                  <th>Course 3</th>
-                  <th>Course 4</th>
-                </tr>
-              </thead>
-              <tbody>
-                {semesterLabels.map(sem => (
-                  <tr key={sem}>
-                    <td><strong>{sem}</strong></td>
-                    {
-                      (studyPlan.plan.find(s => s.semester === sem)?.units || []).map((unit, i) => {
-                        let courseName = '';
-                        for (const section of Object.values(courseRules?.sections || {})) {
-                          const found = section.units.find(u => u.code === unit);
-                          if (found) {
-                            courseName = found.name;
-                            break;
-                          }
-                        }
-                        if (!courseName && year === "2025" && course === "MIT") {
-                          const specUnits = courseRules.specialisations?.[getSpecKey(specialisation)]?.units || [];
-                          const found = specUnits.find(u => u.code === unit);
-                          if (found) {
-                            courseName = found.name;
-                          }
-                        }
-                        return (
-                          <td key={i}>
-                            {unit} {courseName ? `- ${courseName}` : ''}
-                          </td>
-                        );
-                      })
-                    }
-                    {Array.from({ length: 4 - (studyPlan.plan.find(s => s.semester === sem)?.units.length || 0) }).map((_, idx) => (
-                      <td key={`empty-${idx}`}>-</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="filter-group">
+            <label>Semester:</label>
+            <select value={semester} onChange={(e) => setSemester(e.target.value)}>
+              <option value="S1">S1</option>
+              <option value="S2">S2</option>
+            </select>
           </div>
-        )}
-      </div>
-
-      {/* Optional and specialisation units display */}
-      {courseRules && studyPlan && (
-        <div className="alt-courses-container">
-          {courseRules.sections && Object.keys(courseRules.sections).map((key, i) => (
-            <div key={i}>
-              <h3>{courseRules.sections[key].name}</h3>
-              <ul className="alt-course-list">
-                {courseRules.sections[key].units.map((u, j) => (
-                  <li key={j} className="alt-course">
-                    <span className="course-dot core"></span>
-                    {u.code} {u.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          {year === "2025" && course === "MIT" && courseRules.specialisations && (
-            <div>
-              <h3>{courseRules.specialisations[getSpecKey(specialisation)]?.name}</h3>
-              <ul className="alt-course-list">
-                {courseRules.specialisations[getSpecKey(specialisation)]?.units.map((u, i) => (
-                  <li key={i} className="alt-course">
-                    <span className="course-dot specialisation"></span>
-                    {u.code} {u.name}
-                  </li>
-                ))}
-              </ul>
+          <div className="filter-group">
+            <label>Course:</label>
+            <select value={course} onChange={(e) => setCourse(e.target.value)}>
+              <option value="MIT">MIT</option>
+              <option value="MDS">MDS</option>
+            </select>
+          </div>
+          {year === '2025' && course === 'MIT' && (
+            <div className="filter-group">
+              <label>Specialisation:</label>
+              <select value={specialisation} onChange={(e) => setSpecialisation(e.target.value)}>
+                <option value="Applied Computing">Applied Computing</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+                <option value="Software Systems">Software Systems</option>
+              </select>
             </div>
           )}
         </div>
-      )}
-    </div>
+
+        {/* Main Table */}
+        {loading ? <p>Loading...</p> : studyPlan && courseRules && (
+          <>
+            <div className="schedule-table-wrapper">
+              <table className="schedule-table">
+                <thead>
+                  <tr>
+                    <th>Semester</th>
+                    <th>Course 1</th>
+                    <th>Course 2</th>
+                    <th>Course 3</th>
+                    <th>Course 4</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {semesterLabels.map((sem, semIdx) => (
+                    <tr key={sem}>
+                      <td><strong>{sem}</strong></td>
+                      {[0, 1, 2, 3].map(i => {
+                        const unitCode = studyPlan.plan[semIdx].units[i];
+                        const unit = Object.values(courseRules.sections).flatMap(s => s.units)
+                          .concat(Object.values(courseRules.specialisations || {}).flatMap(s => s.units || []))
+                          .find(u => u.code === unitCode);
+                        return (
+                          <DroppableCell
+                            key={i}
+                            onDrop={(newUnit) => handleDropToCell(semIdx, newUnit)}
+                          >
+                            {unit && (
+                              <DraggableUnit unit={unit}>
+                                <div onDoubleClick={() => handleRemoveFromTable(unit)}>
+                                  {unit.code} - {unit.name}
+                                </div>
+                              </DraggableUnit>
+                            )}
+                          </DroppableCell>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Right-side Unit Panel */}
+            <div className="alt-courses-container">
+              {Object.entries(courseRules.sections).map(([key, section], idx) => (
+                <DroppablePanel key={idx} section={section} onDropUnit={handleRemoveFromTable}>
+                  {section.units.filter(u => !isUnitInPlan(u.code)).map((u, i) => (
+                    <li key={i}>
+                      <DraggableUnit unit={u}>{u.code} - {u.name}</DraggableUnit>
+                    </li>
+                  ))}
+                </DroppablePanel>
+              ))}
+              {year === '2025' && course === 'MIT' && courseRules.specialisations && courseRules.specialisations[getSpecKey(specialisation)] && (
+                <DroppablePanel
+                  section={courseRules.specialisations[getSpecKey(specialisation)]}
+                  onDropUnit={handleRemoveFromTable}
+                >
+                  {courseRules.specialisations[getSpecKey(specialisation)].units
+                    .filter(u => !isUnitInPlan(u.code))
+                    .map((u, i) => (
+                      <li key={i}>
+                        <DraggableUnit unit={u}>{u.code} - {u.name}</DraggableUnit>
+                      </li>
+                    ))}
+                </DroppablePanel>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </DndProvider>
   );
 }
 
