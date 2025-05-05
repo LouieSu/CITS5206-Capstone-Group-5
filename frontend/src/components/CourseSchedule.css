@@ -153,3 +153,101 @@
 .schedule-table-wrapper::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
+
+
+
+
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  max-width: 200px;
+}
+
+.filter-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.filter-group select {
+  padding: 8px;
+  font-size: 16px;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.schedule-page {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Left filter bar */
+.filter-bar {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Main table wrapper */
+.schedule-table-wrapper {
+  flex: 1;
+  overflow-x: auto;
+}
+
+/* Right unit panel */
+.alt-courses-container {
+  flex: 0 0 250px;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+/* Maintain clarity on the unit lists */
+.alt-course-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.alt-course {
+  margin-bottom: 8px;
+  background: #f4f4f4;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: grab;
+  border: 1px solid #ccc;
+}
+
+/* Table styling */
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.schedule-table th,
+.schedule-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  min-width: 120px;
+}
+
+/* Drop cell style */
+.drop-cell {
+  background-color: #f9f9f9;
+}
