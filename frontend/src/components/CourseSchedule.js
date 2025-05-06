@@ -102,7 +102,7 @@ function CourseSchedule() {
       const { completed_specialisations, issues, valid } = res.data;
 
       // Map abbreviations to full names
-      const mappedSpecialisations = completed_specialisations.map(
+      const mappedSpecialisations = (completed_specialisations || []).map(
         (spec) => specialisationMap[spec] || spec // Use the full name if available, otherwise fallback to the original value
       );
 
@@ -260,11 +260,11 @@ function CourseSchedule() {
 
               {/* Message Area */}
               <div className="user-message">
-                {validationResults.completedSpecialisations.length > 0 && (
-                  <p className="info-message">
+              {validationResults.completedSpecialisations.length > 0 && (
+                <p className="info-message">
                     Matched Specialisations: {validationResults.completedSpecialisations.join(", ")}
-                  </p>
-                )}
+                </p>
+              )}
 
                 {validationResults.valid === null ? (
                   <p className="info-message main-message">Choose more courses</p>
