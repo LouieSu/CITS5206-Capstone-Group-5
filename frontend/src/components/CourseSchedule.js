@@ -52,7 +52,7 @@ function CourseSchedule() {
   const location = useLocation();
   const initialState = location.state || {};
 
-  const [name] = useState(initialState.name || '');
+  // const [name] = useState(initialState.name || '');
   const [year, setYear] = useState(initialState.year || '2025');
   const [semester, setSemester] = useState(initialState.semester || 'S1');
   const [course, setCourse] = useState(initialState.course || 'MIT');
