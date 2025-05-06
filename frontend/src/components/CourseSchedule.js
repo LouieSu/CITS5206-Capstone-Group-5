@@ -89,11 +89,14 @@ function CourseSchedule() {
     const messageDiv = document.querySelector('.user-message');
 
     if (res.data) {
-      const { completed_specialisations, issues, valid } = res.data;
 
-      const specialisationsText = completed_specialisations.length
-        ? `Completed Specialisations: ${completed_specialisations.join(', ')}`
-        : 'No specialisations completed.';
+      const { completed_specialisations, issues, valid } = res.data;
+      const spe_empty_prompt = completed_specialisations? "No Specialisation Completed" : "";
+    
+
+      const specialisationsText = (completed_specialisations ?? []).length
+        ? `Completed Specialisations: ${(completed_specialisations ?? []).join(', ')}`
+        : spe_empty_prompt;
 
       const issuesText = issues.length
         ? issues.map(issue => `<span class="error-message">- ${issue[0]}: ${issue[1]}</span>`).join('<br>')
