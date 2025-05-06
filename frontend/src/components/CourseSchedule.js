@@ -44,6 +44,11 @@ function CourseSchedule() {
       .finally(() => setLoading(false));
   }, [getPlanApiUrl]);
 
+
+  useEffect(() => {
+    request_validation();
+  }, [studyPlan]);
+
   const semesterLabels = studyPlan?.plan?.map(s => s.semester) || [];
 
   const isUnitInPlan = (code) =>
@@ -138,10 +143,7 @@ function CourseSchedule() {
   function DroppableCell({ onDrop, children }) {
     const [, drop] = useDrop(() => ({
       accept: ItemTypes.UNIT,
-      drop: (item) => {
-          onDrop(item.unit);
-          request_validation(item.unit);
-      },
+      drop: (item) => onDrop(item.unit),
     }), [onDrop]);
 
     return (
