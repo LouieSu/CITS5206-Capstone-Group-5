@@ -251,3 +251,28 @@
 .drop-cell {
   background-color: #f9f9f9;
 }
+
+/* Success Message */
+.success-message {
+  color: #28a745; /* Green for success */
+  font-weight: bold;
+}
+
+/* Error Message */
+.error-message {
+  color: #dc3545; /* Red for errors */
+  font-weight: bold;
+}
+
+/* General User Message Styling */
+.user-message {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
