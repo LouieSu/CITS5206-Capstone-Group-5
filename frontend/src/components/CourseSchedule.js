@@ -91,13 +91,24 @@ function CourseSchedule() {
     };
   }
 
-  const rendering_validation_res = (res) => {
+  const handle_validation_result = (res) => {
+    const specialisationMap = {
+      ac: "Applied Computing",
+      ai: "Artificial Intelligence",
+      ss: "Software Systems",
+    };
+
     if (res.data) {
       const { completed_specialisations, issues, valid } = res.data;
 
+      // Map abbreviations to full names
+      const mappedSpecialisations = completed_specialisations.map(
+        (spec) => specialisationMap[spec] || spec // Use the full name if available, otherwise fallback to the original value
+      );
+
       setValidationResults({
         valid,
-        completedSpecialisations: completed_specialisations || [],
+        completedSpecialisations: mappedSpecialisations,
         issues: issues || [],
       });
     } else {
@@ -115,7 +126,7 @@ function CourseSchedule() {
     const params = _transform_timetable();
     axios.post(api, params)
         .then(res => {
-          rendering_validation_res(res);
+          handle_validation_result(res);
         })
         .catch(err => {
           console.error('Validation failed:', err.response?.data || err.message);
@@ -251,7 +262,7 @@ function CourseSchedule() {
               <div className="user-message">
                 {validationResults.completedSpecialisations.length > 0 && (
                   <p className="info-message">
-                    Completed Specialisations: {validationResults.completedSpecialisations.join(", ")}
+                    Matched Specialisations: {validationResults.completedSpecialisations.join(", ")}
                   </p>
                 )}
 
