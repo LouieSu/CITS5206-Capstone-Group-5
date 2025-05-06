@@ -8,6 +8,45 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 const ItemTypes = { UNIT: 'unit' };
 
+function DraggableUnit({ unit, children }) {
+  const [, drag] = useDrag(() => ({
+    type: ItemTypes.UNIT,
+    item: { unit },
+  }), [unit]);
+
+  return (
+    <div ref={drag} className="alt-course" draggable>
+      {children}
+    </div>
+  );
+}
+
+function DroppableCell({ onDrop, children }) {
+  const [, drop] = useDrop(() => ({
+    accept: ItemTypes.UNIT,
+    drop: (item) => onDrop(item.unit),
+  }), [onDrop]);
+
+  return (
+    <td ref={drop} className="drop-cell">
+      {children || '-'}
+    </td>
+  );
+}
+
+function DroppablePanel({ section, children, onDropUnit }) {
+  const [, drop] = useDrop(() => ({
+    accept: ItemTypes.UNIT,
+    drop: (item) => onDropUnit(item.unit),
+  }), [onDropUnit]);
+
+  return (
+    <div ref={drop}>
+      <h3>{section.name}</h3>
+      <ul className="alt-course-list">{children}</ul>
+    </div>
+  );
+}
 
 function CourseSchedule() {
   const location = useLocation();
@@ -30,68 +69,27 @@ function CourseSchedule() {
     return `${API_BASE_URL}/plan/${getRulesetCode()}/${getStartCode()}/${specKey}`;
   }, [year, course, specialisation, getSpecKey, getRulesetCode, getStartCode]);
 
+  // fetched from backend
   const [validationResults, setValidationResults] = useState({
     valid: null,
     completedSpecialisations: [],
     issues: [],
   });
-  
-  useEffect(() => {
-    axios.get(`${API_BASE_URL}/ruleset/${getRulesetCode()}`)
-      .then(res => setCourseRules(res.data))
-      .catch(() => setCourseRules(null));
-  }, [getRulesetCode]);
 
-  useEffect(() => {
-    setLoading(true);
-    axios.get(getPlanApiUrl())
-      .then(res => setStudyPlan(res.data))
-      .catch(() => setStudyPlan(null))
-      .finally(() => setLoading(false));
-  }, [getPlanApiUrl]);
-
-
-  useEffect(() => {
-    request_validation();
-  }, [studyPlan]);
-
-  const semesterLabels = studyPlan?.plan?.map(s => s.semester) || [];
-
-  const isUnitInPlan = (code) =>
-    studyPlan?.plan?.some(sem => sem.units.includes(code));
-
-  const handleDropToCell = (semIdx, unit) => {
-    if (!studyPlan || isUnitInPlan(unit.code)) return;
-    const updatedPlan = [...studyPlan.plan];
-    if (updatedPlan[semIdx].units.length < 4) {
-      updatedPlan[semIdx].units.push(unit.code);
-      setStudyPlan({ ...studyPlan, plan: updatedPlan });
-    }
-  };
-
-  const handleRemoveFromTable = (unit) => {
-    const updatedPlan = studyPlan.plan.map(sem => ({
-      ...sem,
-      units: sem.units.filter(code => code !== unit.code),
-    }));
-    setStudyPlan({ ...studyPlan, plan: updatedPlan });
-  };
-
-  // api looks like: validate-mit2024
-  const _get_validation_API_name = () => {
+  const _get_validation_API_name = useCallback(() => {
     return API_BASE_URL + "/validate-" + course.toLowerCase() + year;
-  }
+  }, [course, year]);
 
-  const _transform_timetable = () => {
-    if (!studyPlan || !studyPlan.plan){
+  const _transform_timetable = useCallback(() => {
+    if (!studyPlan || !studyPlan.plan) {
       return [];
     }
     return {
-      "timetable": studyPlan.plan.map(l => l.units)
+      timetable: studyPlan.plan.map(l => l.units),
     };
-  }
+  }, [studyPlan]);
 
-  const handle_validation_result = (res) => {
+  const handle_validation_result = useCallback((res) => {
     const specialisationMap = {
       ac: "Applied Computing",
       ai: "Artificial Intelligence",
@@ -118,61 +116,60 @@ function CourseSchedule() {
         issues: ["Validation response is empty or invalid."],
       });
     }
-  };
+  }, []);
 
-  // request validation from backend and show validation results.
-  const request_validation = (unit) => {
+  const request_validation = useCallback(() => {
     const api = _get_validation_API_name();
     const params = _transform_timetable();
     axios.post(api, params)
-        .then(res => {
-          handle_validation_result(res);
-        })
-        .catch(err => {
-          console.error('Validation failed:', err.response?.data || err.message);
-        });
-  }
+      .then(res => {
+        handle_validation_result(res);
+      })
+      .catch(err => {
+        console.error('Validation failed:', err.response?.data || err.message);
+      });
+  }, [_get_validation_API_name, _transform_timetable, handle_validation_result]);
+  
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/ruleset/${getRulesetCode()}`)
+      .then(res => setCourseRules(res.data))
+      .catch(() => setCourseRules(null));
+  }, [getRulesetCode]);
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get(getPlanApiUrl())
+      .then(res => setStudyPlan(res.data))
+      .catch(() => setStudyPlan(null))
+      .finally(() => setLoading(false));
+  }, [getPlanApiUrl]);
 
 
-  function DraggableUnit({ unit, children }) {
-    const [, drag] = useDrag(() => ({
-      type: ItemTypes.UNIT,
-      item: { unit },
-    }), [unit]);
+  useEffect(() => {
+    request_validation();
+  }, [studyPlan, request_validation]);
 
-    return (
-      <div ref={drag} className="alt-course" draggable>
-        {children}
-      </div>
-    );
-  }
+  const semesterLabels = studyPlan?.plan?.map(s => s.semester) || [];
 
-  function DroppableCell({ onDrop, children }) {
-    const [, drop] = useDrop(() => ({
-      accept: ItemTypes.UNIT,
-      drop: (item) => onDrop(item.unit),
-    }), [onDrop]);
+  const isUnitInPlan = (code) =>
+    studyPlan?.plan?.some(sem => sem.units.includes(code));
 
-    return (
-      <td ref={drop} className="drop-cell">
-        {children || '-'}
-      </td>
-    );
-  }
+  const handleDropToCell = (semIdx, unit) => {
+    if (!studyPlan || isUnitInPlan(unit.code)) return;
+    const updatedPlan = [...studyPlan.plan];
+    if (updatedPlan[semIdx].units.length < 4) {
+      updatedPlan[semIdx].units.push(unit.code);
+      setStudyPlan({ ...studyPlan, plan: updatedPlan });
+    }
+  };
 
-  function DroppablePanel({ section, children, onDropUnit }) {
-    const [, drop] = useDrop(() => ({
-      accept: ItemTypes.UNIT,
-      drop: (item) => onDropUnit(item.unit),
-    }), [onDropUnit]);
-
-    return (
-      <div ref={drop}>
-        <h3>{section.name}</h3>
-        <ul className="alt-course-list">{children}</ul>
-      </div>
-    );
-  }
+  const handleRemoveFromTable = (unit) => {
+    const updatedPlan = studyPlan.plan.map(sem => ({
+      ...sem,
+      units: sem.units.filter(code => code !== unit.code),
+    }));
+    setStudyPlan({ ...studyPlan, plan: updatedPlan });
+  };
 
   return (
     <DndProvider backend={HTML5Backend}>
