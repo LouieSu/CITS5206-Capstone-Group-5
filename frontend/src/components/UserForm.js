@@ -98,7 +98,7 @@ function UserForm() {
           </div>
         )}
 
-        {step === 5 && year === "2025" && course === "MIT" && (
+        {step === 5 && (year === "2025" && course === "MIT") && (
           <div className="step-container">
             <h2>Select Your Specialisation</h2>
             <select value={specialisation} onChange={(e) => setSpecialisation(e.target.value)}>
@@ -109,26 +109,25 @@ function UserForm() {
             </select>
             <div className="button-group">
               <button className="prev-btn" onClick={prevStep}>Previous</button>
-              <button
-                className="submit-btn"
-                onClick={handleSubmit}
-                disabled={!specialisation}
-              >
-                Submit
+              <button className="next-btn" onClick={nextStep} disabled={!specialisation}>
+                Next
               </button>
             </div>
           </div>
         )}
 
-        {(step === 5 && !(year === "2025" && course === "MIT")) && (
+        {((step === 5 && !(year === "2025" && course === "MIT")) || step === 6) && (
           <div className="step-container">
             <h2>Confirm Your Details</h2>
             <p><strong>Name:</strong> {name}</p>
             <p><strong>Year:</strong> {year}</p>
             <p><strong>Semester:</strong> {semester}</p>
             <p><strong>Course:</strong> {course}</p>
+            {(year === "2025" && course === "MIT") && (
+              <p><strong>Specialisation:</strong> {specialisation}</p>
+            )}
             <div className="button-group">
-              <button className="prev-btn" onClick={prevStep}>Previous</button>
+              <button className="prev-btn" onClick={() => setStep(step === 6 ? 5 : 4)}>Previous</button>
               <button className="submit-btn" onClick={handleSubmit}>Submit</button>
             </div>
           </div>
