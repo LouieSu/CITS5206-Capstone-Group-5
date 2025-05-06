@@ -30,6 +30,12 @@ function CourseSchedule() {
     return `${API_BASE_URL}/plan/${getRulesetCode()}/${getStartCode()}/${specKey}`;
   }, [year, course, specialisation, getSpecKey, getRulesetCode, getStartCode]);
 
+  const [validationResults, setValidationResults] = useState({
+    valid: null,
+    completedSpecialisations: [],
+    issues: [],
+  });
+  
   useEffect(() => {
     axios.get(`${API_BASE_URL}/ruleset/${getRulesetCode()}`)
       .then(res => setCourseRules(res.data))
@@ -86,35 +92,22 @@ function CourseSchedule() {
   }
 
   const rendering_validation_res = (res) => {
-    const messageDiv = document.querySelector('.user-message');
-
     if (res.data) {
-
       const { completed_specialisations, issues, valid } = res.data;
-      const spe_empty_prompt = completed_specialisations? "No Specialisation Completed" : "";
-    
 
-      const specialisationsText = (completed_specialisations ?? []).length
-        ? `Completed Specialisations: ${(completed_specialisations ?? []).join(', ')}`
-        : spe_empty_prompt;
-
-      const issuesText = issues.length
-        ? issues.map(issue => `<span class="error-message">- ${issue[0]}: ${issue[1]}</span>`).join('<br>')
-        : '<span class="success-message">No issues found.</span>';
-
-      const validationText = valid
-        ? '<span class="success-message">Study Plan Ready!</span>'
-        : '<span class="error-message">Incomplete study plan.</span>';
-
-      messageDiv.innerHTML = `
-        <p>${validationText}</p>
-        <p>${specialisationsText}</p>
-        <pre>${issuesText}</pre>
-      `;
+      setValidationResults({
+        valid,
+        completedSpecialisations: completed_specialisations || [],
+        issues: issues || [],
+      });
     } else {
-      messageDiv.innerHTML = '<p class="error-message">Validation response is empty or invalid.</p>';
+      setValidationResults({
+        valid: false,
+        completedSpecialisations: [],
+        issues: ["Validation response is empty or invalid."],
+      });
     }
-  }
+  };
 
   // request validation from backend and show validation results.
   const request_validation = (unit) => {
@@ -256,7 +249,27 @@ function CourseSchedule() {
 
               {/* Message Area */}
               <div className="user-message">
-                <p>Choose more courses</p>
+                {validationResults.completedSpecialisations.length > 0 && (
+                  <p className="info-message">
+                    Completed Specialisations: {validationResults.completedSpecialisations.join(", ")}
+                  </p>
+                )}
+
+                {validationResults.valid === null ? (
+                  <p className="info-message main-message">Choose more courses</p>
+                ) : validationResults.valid ? (
+                  <p className="success-message main-message">Study Plan Ready!</p>
+                ) : (
+                  <p className="error-message main-message">Incomplete study plan.</p>
+                )}
+                
+                {validationResults.issues.length > 0 && (
+                  <div className="issues-list">
+                    {validationResults.issues.map((issue, index) => (
+                      <p key={index} className="error-message issue-item">- <b>{issue[0]}</b>: {issue[1]} </p>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
