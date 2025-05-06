@@ -8,51 +8,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 const ItemTypes = { UNIT: 'unit' };
 
-function DraggableUnit({ unit, children }) {
-  const [, drag] = useDrag(() => ({
-    type: ItemTypes.UNIT,
-    item: { unit },
-  }), [unit]);
-
-  return (
-    <div ref={drag} className="alt-course" draggable>
-      {children}
-    </div>
-  );
-}
-
-function DroppableCell({ onDrop, children }) {
-  const [, drop] = useDrop(() => ({
-    accept: ItemTypes.UNIT,
-    drop: (item) => onDrop(item.unit),
-  }), [onDrop]);
-
-  return (
-    <td ref={drop} className="drop-cell">
-      {children || '-'}
-    </td>
-  );
-}
-
-function DroppablePanel({ section, children, onDropUnit }) {
-  const [, drop] = useDrop(() => ({
-    accept: ItemTypes.UNIT,
-    drop: (item) => onDropUnit(item.unit),
-  }), [onDropUnit]);
-
-  return (
-    <div ref={drop}>
-      <h3>{section.name}</h3>
-      <ul className="alt-course-list">{children}</ul>
-    </div>
-  );
-}
-
 function CourseSchedule() {
   const location = useLocation();
   const initialState = location.state || {};
 
-  // const [name] = useState(initialState.name || '');
   const [year, setYear] = useState(initialState.year || '2025');
   const [semester, setSemester] = useState(initialState.semester || 'S1');
   const [course, setCourse] = useState(initialState.course || 'MIT');
@@ -60,6 +19,11 @@ function CourseSchedule() {
   const [courseRules, setCourseRules] = useState(null);
   const [studyPlan, setStudyPlan] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [validationResults, setValidationResults] = useState({
+    valid: null,
+    completedSpecialisations: [],
+    issues: [],
+  });
 
   const getSpecKey = useCallback((spec) => spec.toLowerCase().split(' ').map(w => w[0]).join(''), []);
   const getRulesetCode = useCallback(() => `${course}-${year}`, [course, year]);
@@ -83,13 +47,18 @@ function CourseSchedule() {
       .finally(() => setLoading(false));
   }, [getPlanApiUrl]);
 
+  useEffect(() => {
+    request_validation();
+  }, [studyPlan]);
+
   const semesterLabels = studyPlan?.plan?.map(s => s.semester) || [];
 
   const isUnitInPlan = (code) =>
     studyPlan?.plan?.some(sem => sem.units.includes(code));
 
-  const handleDropToCell = (semIdx, unit) => {
+  const handleDropToCell = (semIdx, unit, semCode) => {
     if (!studyPlan || isUnitInPlan(unit.code)) return;
+    if (!unit.availability?.includes(semCode)) return;
     const updatedPlan = [...studyPlan.plan];
     if (updatedPlan[semIdx].units.length < 4) {
       updatedPlan[semIdx].units.push(unit.code);
@@ -104,6 +73,95 @@ function CourseSchedule() {
     }));
     setStudyPlan({ ...studyPlan, plan: updatedPlan });
   };
+
+  const _get_validation_API_name = () => {
+    return API_BASE_URL + "/validate-" + course.toLowerCase() + year;
+  };
+
+  const _transform_timetable = () => {
+    if (!studyPlan || !studyPlan.plan) {
+      return [];
+    }
+    return {
+      "timetable": studyPlan.plan.map(l => l.units)
+    };
+  };
+
+  const handle_validation_result = (res) => {
+    const specialisationMap = {
+      ac: "Applied Computing",
+      ai: "Artificial Intelligence",
+      ss: "Software Systems",
+    };
+
+    if (res.data) {
+      const { completed_specialisations, issues, valid } = res.data;
+      const mappedSpecialisations = (completed_specialisations || []).map(
+        (spec) => specialisationMap[spec] || spec
+      );
+
+      setValidationResults({
+        valid,
+        completedSpecialisations: mappedSpecialisations,
+        issues: issues || [],
+      });
+    } else {
+      setValidationResults({
+        valid: false,
+        completedSpecialisations: [],
+        issues: ["Validation response is empty or invalid."],
+      });
+    }
+  };
+
+  const request_validation = () => {
+    const api = _get_validation_API_name();
+    const params = _transform_timetable();
+    axios.post(api, params)
+      .then(res => handle_validation_result(res))
+      .catch(err => console.error('Validation failed:', err.response?.data || err.message));
+  };
+
+  function DraggableUnit({ unit, children }) {
+    const [, drag] = useDrag(() => ({
+      type: ItemTypes.UNIT,
+      item: { unit },
+    }), [unit]);
+
+    return (
+      <div ref={drag} className="alt-course" draggable>
+        {children}
+      </div>
+    );
+  }
+
+  function DroppableCell({ onDrop, children, semCode }) {
+    const [, drop] = useDrop(() => ({
+      accept: ItemTypes.UNIT,
+      canDrop: (item) => item.unit.availability?.includes(semCode),
+      drop: (item) => onDrop(item.unit, semCode),
+    }), [onDrop, semCode]);
+
+    return (
+      <td ref={drop} className="drop-cell">
+        {children || '-'}
+      </td>
+    );
+  }
+
+  function DroppablePanel({ section, children, onDropUnit }) {
+    const [, drop] = useDrop(() => ({
+      accept: ItemTypes.UNIT,
+      drop: (item) => onDropUnit(item.unit),
+    }), [onDropUnit]);
+
+    return (
+      <div ref={drop}>
+        <h3>{section.name}</h3>
+        <ul className="alt-course-list">{children}</ul>
+      </div>
+    );
+  }
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -146,45 +204,73 @@ function CourseSchedule() {
         {/* Main Table */}
         {loading ? <p>Loading...</p> : studyPlan && courseRules && (
           <>
-            <div className="schedule-table-wrapper">
-              <table className="schedule-table">
-                <thead>
-                  <tr>
-                    <th>Semester</th>
-                    <th>Course 1</th>
-                    <th>Course 2</th>
-                    <th>Course 3</th>
-                    <th>Course 4</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {semesterLabels.map((sem, semIdx) => (
-                    <tr key={sem}>
-                      <td><strong>{sem}</strong></td>
-                      {[0, 1, 2, 3].map(i => {
-                        const unitCode = studyPlan.plan[semIdx].units[i];
-                        const unit = Object.values(courseRules.sections).flatMap(s => s.units)
-                          .concat(Object.values(courseRules.specialisations || {}).flatMap(s => s.units || []))
-                          .find(u => u.code === unitCode);
-                        return (
-                          <DroppableCell
-                            key={i}
-                            onDrop={(newUnit) => handleDropToCell(semIdx, newUnit)}
-                          >
-                            {unit && (
-                              <DraggableUnit unit={unit}>
-                                <div onDoubleClick={() => handleRemoveFromTable(unit)}>
-                                  {unit.code} - {unit.name}
-                                </div>
-                              </DraggableUnit>
-                            )}
-                          </DroppableCell>
-                        );
-                      })}
+            <div className="schedule-table-container">
+              <div className="schedule-table-wrapper">
+                <table className="schedule-table">
+                  <thead>
+                    <tr>
+                      <th>Semester</th>
+                      <th>Course 1</th>
+                      <th>Course 2</th>
+                      <th>Course 3</th>
+                      <th>Course 4</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {semesterLabels.map((sem, semIdx) => (
+                      <tr key={sem}>
+                        <td><strong>{sem}</strong></td>
+                        {[0, 1, 2, 3].map(i => {
+                          const unitCode = studyPlan.plan[semIdx].units[i];
+                          const unit = Object.values(courseRules.sections).flatMap(s => s.units)
+                            .concat(Object.values(courseRules.specialisations || {}).flatMap(s => s.units || []))
+                            .find(u => u.code === unitCode);
+                          return (
+                            <DroppableCell
+                              key={i}
+                              semCode={sem}
+                              onDrop={(newUnit) => handleDropToCell(semIdx, newUnit, sem)}
+                            >
+                              {unit && (
+                                <DraggableUnit unit={unit}>
+                                  <div onDoubleClick={() => handleRemoveFromTable(unit)}>
+                                    {unit.code} - {unit.name}
+                                  </div>
+                                </DraggableUnit>
+                              )}
+                            </DroppableCell>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Message Area */}
+              <div className="user-message">
+                {validationResults.completedSpecialisations.length > 0 && (
+                  <p className="info-message">
+                    Matched Specialisations: {validationResults.completedSpecialisations.join(", ")}
+                  </p>
+                )}
+
+                {validationResults.valid === null ? (
+                  <p className="info-message main-message">Choose more courses</p>
+                ) : validationResults.valid ? (
+                  <p className="success-message main-message">Study Plan Ready!</p>
+                ) : (
+                  <p className="error-message main-message">Incomplete study plan.</p>
+                )}
+                
+                {validationResults.issues.length > 0 && (
+                  <div className="issues-list">
+                    {validationResults.issues.map((issue, index) => (
+                      <p key={index} className="error-message issue-item">- <b>{issue[0]}</b>: {issue[1]} </p>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Right-side Unit Panel */}
