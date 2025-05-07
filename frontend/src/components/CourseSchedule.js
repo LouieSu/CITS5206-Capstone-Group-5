@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './CourseSchedule.css';
@@ -52,7 +52,6 @@ function CourseSchedule() {
   const location = useLocation();
   const initialState = location.state || {};
 
-  // const [name] = useState(initialState.name || '');
   const [year, setYear] = useState(initialState.year || '2025');
   const [semester, setSemester] = useState(initialState.semester || 'S1');
   const [course, setCourse] = useState(initialState.course || 'MIT');
@@ -60,6 +59,7 @@ function CourseSchedule() {
   const [courseRules, setCourseRules] = useState(null);
   const [studyPlan, setStudyPlan] = useState(null);
   const [loading, setLoading] = useState(false);
+  const isImportingRef = useRef(false);
 
   const getSpecKey = useCallback((spec) => spec.toLowerCase().split(' ').map(w => w[0]).join(''), []);
   const getRulesetCode = useCallback(() => `${course}-${year}`, [course, year]);
@@ -69,67 +69,32 @@ function CourseSchedule() {
     return `${API_BASE_URL}/plan/${getRulesetCode()}/${getStartCode()}/${specKey}`;
   }, [year, course, specialisation, getSpecKey, getRulesetCode, getStartCode]);
 
-  // fetched from backend
   const [validationResults, setValidationResults] = useState({
     valid: null,
     completedSpecialisations: [],
     issues: [],
   });
 
-  const _get_validation_API_name = useCallback(() => {
-    return API_BASE_URL + "/validate-" + course.toLowerCase() + year;
-  }, [course, year]);
-
-  const _transform_timetable = useCallback(() => {
-    if (!studyPlan || !studyPlan.plan) {
-      return [];
-    }
-    return {
-      timetable: studyPlan.plan.map(l => l.units),
-    };
-  }, [studyPlan]);
+  const _get_validation_API_name = useCallback(() => `${API_BASE_URL}/validate-${course.toLowerCase()}${year}`, [course, year]);
+  const _transform_timetable = useCallback(() => ({ timetable: studyPlan?.plan?.map(l => l.units) || [] }), [studyPlan]);
 
   const handle_validation_result = useCallback((res) => {
-    const specialisationMap = {
-      ac: "Applied Computing",
-      ai: "Artificial Intelligence",
-      ss: "Software Systems",
-    };
-
+    const specialisationMap = { ac: 'Applied Computing', ai: 'Artificial Intelligence', ss: 'Software Systems' };
     if (res.data) {
       const { completed_specialisations, issues, valid } = res.data;
-
-      // Map abbreviations to full names
-      const mappedSpecialisations = (completed_specialisations || []).map(
-        (spec) => specialisationMap[spec] || spec // Use the full name if available, otherwise fallback to the original value
-      );
-
-      setValidationResults({
-        valid,
-        completedSpecialisations: mappedSpecialisations,
-        issues: issues || [],
-      });
+      const mappedSpecialisations = (completed_specialisations || []).map(spec => specialisationMap[spec] || spec);
+      setValidationResults({ valid, completedSpecialisations: mappedSpecialisations, issues: issues || [] });
     } else {
-      setValidationResults({
-        valid: false,
-        completedSpecialisations: [],
-        issues: ["Validation response is empty or invalid."],
-      });
+      setValidationResults({ valid: false, completedSpecialisations: [], issues: ['Validation response is empty or invalid.'] });
     }
   }, []);
 
   const request_validation = useCallback(() => {
-    const api = _get_validation_API_name();
-    const params = _transform_timetable();
-    axios.post(api, params)
-      .then(res => {
-        handle_validation_result(res);
-      })
-      .catch(err => {
-        console.error('Validation failed:', err.response?.data || err.message);
-      });
+    axios.post(_get_validation_API_name(), _transform_timetable())
+      .then(res => handle_validation_result(res))
+      .catch(err => console.error('Validation failed:', err.response?.data || err.message));
   }, [_get_validation_API_name, _transform_timetable, handle_validation_result]);
-  
+
   useEffect(() => {
     axios.get(`${API_BASE_URL}/ruleset/${getRulesetCode()}`)
       .then(res => setCourseRules(res.data))
@@ -137,6 +102,10 @@ function CourseSchedule() {
   }, [getRulesetCode]);
 
   useEffect(() => {
+    if (isImportingRef.current) {
+      isImportingRef.current = false;
+      return;
+    }
     setLoading(true);
     axios.get(getPlanApiUrl())
       .then(res => setStudyPlan(res.data))
@@ -144,15 +113,11 @@ function CourseSchedule() {
       .finally(() => setLoading(false));
   }, [getPlanApiUrl]);
 
-
-  useEffect(() => {
-    request_validation();
-  }, [studyPlan, request_validation]);
+  useEffect(() => { request_validation(); }, [studyPlan, request_validation]);
 
   const semesterLabels = studyPlan?.plan?.map(s => s.semester) || [];
 
-  const isUnitInPlan = (code) =>
-    studyPlan?.plan?.some(sem => sem.units.includes(code));
+  const isUnitInPlan = (code) => studyPlan?.plan?.some(sem => sem.units.includes(code));
 
   const handleDropToCell = (semIdx, unit) => {
     if (!studyPlan || isUnitInPlan(unit.code)) return;
@@ -164,17 +129,57 @@ function CourseSchedule() {
   };
 
   const handleRemoveFromTable = (unit) => {
-    const updatedPlan = studyPlan.plan.map(sem => ({
-      ...sem,
-      units: sem.units.filter(code => code !== unit.code),
-    }));
+    const updatedPlan = studyPlan.plan.map(sem => ({ ...sem, units: sem.units.filter(code => code !== unit.code) }));
     setStudyPlan({ ...studyPlan, plan: updatedPlan });
+  };
+
+  const handleExportPlan = () => {
+    if (!studyPlan) return alert('No study plan to export.');
+    const specKey = (year === '2025' && course === 'MIT') ? getSpecKey(specialisation) : 'none';
+    const filename = `${year}-${course.toLowerCase()}-${semester.toLowerCase()}-${specKey}.json`;
+    const blob = new Blob([JSON.stringify(studyPlan, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportPlan = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      try {
+        const importedData = JSON.parse(event.target.result);
+        if (!importedData || !importedData.plan || !importedData.ruleset_code || !importedData.start)
+          throw new Error('Invalid study plan format');
+        const [importedCourse, importedYear] = importedData.ruleset_code.split('-');
+        const importedSemester = importedData.start.slice(2);
+        const importedSpecKey = importedData.specialisation || 'none';
+        const specMap = { ac: 'Applied Computing', ai: 'Artificial Intelligence', ss: 'Software Systems' };
+        setYear(importedYear);
+        setCourse(importedCourse);
+        setSemester(importedSemester);
+        if (importedCourse === 'MIT' && importedYear === '2025') {
+          setSpecialisation(specMap[importedSpecKey] || 'Software Systems');
+        }
+        isImportingRef.current = true;
+        setStudyPlan(importedData);
+        const ruleUrl = `${API_BASE_URL}/ruleset/${importedCourse}-${importedYear}`;
+        const ruleRes = await axios.get(ruleUrl);
+        setCourseRules(ruleRes.data);
+      } catch (err) {
+        alert('Failed to import study plan: ' + err.message);
+      }
+    };
+    reader.readAsText(file);
   };
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="schedule-page">
-        {/* Filter Panel */}
         <div className="filter-bar">
           <div className="filter-group">
             <label>Year:</label>
@@ -207,7 +212,30 @@ function CourseSchedule() {
               </select>
             </div>
           )}
+          <div className="filter-group">
+            <button className="export-button" onClick={handleExportPlan}>
+              Export Plan
+            </button>
+          </div>
+          <div className="filter-group">
+            <button
+              className="import-button"
+              onClick={() => document.getElementById('importInput').click()}
+            >
+              Import Plan
+            </button>
+            <input
+              type="file"
+              id="importInput"
+              accept=".json"
+              onChange={handleImportPlan}
+              style={{ display: "none" }}
+            />
+          </div>
+
+
         </div>
+
         
 
         {/* Main Table */}
