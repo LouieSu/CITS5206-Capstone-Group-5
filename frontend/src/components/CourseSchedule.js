@@ -69,6 +69,67 @@ function CourseSchedule() {
     return `${API_BASE_URL}/plan/${getRulesetCode()}/${getStartCode()}/${specKey}`;
   }, [year, course, specialisation, getSpecKey, getRulesetCode, getStartCode]);
 
+  // fetched from backend
+  const [validationResults, setValidationResults] = useState({
+    valid: null,
+    completedSpecialisations: [],
+    issues: [],
+  });
+
+  const _get_validation_API_name = useCallback(() => {
+    return API_BASE_URL + "/validate-" + course.toLowerCase() + year;
+  }, [course, year]);
+
+  const _transform_timetable = useCallback(() => {
+    if (!studyPlan || !studyPlan.plan) {
+      return [];
+    }
+    return {
+      timetable: studyPlan.plan.map(l => l.units),
+    };
+  }, [studyPlan]);
+
+  const handle_validation_result = useCallback((res) => {
+    const specialisationMap = {
+      ac: "Applied Computing",
+      ai: "Artificial Intelligence",
+      ss: "Software Systems",
+    };
+
+    if (res.data) {
+      const { completed_specialisations, issues, valid } = res.data;
+
+      // Map abbreviations to full names
+      const mappedSpecialisations = (completed_specialisations || []).map(
+        (spec) => specialisationMap[spec] || spec // Use the full name if available, otherwise fallback to the original value
+      );
+
+      setValidationResults({
+        valid,
+        completedSpecialisations: mappedSpecialisations,
+        issues: issues || [],
+      });
+    } else {
+      setValidationResults({
+        valid: false,
+        completedSpecialisations: [],
+        issues: ["Validation response is empty or invalid."],
+      });
+    }
+  }, []);
+
+  const request_validation = useCallback(() => {
+    const api = _get_validation_API_name();
+    const params = _transform_timetable();
+    axios.post(api, params)
+      .then(res => {
+        handle_validation_result(res);
+      })
+      .catch(err => {
+        console.error('Validation failed:', err.response?.data || err.message);
+      });
+  }, [_get_validation_API_name, _transform_timetable, handle_validation_result]);
+  
   useEffect(() => {
     axios.get(`${API_BASE_URL}/ruleset/${getRulesetCode()}`)
       .then(res => setCourseRules(res.data))
@@ -82,6 +143,11 @@ function CourseSchedule() {
       .catch(() => setStudyPlan(null))
       .finally(() => setLoading(false));
   }, [getPlanApiUrl]);
+
+
+  useEffect(() => {
+    request_validation();
+  }, [studyPlan, request_validation]);
 
   const semesterLabels = studyPlan?.plan?.map(s => s.semester) || [];
 
@@ -142,49 +208,77 @@ function CourseSchedule() {
             </div>
           )}
         </div>
+        
 
         {/* Main Table */}
         {loading ? <p>Loading...</p> : studyPlan && courseRules && (
           <>
-            <div className="schedule-table-wrapper">
-              <table className="schedule-table">
-                <thead>
-                  <tr>
-                    <th>Semester</th>
-                    <th>Course 1</th>
-                    <th>Course 2</th>
-                    <th>Course 3</th>
-                    <th>Course 4</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {semesterLabels.map((sem, semIdx) => (
-                    <tr key={sem}>
-                      <td><strong>{sem}</strong></td>
-                      {[0, 1, 2, 3].map(i => {
-                        const unitCode = studyPlan.plan[semIdx].units[i];
-                        const unit = Object.values(courseRules.sections).flatMap(s => s.units)
-                          .concat(Object.values(courseRules.specialisations || {}).flatMap(s => s.units || []))
-                          .find(u => u.code === unitCode);
-                        return (
-                          <DroppableCell
-                            key={i}
-                            onDrop={(newUnit) => handleDropToCell(semIdx, newUnit)}
-                          >
-                            {unit && (
-                              <DraggableUnit unit={unit}>
-                                <div onDoubleClick={() => handleRemoveFromTable(unit)}>
-                                  {unit.code} - {unit.name}
-                                </div>
-                              </DraggableUnit>
-                            )}
-                          </DroppableCell>
-                        );
-                      })}
+            <div className="schedule-table-container">
+              <div className="schedule-table-wrapper">
+                <table className="schedule-table">
+                  <thead>
+                    <tr>
+                      <th>Semester</th>
+                      <th>Course 1</th>
+                      <th>Course 2</th>
+                      <th>Course 3</th>
+                      <th>Course 4</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {semesterLabels.map((sem, semIdx) => (
+                      <tr key={sem}>
+                        <td><strong>{sem}</strong></td>
+                        {[0, 1, 2, 3].map(i => {
+                          const unitCode = studyPlan.plan[semIdx].units[i];
+                          const unit = Object.values(courseRules.sections).flatMap(s => s.units)
+                            .concat(Object.values(courseRules.specialisations || {}).flatMap(s => s.units || []))
+                            .find(u => u.code === unitCode);
+                          return (
+                            <DroppableCell
+                              key={i}
+                              onDrop={(newUnit) => handleDropToCell(semIdx, newUnit)}
+                            >
+                              {unit && (
+                                <DraggableUnit unit={unit}>
+                                  <div onDoubleClick={() => handleRemoveFromTable(unit)}>
+                                    {unit.code} - {unit.name}
+                                  </div>
+                                </DraggableUnit>
+                              )}
+                            </DroppableCell>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Message Area */}
+              <div className="user-message">
+              {validationResults.completedSpecialisations.length > 0 && (
+                <p className="info-message">
+                    Matched Specialisations: {validationResults.completedSpecialisations.join(", ")}
+                </p>
+              )}
+
+                {validationResults.valid === null ? (
+                  <p className="info-message main-message">Choose more courses</p>
+                ) : validationResults.valid ? (
+                  <p className="success-message main-message">Study Plan Ready!</p>
+                ) : (
+                  <p className="error-message main-message">Incomplete study plan.</p>
+                )}
+                
+                {validationResults.issues.length > 0 && (
+                  <div className="issues-list">
+                    {validationResults.issues.map((issue, index) => (
+                      <p key={index} className="error-message issue-item">- <b>{issue[0]}</b>: {issue[1]} </p>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Right-side Unit Panel */}
