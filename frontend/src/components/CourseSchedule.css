@@ -300,3 +300,19 @@
   font-weight: normal; /* Normal weight for issues */
   line-height: 1.5; /* Add spacing between lines for readability */
 }
+
+.export-button,
+.import-button {
+  padding: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+}
+
+
+
