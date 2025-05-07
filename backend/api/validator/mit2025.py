@@ -92,10 +92,10 @@ def validate(student_timetable):
         validation_results.append(("Graduation", f"Only {total_credits} credit points completed, need 96"))
 
     missing_core = [u for u in core_units if u not in unit_to_semester]
-    
 
     for unit in missing_core:
         validation_results.append(("Core", f"Missing core unit: {unit}"))
+
     conversion_section = None
     for section in target_ruleset.findall(".//section"):
         if section.findtext("code") == "conversion":
@@ -118,6 +118,11 @@ def validate(student_timetable):
                     "Conversion",
                     f"Only {earned_points} points from {cond_units}, need {cond_points}"
                 ))
+        elif earned_points > cond_points:
+            validation_results.append((
+                    "Conversion",
+                f"{earned_points} points taken from {cond_units}, but only {cond_points} allowed"
+                 )) 
 
     # Check specialization
     specialisation_codes = {"ai", "ss", "ac"}

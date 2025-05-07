@@ -15,14 +15,32 @@ unit_prereqs = {}
 unit_offered = {}
 unit_levels = {}
 unit_points = {}
+# Map conditionGroup codes to their conditions
+condition_group_map = {}
+
+for group in units_root.findall(".//conditionGroup"):
+    group_code = group.findtext("code")
+    if group_code:
+        # Extract all <unit> codes from nested conditions
+        units = set()
+        for unit_elem in group.findall(".//unit"):
+            units.add(unit_elem.text.strip())
+        condition_group_map[group_code] = units
+
 
 for unit in units_root.findall(".//Unit"):
     code = unit.attrib.get("code")
-    prereqs = [prereq.text.strip() for prereq in unit.findall(".//Prerequisite")]
+    prereqs = set()
+    for prereq_group in unit.findall(".//prerequisites"):
+        for cond_group in prereq_group.findall("conditionGroup"):
+            ref = cond_group.attrib.get("ref")
+            if ref and ref in condition_group_map:
+                prereqs.update(condition_group_map[ref])
+    unit_prereqs[code] = list(prereqs)
+
     availability = unit.attrib.get("availability", "")
     level = unit.attrib.get("level", "")
     points = int(unit.attrib.get("points", "6"))
-    unit_prereqs[code] = prereqs
     unit_offered[code] = availability
     unit_levels[code] = level
     unit_points[code] = points
@@ -116,6 +134,12 @@ def validate(student_timetable):
                     "Conversion",
                     f"Only {earned_points} points from {cond_units}, need {cond_points}"
                 ))
+        elif earned_points > cond_points:
+            validation_results.append((
+                    "Conversion",
+                f"{earned_points} points taken from {cond_units}, but only {cond_points} allowed"
+                 ))  
+   
 
     if not validation_results:
         return {
