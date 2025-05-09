@@ -15,14 +15,32 @@ unit_prereqs = {}
 unit_offered = {}
 unit_levels = {}
 unit_points = {}
+# Map conditionGroup codes to their conditions
+condition_group_map = {}
+
+for group in units_root.findall(".//conditionGroup"):
+    group_code = group.findtext("code")
+    if group_code:
+        # Extract all <unit> codes from nested conditions
+        units = set()
+        for unit_elem in group.findall(".//unit"):
+            units.add(unit_elem.text.strip())
+        condition_group_map[group_code] = units
+
 
 for unit in units_root.findall(".//Unit"):
     code = unit.attrib.get("code")
-    prereqs = [prereq.text.strip() for prereq in unit.findall(".//Prerequisite")]
+    prereqs = set()
+    for prereq_group in unit.findall(".//prerequisites"):
+        for cond_group in prereq_group.findall("conditionGroup"):
+            ref = cond_group.attrib.get("ref")
+            if ref and ref in condition_group_map:
+                prereqs.update(condition_group_map[ref])
+    unit_prereqs[code] = list(prereqs)
+
     availability = unit.attrib.get("availability", "")
     level = unit.attrib.get("level", "")
     points = int(unit.attrib.get("points", "6"))
-    unit_prereqs[code] = prereqs
     unit_offered[code] = availability
     unit_levels[code] = level
     unit_points[code] = points
@@ -90,13 +108,38 @@ def validate(student_timetable):
 
     # Core and Conversion validation
     missing_core = [u for u in core_units if u not in unit_to_semester]
-    missing_conversion = [u for u in conversion_units if u not in unit_to_semester]
-
+    
     for unit in missing_core:
         validation_results.append(("Core", f"Missing core unit: {unit}"))
 
-    for unit in missing_conversion:
-        validation_results.append(("Conversion", f"Missing conversion unit: {unit}"))
+    conversion_section = None
+    for section in target_ruleset.findall(".//section"):
+        if section.findtext("code") == "conversion":
+            conversion_section = section
+            break
+    if conversion_section is not None:
+        taken_units = set(unit_to_semester.keys())
+        conversion_conditions = conversion_section.findall(".//condition")
+
+    for cond in conversion_conditions:
+        cond_type = cond.findtext("type")
+        cond_points = int(cond.findtext("points"))
+        cond_units = [u.strip() for u in cond.findtext("units").split(",")]
+
+        matched = taken_units.intersection(cond_units)
+        earned_points = sum(unit_points.get(u, 6) for u in matched)
+
+        if earned_points < cond_points:
+            validation_results.append((
+                    "Conversion",
+                    f"Only {earned_points} points from {cond_units}, need {cond_points}"
+                ))
+        elif earned_points > cond_points:
+            validation_results.append((
+                    "Conversion",
+                f"{earned_points} points taken from {cond_units}, but only {cond_points} allowed"
+                 ))  
+   
 
     if not validation_results:
         return {
