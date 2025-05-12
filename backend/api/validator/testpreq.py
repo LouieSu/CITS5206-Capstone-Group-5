@@ -1,20 +1,18 @@
 from availability_and_prereq_checker import validate_study_plan
 
 # Define a sample plan that triggers both availability and prerequisite errors
-sample_plan = [
-    ["CITS2002"],       # Not available in 24S1 and missing prereq
-    ["CITS1401"],       # Available in 24S2 (ok)
-    ["CITS5506"],       # Requires PythonCompletedMITMDS
-    ["CITS5508", "CITS4404"]  # Should be fine if prereqs met
+plan = [
+    ["CITS1003", "CITS1401", "CITS1402", "PHIL4100"],  # 25S2
+    ["CITS2005", "CITS5505", "CITS4401", "CITS5508"]   # 26S1  # Should be fine if prereqs met
 ]
-starting_semester = "24S1"
+starting_semester = "25S2"
+result = validate_study_plan(plan, starting_semester)
 
-result = validate_study_plan(sample_plan, starting_semester)
+# Print results
+print("Availability Issues:")
+for issue in result["availability"]:
+    print(f" - {issue['unit']} not offered in {issue['semester']}")
 
-print("=== AVAILABILITY ===")
-for entry in result["availability"]:
-    print(entry)
-
-print("\n=== PREREQUISITE ERRORS ===")
-for unit, msg in result["prerequisite_issues"]:
-    print(f"{unit}: {msg}")
+print("\nPrerequisite Issues:")
+for unit, issue in result["prerequisite_issues"]:
+    print(f" - {unit}: {issue}")
