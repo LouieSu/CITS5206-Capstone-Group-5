@@ -8,15 +8,55 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 const ItemTypes = { UNIT: 'unit' };
 
-function DraggableUnit({ unit, children }) {
+function DraggableUnit({ unit, children, availability, prereq }) {
   const [, drag] = useDrag(() => ({
     type: ItemTypes.UNIT,
     item: { unit },
   }), [unit]);
 
+  // Check if the unit is unsatisfied based on availability or prereq
+  const isUnavailable = availability?.some(a => a.unit === unit.code && !a.available);
+  const hasPrereqIssue = prereq?.some(p => p[0] === unit.code);
+
+  const isUnsatisfied = isUnavailable || hasPrereqIssue; // A unit is unsatisfied if it's unavailable or has a prereq issue
+  const [showTooltip, setShowTooltip] = useState(false); // State for showing/hiding the tooltip
+
+  // Tooltip message logic
+  const availabilityMessage = isUnavailable
+    ? `${unit.code} is not available in ${availability.find(a => a.unit === unit.code)?.semester}`
+    : null;
+
+  const prereqMessage = hasPrereqIssue
+    ? prereq.find(p => p[0] === unit.code)?.[1]
+    : null;
+
+  const tooltipMessages = [
+    { type: 'availability', message: availabilityMessage },
+    { type: 'prereq', message: prereqMessage },
+  ].filter(msg => msg.message); // Collect all messages with types
+
   return (
-    <div ref={drag} className="alt-course" draggable>
+    <div
+      ref={drag}
+      className={`alt-course draggable-unit ${isUnsatisfied ? 'unsatisfied-unit' : ''}`}
+      draggable
+      onMouseEnter={() => isUnsatisfied && setShowTooltip(true)} // Show tooltip on hover
+      onMouseLeave={() => setShowTooltip(false)} // Hide tooltip when mouse leaves
+    >
       {children}
+      {isUnsatisfied && <span className="exclamation-icon">!</span>}
+      {showTooltip && (
+        <div className="tooltip">
+          {tooltipMessages.map((msg, index) => (
+            <div
+              key={index}
+              className={`tooltip-message ${msg.type === 'availability' ? 'availability-message' : 'prereq-message'}`}
+            >
+              {msg.message}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -75,19 +115,37 @@ function CourseSchedule() {
     issues: [],
   });
 
-  const _get_validation_API_name = useCallback(() => `${API_BASE_URL}/validate-${course.toLowerCase()}${year}`, [course, year]);
-  const _transform_timetable = useCallback(() => ({ timetable: studyPlan?.plan?.map(l => l.units) || [] }), [studyPlan]);
+  const [availability, setAvailability] = useState([]);
+  const [prereq, setPrereq] = useState([]);
 
-  const handle_validation_result = useCallback((res) => {
-    const specialisationMap = { ac: 'Applied Computing', ai: 'Artificial Intelligence', ss: 'Software Systems' };
-    if (res.data) {
-      const { completed_specialisations, issues, valid } = res.data;
-      const mappedSpecialisations = (completed_specialisations || []).map(spec => specialisationMap[spec] || spec);
-      setValidationResults({ valid, completedSpecialisations: mappedSpecialisations, issues: issues || [] });
-    } else {
-      setValidationResults({ valid: false, completedSpecialisations: [], issues: ['Validation response is empty or invalid.'] });
+  const _get_validation_API_name = useCallback(() => `${API_BASE_URL}/validate-${course.toLowerCase()}${year}`, [course, year]);
+  const _transform_timetable = useCallback(() => (
+    { 
+      "timetable": studyPlan?.plan?.map(l => l.units) || [],
+      "starting_sem": year.slice(-2) + semester
     }
-  }, []);
+  ), [studyPlan, semester, year]);
+
+const handle_validation_result = useCallback((res) => {
+  const specialisationMap = { ac: 'Applied Computing', ai: 'Artificial Intelligence', ss: 'Software Systems' };
+  if (res.data) {
+    const { completed_specialisations, issues, valid } = res.data.validation;
+    const availability  = res.data.prereq.availability; 
+    const prereq = res.data.prereq.prerequisite_issues; 
+
+    const mappedSpecialisations = (completed_specialisations || []).map(spec => specialisationMap[spec] || spec);
+
+    setValidationResults({ valid, completedSpecialisations: mappedSpecialisations, issues: issues || [] });
+    setAvailability(availability || []); // Store availability in state
+    setPrereq(prereq || []); // Store prereq in state
+  } else {
+    setValidationResults({ valid: false, completedSpecialisations: [], issues: ['Validation response is empty or invalid.'] });
+    setAvailability([]);
+    setPrereq([]);
+  }
+}, []);
+
+
 
   const request_validation = useCallback(() => {
     axios.post(_get_validation_API_name(), _transform_timetable())
@@ -268,7 +326,7 @@ function CourseSchedule() {
                               onDrop={(newUnit) => handleDropToCell(semIdx, newUnit)}
                             >
                               {unit && (
-                                <DraggableUnit unit={unit}>
+                                <DraggableUnit unit={unit} availability={availability} prereq={prereq}>
                                   <div onDoubleClick={() => handleRemoveFromTable(unit)}>
                                     {unit.code} - {unit.name}
                                   </div>

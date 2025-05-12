@@ -314,5 +314,63 @@
   text-align: center;
 }
 
+.draggable-unit {
+  position: relative;
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between the icon and children */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
 
+.unsatisfied-unit {
+  background-color: #ffe6e6; /* Light red background for unsatisfied units */
+}
 
+.unsatisfied-unit:hover {
+  background-color: #ffcccc; /* Darker red background when hovered */
+}
+
+.exclamation-icon {
+  color: #ff4d4d; /* Red color for the exclamation icon */
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.tooltip {
+  position: absolute;
+  top: -30px; /* Position the tooltip above the unit */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff; /* White background for the tooltip */
+  color: #333; /* Default text color */
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none; /* Prevent tooltip from interfering with mouse events */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-message {
+  margin-bottom: 4px; /* Add spacing between messages */
+}
+
+.tooltip-message:last-child {
+  margin-bottom: 0; /* Remove spacing for the last message */
+}
+
+.availability-message {
+  color: #d9534f; /* Red color for availability issues */
+}
+
+.prereq-message {
+  color: #f0ad4e; /* Orange color for prerequisite issues */
+}
+
+.draggable-unit {
+  position: relative; /* Ensure the tooltip is positioned relative to the unit */
+}

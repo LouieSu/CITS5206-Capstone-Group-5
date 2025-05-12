@@ -6,6 +6,7 @@ from .validator.mit2024 import validate as validate_mit2024_func
 from .validator.mit2025 import validate as validate_mit2025_func
 from .validator.mds2024 import validate as validate_mds2024_func
 from .validator.mds2025 import validate as validate_mds2025_func
+from .validator.availability_and_prereq_checker import validate_study_plan
 
 def setup_signal(request):
     return JsonResponse({"message": "UWA Study Planner, Backend communication good!"})
@@ -40,50 +41,38 @@ def default_plan(request, ruleset_code, start, specialisation):
 
 @csrf_exempt
 def validate_mit2024(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            timetable = data.get("timetable", [])
-            result = validate_mit2024_func(timetable)
-            return JsonResponse(result)
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=400)
-    else:
-        return JsonResponse({"error": "Only POST method allowed"}, status=405)
+    return do_validation(request, validate_mit2024_func)
+
     
 @csrf_exempt
 def validate_mit2025(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            timetable = data.get("timetable", [])
-            result = validate_mit2025_func(timetable)
-            return JsonResponse(result, safe=False)
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=400)
-    else:
-        return JsonResponse({"error": "Only POST method allowed"}, status=405)
+    return do_validation(request, validate_mit2025_func)
+
     
 @csrf_exempt
 def validate_mds2024(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            timetable = data.get("timetable", [])
-            result = validate_mds2024_func(timetable)
-            return JsonResponse(result, safe=False)
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=400)
-    else:
-        return JsonResponse({"error": "Only POST method allowed"}, status=405)
+    return do_validation(request, validate_mds2024_func)
+
 
 @csrf_exempt
 def validate_mds2025(request):
+    return do_validation(request, validate_mds2025_func)
+
+
+def do_validation(request, func):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
             timetable = data.get("timetable", [])
-            result = validate_mds2025_func(timetable)
+            starting_sem = data.get("starting_sem", None)
+            if len(timetable) == 0:
+                return JsonResponse({}, safe=False) 
+            valid = func(timetable) if len(timetable) > 0 else {}
+            prereq = validate_study_plan(timetable, starting_sem) if starting_sem is not None else {}
+            result = {
+                "validation": valid,
+                "prereq": prereq
+            }
             return JsonResponse(result, safe=False)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
