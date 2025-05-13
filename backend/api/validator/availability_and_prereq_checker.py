@@ -92,13 +92,15 @@ def validate_study_plan(plan, starting_semester):
     for i, sem_units in enumerate(plan):
         for unit in sem_units:
             label = semester_labels[i]
+            semester_only = label[-2:]  # Extracts "S1" or "S2"
             available = check_unit_availability(unit, label)
-            if not available:  # Only include if not available
+            if not available:
                 availability_results.append({
                     "unit": unit,
-                    "semester": label,
+                    "semester": semester_only,
                     "available": False
-                })
+            })
+
     prereq_issues = check_prerequisites(plan)
     return {
         "availability": availability_results,
