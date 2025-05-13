@@ -51,19 +51,19 @@ for unit in units_root.findall(".//unit"):
     unit_prereqs[code] = list(prereqs)
 
 # Helper functions
-def generate_semester_labels(starting_semester, num_semesters):
-    year = int(starting_semester[:2])
-    half = starting_semester[-2:]
-    labels = []
+def generate_semester_labels_fixed_year(starting_semester, num_semesters):
+    year = starting_semester[:2]  # e.g., "24"
+    start_sem = starting_semester[-2:].upper()  # "S1" or "S2"
     sem_cycle = ["S1", "S2"]
-    start_index = sem_cycle.index(half)
+    start_index = sem_cycle.index(start_sem)
 
+    labels = []
     for i in range(num_semesters):
         current_index = (start_index + i) % 2
-        current_year = year + ((start_index + i) // 2)
-        label = f"{current_year:02d}{sem_cycle[current_index]}"
+        label = f"{year}{sem_cycle[current_index]}"
         labels.append(label)
     return labels
+
 
 def check_unit_availability(unit_code, semester_label):
     offered = unit_availability.get(unit_code, "")
@@ -87,7 +87,7 @@ def check_prerequisites(unit_plan):
 
 # ✅ Function you can use like an API
 def validate_study_plan(plan, starting_semester):
-    semester_labels = generate_semester_labels(starting_semester, len(plan))
+    semester_labels = generate_semester_labels_fixed_year(starting_semester, len(plan))
     availability_results = []
     for i, sem_units in enumerate(plan):
         for unit in sem_units:
