@@ -86,10 +86,6 @@
                                 </condition>
                             </conditions>
                         </conditionGroup>
-                        <condition>
-                            <type>Unit</type>
-                            <unit>STAT2062</unit>
-                        </condition>
                     </conditions>
                 </conditionGroup>
             </conditions>
@@ -167,7 +163,7 @@
         <code>STAT2401</code>
         <point>6</point>
         <name>Analysis of Experiments</name>
-        <availability>24S1</availability>
+        <availability>24S1,25S1</availability>
 
         <prerequisites>
             <!-- Refer to a pre-defined ConditionGroup -->
@@ -179,7 +175,7 @@
         <code>STAT2402</code>
         <point>6</point>
         <name>Analysis of Observations</name>
-        <availability>24S1</availability>
+        <availability>24S2,25S2</availability>
 
         <prerequisites>
             <!-- Refer to a pre-defined ConditionGroup -->
@@ -288,7 +284,7 @@
         <code>STAT4066</code>
         <point>6</point>
         <name>Bayesian Computing and Statistics</name>
-        <availability>25S2</availability>
+        <availability>24S2,25S2</availability>
 
         <prerequisites>
             <conditionGroup ref="STAT4066Prereq"/>
