@@ -100,6 +100,7 @@ function CourseSchedule() {
   const [studyPlan, setStudyPlan] = useState(null);
   const [loading, setLoading] = useState(false);
   const isImportingRef = useRef(false);
+  const [isFilterBarExpanded, setIsFilterBarExpanded] = useState(true); // Added state for filter bar
 
   const getSpecKey = useCallback((spec) => spec.toLowerCase().split(' ').map(w => w[0]).join(''), []);
   const getRulesetCode = useCallback(() => `${course}-${year}`, [course, year]);
@@ -238,163 +239,169 @@ const handle_validation_result = useCallback((res) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="schedule-page">
-        <div className="filter-bar">
-          <div className="filter-group">
-            <label>Year:</label>
-            <select value={year} onChange={(e) => setYear(e.target.value)}>
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
-            </select>
-          </div>
-          <div className="filter-group">
-            <label>Semester:</label>
-            <select value={semester} onChange={(e) => setSemester(e.target.value)}>
-              <option value="S1">S1</option>
-              <option value="S2">S2</option>
-            </select>
-          </div>
-          <div className="filter-group">
-            <label>Course:</label>
-            <select value={course} onChange={(e) => setCourse(e.target.value)}>
-              <option value="MIT">MIT</option>
-              <option value="MDS">MDS</option>
-            </select>
-          </div>
-          {year === '2025' && course === 'MIT' && (
-            <div className="filter-group">
-              <label>Specialisation:</label>
-              <select value={specialisation} onChange={(e) => setSpecialisation(e.target.value)}>
-                <option value="Applied Computing">Applied Computing</option>
-                <option value="Artificial Intelligence">Artificial Intelligence</option>
-                <option value="Software Systems">Software Systems</option>
-              </select>
-            </div>
+        <div className={`filter-bar ${isFilterBarExpanded ? 'expanded' : 'collapsed'}`}>
+          <button onClick={() => setIsFilterBarExpanded(!isFilterBarExpanded)} className="filter-toggle-button">
+            {isFilterBarExpanded ? '✕' : '☰'} {/* Changed text to icons */}
+          </button>
+          {isFilterBarExpanded && (
+            <>
+              <div className="filter-group">
+                <label>Year:</label>
+                <select value={year} onChange={(e) => setYear(e.target.value)}>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                </select>
+              </div>
+              <div className="filter-group">
+                <label>Semester:</label>
+                <select value={semester} onChange={(e) => setSemester(e.target.value)}>
+                  <option value="S1">S1</option>
+                  <option value="S2">S2</option>
+                </select>
+              </div>
+              <div className="filter-group">
+                <label>Course:</label>
+                <select value={course} onChange={(e) => setCourse(e.target.value)}>
+                  <option value="MIT">MIT</option>
+                  <option value="MDS">MDS</option>
+                </select>
+              </div>
+              {year === '2025' && course === 'MIT' && (
+                <div className="filter-group">
+                  <label>Specialisation:</label>
+                  <select value={specialisation} onChange={(e) => setSpecialisation(e.target.value)}>
+                    <option value="Applied Computing">Applied Computing</option>
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Software Systems">Software Systems</option>
+                  </select>
+                </div>
+              )}
+              <div className="filter-group">
+                <button className="export-button" onClick={handleExportPlan}>
+                  Export Plan
+                </button>
+              </div>
+              <div className="filter-group">
+                <button
+                  className="import-button"
+                  onClick={() => document.getElementById('importInput').click()}
+                >
+                  Import Plan
+                </button>
+                <input
+                  type="file"
+                  id="importInput"
+                  accept=".json"
+                  onChange={handleImportPlan}
+                  style={{ display: "none" }}
+                />
+              </div>
+            </>
           )}
-          <div className="filter-group">
-            <button className="export-button" onClick={handleExportPlan}>
-              Export Plan
-            </button>
-          </div>
-          <div className="filter-group">
-            <button
-              className="import-button"
-              onClick={() => document.getElementById('importInput').click()}
-            >
-              Import Plan
-            </button>
-            <input
-              type="file"
-              id="importInput"
-              accept=".json"
-              onChange={handleImportPlan}
-              style={{ display: "none" }}
-            />
-          </div>
-
-
         </div>
 
-        
-
-        {/* Main Table */}
-        {loading ? <p>Loading...</p> : studyPlan && courseRules && (
-          <>
-            <div className="schedule-table-container">
-              <div className="schedule-table-wrapper">
-                <table className="schedule-table">
-                  <thead>
-                    <tr>
-                      <th>Semester</th>
-                      <th>Course 1</th>
-                      <th>Course 2</th>
-                      <th>Course 3</th>
-                      <th>Course 4</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {semesterLabels.map((sem, semIdx) => (
-                      <tr key={sem}>
-                        <td><strong>{sem}</strong></td>
-                        {[0, 1, 2, 3].map(i => {
-                          const unitCode = studyPlan.plan[semIdx].units[i];
-                          const unit = Object.values(courseRules.sections).flatMap(s => s.units)
-                            .concat(Object.values(courseRules.specialisations || {}).flatMap(s => s.units || []))
-                            .find(u => u.code === unitCode);
-                          return (
-                            <DroppableCell
-                              key={i}
-                              onDrop={(newUnit) => handleDropToCell(semIdx, newUnit)}
-                            >
-                              {unit && (
-                                <DraggableUnit unit={unit} availability={availability} prereq={prereq}>
-                                  <div onDoubleClick={() => handleRemoveFromTable(unit)}>
-                                    {unit.code} - {unit.name}
-                                  </div>
-                                </DraggableUnit>
-                              )}
-                            </DroppableCell>
-                          );
-                        })}
+        {/* Wrap table and unit panel in main-content-wrapper */}
+        <div className="main-content-wrapper">
+          {/* Main Table and Messages */}
+          {loading ? <p>Loading...</p> : studyPlan && courseRules && (
+            <>
+              <div className="schedule-table-container">
+                <div className="schedule-table-wrapper">
+                  <table className="schedule-table">
+                    <thead>
+                      <tr>
+                        <th>Semester</th>
+                        <th>Course 1</th>
+                        <th>Course 2</th>
+                        <th>Course 3</th>
+                        <th>Course 4</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {semesterLabels.map((sem, semIdx) => (
+                        <tr key={sem}>
+                          <td><strong>{sem}</strong></td>
+                          {[0, 1, 2, 3].map(i => {
+                            const unitCode = studyPlan.plan[semIdx].units[i];
+                            const unit = Object.values(courseRules.sections).flatMap(s => s.units)
+                              .concat(Object.values(courseRules.specialisations || {}).flatMap(s => s.units || []))
+                              .find(u => u.code === unitCode);
+                            return (
+                              <DroppableCell
+                                key={i}
+                                onDrop={(newUnit) => handleDropToCell(semIdx, newUnit)}
+                              >
+                                {unit && (
+                                  <DraggableUnit unit={unit} availability={availability} prereq={prereq}>
+                                    <div onDoubleClick={() => handleRemoveFromTable(unit)}>
+                                      {unit.code} - {unit.name}
+                                    </div>
+                                  </DraggableUnit>
+                                )}
+                              </DroppableCell>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Message Area */}
+                <div className="user-message">
+                {validationResults.completedSpecialisations.length > 0 && (
+                  <p className="info-message">
+                      Matched Specialisations: {validationResults.completedSpecialisations.join(", ")}
+                  </p>
+                )}
+
+                  {validationResults.valid === null ? (
+                    <p className="info-message main-message">Choose more courses</p>
+                  ) : validationResults.valid ? (
+                    <p className="success-message main-message">Study Plan Ready!</p>
+                  ) : (
+                    <p className="error-message main-message">Incomplete study plan.</p>
+                  )}
+                  
+                  {validationResults.issues.length > 0 && (
+                    <div className="issues-list">
+                      {validationResults.issues.map((issue, index) => (
+                        <p key={index} className="error-message issue-item">- <b>{issue[0]}</b>: {issue[1]} </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
-              {/* Message Area */}
-              <div className="user-message">
-              {validationResults.completedSpecialisations.length > 0 && (
-                <p className="info-message">
-                    Matched Specialisations: {validationResults.completedSpecialisations.join(", ")}
-                </p>
-              )}
-
-                {validationResults.valid === null ? (
-                  <p className="info-message main-message">Choose more courses</p>
-                ) : validationResults.valid ? (
-                  <p className="success-message main-message">Study Plan Ready!</p>
-                ) : (
-                  <p className="error-message main-message">Incomplete study plan.</p>
-                )}
-                
-                {validationResults.issues.length > 0 && (
-                  <div className="issues-list">
-                    {validationResults.issues.map((issue, index) => (
-                      <p key={index} className="error-message issue-item">- <b>{issue[0]}</b>: {issue[1]} </p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Right-side Unit Panel */}
-            <div className="alt-courses-container">
-              {Object.entries(courseRules.sections).map(([key, section], idx) => (
-                <DroppablePanel key={idx} section={section} onDropUnit={handleRemoveFromTable}>
-                  {section.units.filter(u => !isUnitInPlan(u.code)).map((u, i) => (
-                    <li key={i}>
-                      <DraggableUnit unit={u}>{u.code} - {u.name}</DraggableUnit>
-                    </li>
-                  ))}
-                </DroppablePanel>
-              ))}
-              {year === '2025' && course === 'MIT' && courseRules.specialisations && courseRules.specialisations[getSpecKey(specialisation)] && (
-                <DroppablePanel
-                  section={courseRules.specialisations[getSpecKey(specialisation)]}
-                  onDropUnit={handleRemoveFromTable}
-                >
-                  {courseRules.specialisations[getSpecKey(specialisation)].units
-                    .filter(u => !isUnitInPlan(u.code))
-                    .map((u, i) => (
+              {/* Right-side Unit Panel */}
+              <div className="alt-courses-container">
+                {Object.entries(courseRules.sections).map(([key, section], idx) => (
+                  <DroppablePanel key={idx} section={section} onDropUnit={handleRemoveFromTable}>
+                    {section.units.filter(u => !isUnitInPlan(u.code)).map((u, i) => (
                       <li key={i}>
                         <DraggableUnit unit={u}>{u.code} - {u.name}</DraggableUnit>
                       </li>
                     ))}
-                </DroppablePanel>
-              )}
-            </div>
-          </>
-        )}
+                  </DroppablePanel>
+                ))}
+                {year === '2025' && course === 'MIT' && courseRules.specialisations && courseRules.specialisations[getSpecKey(specialisation)] && (
+                  <DroppablePanel
+                    section={courseRules.specialisations[getSpecKey(specialisation)]}
+                    onDropUnit={handleRemoveFromTable}
+                  >
+                    {courseRules.specialisations[getSpecKey(specialisation)].units
+                      .filter(u => !isUnitInPlan(u.code))
+                      .map((u, i) => (
+                        <li key={i}>
+                          <DraggableUnit unit={u}>{u.code} - {u.name}</DraggableUnit>
+                        </li>
+                      ))}
+                  </DroppablePanel>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </DndProvider>
   );
