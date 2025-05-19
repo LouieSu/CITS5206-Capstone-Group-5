@@ -568,3 +568,75 @@ div.schedule-table-wrapper {
 .filter-bar.collapsed .import-button {
   display: none;
 }
+
+.print-button,
+.export-button,
+.import-button {
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: normal;
+  transition: background-color 0.3s ease;
+  display: block; /* Make buttons take up full width of their container */
+  width: 100%; /* Ensure full width */
+  text-align: center; /* Center text in button */
+  margin-bottom: 5px; /* Add a little space below each button */
+}
+
+.print-button {
+  background-color: #28a745; /* Green */
+  margin-top: 10px; /* Added top margin */
+}
+
+.export-button {
+  background-color: #007bff; /* Blue */
+}
+
+.import-button {
+  background-color: #6c757d; /* Grey */
+}
+
+.print-button:last-child,
+.export-button:last-child,
+.import-button:last-child {
+  margin-bottom: 0; /* Remove margin for the last button in a group if needed, though each is in its own filter-group */
+}
+
+.print-button:hover {
+  background-color: #218838; /* Darker Green */
+}
+
+.export-button:hover {
+  background-color: #0056b3; /* Darker Blue */
+}
+
+.import-button:hover {
+  background-color: #5a6268; /* Darker Grey */
+}
+
+/* Print-specific styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .schedule-table-container, .schedule-table-container * {
+    visibility: visible;
+  }
+  .schedule-table-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  .filter-bar,
+  .alt-courses-container,
+  .filter-toggle-button,
+  .export-button,
+  .import-button,
+  .print-button {
+    display: none !important;
+  }
+}

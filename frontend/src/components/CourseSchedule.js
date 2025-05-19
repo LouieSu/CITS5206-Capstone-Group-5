@@ -236,6 +236,10 @@ const handle_validation_result = useCallback((res) => {
     reader.readAsText(file);
   };
 
+  const handlePrintPlan = () => {
+    window.print();
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="schedule-page">
@@ -276,6 +280,11 @@ const handle_validation_result = useCallback((res) => {
                   </select>
                 </div>
               )}
+              <div className="filter-group">
+                <button className="print-button" onClick={handlePrintPlan}>
+                  Print Plan
+                </button>
+              </div>
               <div className="filter-group">
                 <button className="export-button" onClick={handleExportPlan}>
                   Export Plan
