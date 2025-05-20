@@ -118,6 +118,7 @@ function CourseSchedule() {
 
   const [availability, setAvailability] = useState([]);
   const [prereq, setPrereq] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
 
   const _get_validation_API_name = useCallback(() => `${API_BASE_URL}/validate-${course.toLowerCase()}${year}`, [course, year]);
   const _transform_timetable = useCallback(() => (
@@ -127,31 +128,37 @@ function CourseSchedule() {
     }
   ), [studyPlan, semester, year]);
 
-const handle_validation_result = useCallback((res) => {
-  const specialisationMap = { ac: 'Applied Computing', ai: 'Artificial Intelligence', ss: 'Software Systems' };
-  if (res.data) {
-    const { completed_specialisations, issues, valid } = res.data.validation;
-    const availability  = res.data.prereq.availability; 
-    const prereq = res.data.prereq.prerequisite_issues; 
+  const handle_validation_result = useCallback((res) => {
+    const specialisationMap = { ac: 'Applied Computing', ai: 'Artificial Intelligence', ss: 'Software Systems' };
+    if (res.data) {
+      const { completed_specialisations = [], issues = [], valid = false } = res.data.validation;
+      const availability  = res.data.prereq.availability; 
+      const prereq = res.data.prereq.prerequisite_issues; 
+      const suggestions = res.data.suggestion.suggestions;
 
-    const mappedSpecialisations = (completed_specialisations || []).map(spec => specialisationMap[spec] || spec);
+      const mappedSpecialisations =completed_specialisations.map(spec => specialisationMap[spec] || spec);
 
-    setValidationResults({ valid, completedSpecialisations: mappedSpecialisations, issues: issues || [] });
-    setAvailability(availability || []); // Store availability in state
-    setPrereq(prereq || []); // Store prereq in state
-  } else {
-    setValidationResults({ valid: false, completedSpecialisations: [], issues: ['Validation response is empty or invalid.'] });
-    setAvailability([]);
-    setPrereq([]);
-  }
-}, []);
+      setValidationResults({ valid, completedSpecialisations: mappedSpecialisations, issues: issues || [] });
+      setAvailability(availability || []); // Store availability in state
+      setPrereq(prereq || []); // Store prereq in state
+      setSuggestions(suggestions);
+    } else {
+      setValidationResults({ valid: false, completedSpecialisations: [], issues: ['Validation response is empty or invalid.'] });
+      setAvailability([]);
+      setPrereq([]);
+      setSuggestions([]);
+    }
+  }, []);
 
 
 
   const request_validation = useCallback(() => {
-    axios.post(_get_validation_API_name(), _transform_timetable())
-      .then(res => handle_validation_result(res))
-      .catch(err => console.error('Validation failed:', err.response?.data || err.message));
+    const param = _transform_timetable()
+    if (param['timetable'] && param['timetable'].length > 0){
+        axios.post(_get_validation_API_name(), _transform_timetable())
+              .then(res => handle_validation_result(res))
+              .catch(err => console.error('Validation failed:', err.response?.data || err.message));
+    }
   }, [_get_validation_API_name, _transform_timetable, handle_validation_result]);
 
   useEffect(() => {
@@ -305,6 +312,18 @@ const handle_validation_result = useCallback((res) => {
                   style={{ display: "none" }}
                 />
               </div>
+              {suggestions.length > 0 && (
+                <div className="suggestions-panel">
+                  <h4 className="suggestions-title">Suggestions:</h4>
+                  <ul className="suggestions-list">
+                    {suggestions.map((suggestion, index) => (
+                      <li key={index} className="suggestion-item">
+                        {suggestion}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </>
           )}
         </div>
