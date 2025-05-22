@@ -96,7 +96,7 @@ const mockValidationResult = {
     availability: [{ unit: 'CITS5501', available: true, semester: '2025 S1' }],
     prerequisite_issues: [['CITS5501', 'Prerequisite for CITS5501 not met']],
   },
-  suggestions: [], // Added suggestions property
+  suggestion: { suggestions: [] }, // <-- Fix: wrap suggestions in a suggestion object
 };
 
 let getElementByIdSpy;
