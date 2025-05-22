@@ -46,5 +46,8 @@
       "[/\\\\]node_modules[/\\\\](?!axios/).+\\\\.(js|jsx|mjs|cjs|ts|tsx)$",
       "^.+\\\\.module\\\\.(css|sass|scss)$"
     ]
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
   }
 }
