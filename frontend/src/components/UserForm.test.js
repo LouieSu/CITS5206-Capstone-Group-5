@@ -20,43 +20,32 @@ describe('UserForm', () => {
   test('renders initial step (Enter Your Name)', () => {
     expect(screen.getByText(/Enter Your Name/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Your Name/i)).toBeInTheDocument();
-    expect(screen.getByText(/Next/i)).toBeDisabled();
   });
 
-  test('enables Next button when name is entered', () => {
+  test('shows year selection when name is entered', () => {
     fireEvent.change(screen.getByPlaceholderText(/Your Name/i), { target: { value: 'Test User' } });
-    expect(screen.getByText(/Next/i)).not.toBeDisabled();
-  });
-
-  test('progresses to step 2 (Select Your Start Year) on Next click', () => {
-    fireEvent.change(screen.getByPlaceholderText(/Your Name/i), { target: { value: 'Test User' } });
-    fireEvent.click(screen.getByText(/Next/i));
     expect(screen.getByText(/Select Your Start Year/i)).toBeInTheDocument();
-    expect(screen.getByText(/Previous/i)).toBeInTheDocument();
-    expect(screen.getByText(/Next/i)).toBeDisabled();
   });
 
   test('progresses through all steps and submits', () => {
     // Step 1: Name
     fireEvent.change(screen.getByPlaceholderText(/Your Name/i), { target: { value: 'Test User' } });
-    fireEvent.click(screen.getByText(/Next/i));
 
     // Step 2: Year
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: '2025' } });
-    fireEvent.click(screen.getByText(/Next/i));
+    // The year dropdown should be visible now
+    fireEvent.change(screen.getByText(/Select Year/i).closest('select'), { target: { value: '2025' } });
 
     // Step 3: Semester
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'S1' } });
-    fireEvent.click(screen.getByText(/Next/i));
+    // The semester dropdown should be visible now
+    fireEvent.change(screen.getByText(/Select Semester/i).closest('select'), { target: { value: 'S1' } });
 
     // Step 4: Course
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'MIT' } });
-    fireEvent.click(screen.getByText(/Next/i));
+    // The course dropdown should be visible now
+    fireEvent.change(screen.getByText(/Select Course/i).closest('select'), { target: { value: 'MIT' } });
 
     // Step 5: Specialisation (conditionally rendered for MIT 2025)
     expect(screen.getByText(/Select Your Specialisation/i)).toBeInTheDocument();
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'Software Systems' } });
-    fireEvent.click(screen.getByText(/Next/i));
+    fireEvent.change(screen.getByText(/Select Specialisation/i).closest('select'), { target: { value: 'Software Systems' } });
     
     // Step 6: Confirmation
     expect(screen.getByText(/Confirm Your Details/i)).toBeInTheDocument();
@@ -97,19 +86,15 @@ describe('UserForm', () => {
   test('skips specialisation step for non-MIT 2025 courses', () => {
     // Step 1: Name
     fireEvent.change(screen.getByPlaceholderText(/Your Name/i), { target: { value: 'Test User' } });
-    fireEvent.click(screen.getByText(/Next/i));
 
     // Step 2: Year
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: '2024' } });
-    fireEvent.click(screen.getByText(/Next/i));
+    fireEvent.change(screen.getByText(/Select Year/i).closest('select'), { target: { value: '2024' } });
 
     // Step 3: Semester
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'S1' } });
-    fireEvent.click(screen.getByText(/Next/i));
+    fireEvent.change(screen.getByText(/Select Semester/i).closest('select'), { target: { value: 'S1' } });
 
     // Step 4: Course
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'MDS' } });
-    fireEvent.click(screen.getByText(/Next/i));
+    fireEvent.change(screen.getByText(/Select Course/i).closest('select'), { target: { value: 'MDS' } });
 
     // Step 5: Confirmation (specialisation step should be skipped)
     expect(screen.getByText(/Confirm Your Details/i)).toBeInTheDocument();
@@ -139,7 +124,7 @@ describe('UserForm', () => {
         year: '2024',
         semester: 'S1',
         course: 'MDS',
-        specialisation: '', // Should be empty as it was skipped
+        specialisation: undefined, // Should be undefined as it was skipped and reset
       },
     });
   });
