@@ -2,10 +2,10 @@
 .schedule-page {
   display: flex;
   justify-content: space-between;
-  padding: 40px;
-  gap: 32px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
+  padding: 20px; /* Reduced padding */
+  gap: 20px; /* Reduced gap */
+  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font stack */
+  background-color: #f4f7f9; /* Lighter background */
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -14,83 +14,106 @@
 .schedule-container {
   flex: 2;
   background: #ffffff;
-  padding: 32px;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  padding: 25px; /* Adjusted padding */
+  border-radius: 12px; /* Softer corners */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); /* Softer shadow */
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 40px); /* Adjusted max-height */
   overflow: hidden;
 }
 
 .schedule-container h2 {
-  font-size: 26px;
-  margin-bottom: 20px;
-  color: #34495e;
+  font-size: 24px; /* Slightly smaller */
+  margin-bottom: 18px; /* Adjusted margin */
+  color: #2c3e50; /* Darker, more professional color */
 }
 
 .schedule-info {
-  margin-bottom: 20px;
+  margin-bottom: 18px; /* Adjusted margin */
 }
 
 .schedule-info p {
-  margin: 4px 0;
-  font-size: 14px;
-  color: #555;
+  margin: 5px 0; /* Adjusted margin */
+  font-size: 15px; /* Slightly larger for readability */
+  color: #555e68; /* Softer text color */
 }
 
 /* ===== Study Plan Table ===== */
 .schedule-table-wrapper {
   flex: 1;
   overflow-y: auto;
-  margin-top: 10px;
-  padding-right: 4px;
+  margin-top: 15px; /* Adjusted margin */
+  padding-right: 8px; /* Increased padding for scrollbar */
+  border: 1px solid #e0e6ed; /* Light border for definition */
+  border-radius: 8px; /* Rounded corners */
 }
 
 .schedule-table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+  border-collapse: separate; /* Changed for modern styling, allows border-spacing */
+  border-spacing: 0; /* Remove default spacing */
+  margin-top: 0; /* Removed margin as wrapper has it */
 }
 
 .schedule-table th,
 .schedule-table td {
-  border: 1px solid #e0e0e0;
-  padding: 12px 16px;
-  text-align: center;
+  border-bottom: 1px solid #e0e6ed; /* Horizontal lines only */
+  padding: 14px 18px; /* Increased padding */
+  text-align: left; /* Align text to the left for readability */
   font-size: 14px;
+  vertical-align: middle; /* Better vertical alignment */
 }
 
+.schedule-table th:first-child,
+.schedule-table td:first-child {
+  padding-left: 20px; /* More padding for the first column */
+}
+
+
 .schedule-table thead th {
-  background-color: #e3f2fd;
-  color: #1e88e5;
+  background-color: #f8f9fa; /* Lighter header background */
+  color: #343a40; /* Darker header text */
+  font-weight: 600; /* Bolder header text */
+  border-top: none; /* Remove top border for cleaner look with wrapper */
+  border-bottom-width: 2px; /* Thicker bottom border for header */
+  position: sticky; /* Make header sticky */
+  top: 0;
+  z-index: 10;
 }
 
 .schedule-table tbody tr:nth-child(even) {
-  background-color: #fafafa;
+  background-color: #fdfdfe; /* Very subtle striping */
+}
+
+.schedule-table tbody tr:hover {
+  background-color: #f1f5f8; /* Hover effect for rows */
 }
 
 .schedule-table td strong {
-  color: #34495e;
+  color: #2c3e50;
+  font-weight: 600;
 }
 
 /* ===== Optional Courses Panel ===== */
 .alt-courses-container {
   flex: 1;
   background: #ffffff;
-  padding: 28px;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  padding: 20px; /* Adjusted padding */
+  border-radius: 12px; /* Softer corners */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); /* Softer shadow */
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 40px); /* Adjusted max-height */
   overflow-y: auto;
 }
 
 .alt-courses-container h3 {
-  font-size: 20px;
-  margin-bottom: 14px;
-  color: #34495e;
+  font-size: 18px; /* Adjusted size */
+  margin-bottom: 12px; /* Adjusted margin */
+  color: #2c3e50;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e6ed;
 }
 
 .alt-course-list {
@@ -99,280 +122,523 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px; /* Reduced gap */
   overflow-y: auto;
   flex: 1;
   height: 100%;
-  padding-right: 4px;
+  padding-right: 8px; /* Increased padding for scrollbar */
 }
 
 .alt-course {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  background-color: #f5f8ff;
+  gap: 10px; /* Adjusted gap */
+  padding: 12px 15px; /* Adjusted padding */
+  background-color: #f8f9fa; /* Lighter background */
   font-size: 14px;
-  color: #2c3e50;
-  border-radius: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.04);
-  transition: background-color 0.2s ease;
-  cursor: pointer;
+  color: #343a40; /* Darker text */
+  border-radius: 8px; /* Softer corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Added transform and shadow transition */
+  cursor: grab; /* Changed cursor */
+  border: 1px solid #e0e6ed; /* Light border */
 }
 
 .alt-course:hover {
-  background-color: #e3ecf9;
+  background-color: #e9ecef; /* Slightly darker hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.07); /* Enhanced shadow on hover */
 }
 
 /* ===== Course Type Color Dots ===== */
-.course-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+/* Removed as per modern UI trends, can be re-added if needed */
 
-.core { background-color: #42a5f5; }
-.elective { background-color: #66bb6a; }
-.specialisation { background-color: #ffa726; }
-.other { background-color: #ab47bc; }
-
-/* ===== Scrollbar Styling (Optional) ===== */
+/* ===== Scrollbar Styling ===== */
 .alt-course-list::-webkit-scrollbar,
 .schedule-table-wrapper::-webkit-scrollbar {
-  width: 6px;
+  width: 8px; /* Slightly wider */
 }
 
 .alt-course-list::-webkit-scrollbar-thumb,
 .schedule-table-wrapper::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.15);
-  border-radius: 3px;
+  background-color: #bdc3c7; /* More visible scrollbar thumb */
+  border-radius: 4px;
 }
 
 .alt-course-list::-webkit-scrollbar-track,
 .schedule-table-wrapper::-webkit-scrollbar-track {
-  background-color: transparent;
+  background-color: #f1f1f1; /* Lighter track */
 }
-
-
-
-
 
 .filter-bar {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 18px; /* Increased gap */
   padding: 20px;
-  max-width: 200px;
+  background-color: #ffffff; /* White background for filter bar */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); /* Subtle shadow */
+  /* max-width: 240px; -- Let flex-basis control this */
+  flex: 0 0 240px; /* Fixed width */
+  transition: flex-basis 0.3s ease, padding 0.3s ease, width 0.3s ease; /* Added transitions */
+  overflow: hidden; /* Prevent content spill during transition */
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column; /* Stack label and select vertically */
 }
 
 .filter-group label {
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-weight: 600; /* Bolder label */
+  margin-bottom: 8px; /* Space between label and select */
+  font-size: 14px; /* Consistent font size */
+  color: #34495e; /* Professional color */
 }
 
 .filter-group select {
-  padding: 8px;
-  font-size: 16px;
+  padding: 10px 12px; /* Comfortable padding */
+  font-size: 15px;
   width: 100%;
+  border: 1px solid #ced4da; /* Standard border */
+  border-radius: 6px; /* Rounded corners */
+  background-color: #fff; /* White background */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Smooth transition */
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-.schedule-page {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-/* Left filter bar */
-.filter-bar {
-  flex: 0 0 220px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Main table wrapper */
-.schedule-table-wrapper {
-  flex: 1;
-  overflow-x: auto;
-}
-
-/* Right unit panel */
-.alt-courses-container {
-  flex: 0 0 250px;
-  overflow-y: auto;
-  max-height: 80vh;
-}
-
-/* Maintain clarity on the unit lists */
-.alt-course-list {
-  list-style: none;
-  padding-left: 0;
-}
-
-.alt-course {
-  margin-bottom: 8px;
-  background: #f4f4f4;
-  padding: 8px;
-  border-radius: 4px;
-  cursor: grab;
-  border: 1px solid #ccc;
-}
-
-/* Table styling */
-.schedule-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.schedule-table th,
-.schedule-table td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: center;
-  min-width: 120px;
+.filter-group select:focus {
+  border-color: #80bdff; /* Highlight on focus */
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Focus glow */
+  outline: none; /* Remove default outline */
 }
 
 /* Drop cell style */
 .drop-cell {
-  background-color: #f9f9f9;
+  background-color: #f9fafb; /* Lighter, cleaner background */
+  border: 1px dashed #d1d8e0; /* Dashed border to indicate droppable area */
+  transition: background-color 0.2s ease;
+  height: 60px; /* Ensure a minimum height */
+  vertical-align: middle;
+}
+
+.drop-cell:hover {
+  background-color: #eef2f7; /* Visual feedback on hover */
 }
 
 /* General User Message Styling */
 .user-message {
-  margin-top: 20px;
-  padding: 12px;
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  margin-top: 25px; /* Increased margin */
+  padding: 18px 20px; /* Increased padding */
+  background-color: #f8f9fa; /* Lighter background */
+  border: 1px solid #e0e6ed; /* Softer border */
+  border-radius: 8px; /* Rounded corners */
   text-align: center;
-  font-size: 14px;
-  color: #555;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 15px; /* Consistent font size */
+  color: #495057; /* Softer text color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
 }
 
 /* Success Message */
 .success-message {
-  color: #28a745; /* Green for success */
-  font-weight: bold;
+  color: #22a06b; /* Refined green */
+  font-weight: 600; /* Bolder */
+  background-color: #e9f9f2; /* Light green background */
+  border-left: 4px solid #22a06b; /* Accent border */
+  padding: 12px 15px;
+  margin-bottom: 10px;
 }
 
 /* Error Message */
 .error-message {
-  color: #dc3545; /* Red for errors */
-  font-weight: bold;
+  color: #e74c3c; /* Refined red */
+  font-weight: 600; /* Bolder */
+  background-color: #fdedec; /* Light red background */
+  border-left: 4px solid #e74c3c; /* Accent border */
+  padding: 12px 15px;
+  margin-bottom: 10px;
 }
 
 /* Info Message */
 .info-message {
-  color: #007bff; /* Blue for informational messages */
-  font-weight: bold;
+  color: #3498db; /* Refined blue */
+  font-weight: 600; /* Bolder */
+  background-color: #eaf5fc; /* Light blue background */
+  border-left: 4px solid #3498db; /* Accent border */
+  padding: 12px 15px;
+  margin-bottom: 10px;
 }
 
 /* Main Message Styling */
 .main-message {
-  font-size: 18px; /* Larger font size for the main message */
-  font-weight: bold; /* Make it bold for emphasis */
-  margin-bottom: 10px; /* Add spacing below the main message */
+  font-size: 17px; /* Adjusted size */
+  font-weight: 600; /* Bolder */
+  margin-bottom: 12px; /* Adjusted margin */
 }
 
 /* Issues List Styling */
 .issues-list {
-  margin-top: 10px; /* Add spacing above the issues list */
+  margin-top: 12px; /* Adjusted margin */
+  text-align: left; /* Align issues to the left */
+  padding-left: 10px;
 }
 
 .issue-item {
-  font-size: 14px; /* Smaller font size for issues */
-  font-weight: normal; /* Normal weight for issues */
-  line-height: 1.5; /* Add spacing between lines for readability */
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.6; /* Increased line height */
+  color: #555e68; /* Softer color for issue details */
 }
+.issue-item b {
+  color: #c0392b; /* Make the issue code more prominent */
+}
+
 
 .export-button,
 .import-button {
-  padding: 8px;
-  font-size: 16px;
-  font-weight: bold;
+  padding: 10px 15px; /* Adjusted padding */
+  font-size: 15px; /* Consistent font size */
+  font-weight: 600; /* Bolder */
   width: 100%;
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: #3498db; /* Primary button color */
+  color: white; /* White text */
+  border: none; /* Remove border */
   border-radius: 6px;
   cursor: pointer;
   text-align: center;
+  transition: background-color 0.2s ease, transform 0.1s ease; /* Smooth transition */
+  margin-top: 5px; /* Add some space if they are stacked */
 }
+
+.export-button:hover,
+.import-button:hover {
+  background-color: #2980b9; /* Darker shade on hover */
+  transform: translateY(-1px); /* Slight lift on hover */
+}
+
+.import-button {
+  background-color: #5cb85c; /* Green for import */
+}
+
+.import-button:hover {
+  background-color: #4cae4c; /* Darker green on hover */
+}
+
 
 .draggable-unit {
   position: relative;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 10px 12px; /* Adjusted padding */
+  border-radius: 6px; /* Softer corners */
   display: flex;
   align-items: center;
-  gap: 8px; /* Space between the icon and children */
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  gap: 8px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease; /* Added box-shadow transition */
+  border: 1px solid transparent; /* Prepare for border change on unsatisfied */
+  background-color: #fff; /* Default background */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.draggable-unit:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .unsatisfied-unit {
-  background-color: #ffe6e6; /* Light red background for unsatisfied units */
+  background-color: #fff0f0; /* Lighter red background */
+  border-left: 3px solid #e74c3c; /* Red accent border */
+  color: #7c241c; /* Darker text for contrast */
 }
 
 .unsatisfied-unit:hover {
-  background-color: #ffcccc; /* Darker red background when hovered */
+  background-color: #ffe6e6; /* Slightly darker on hover */
 }
 
 .exclamation-icon {
-  color: #ff4d4d; /* Red color for the exclamation icon */
+  color: #e74c3c; /* Consistent red */
   font-weight: bold;
-  font-size: 18px;
-  margin-right: 8px;
+  font-size: 16px; /* Adjusted size */
+  margin-right: 5px; /* Adjusted margin */
 }
 
 .tooltip {
   position: absolute;
-  top: -30px; /* Position the tooltip above the unit */
+  top: calc(100% + 5px); /* Position below the unit */
   left: 50%;
   transform: translateX(-50%);
-  background-color: #fff; /* White background for the tooltip */
-  color: #333; /* Default text color */
-  padding: 10px;
-  border-radius: 4px;
+  background-color: #343a40; /* Dark background for tooltip */
+  color: #f8f9fa; /* Light text */
+  padding: 8px 12px; /* Adjusted padding */
+  border-radius: 6px; /* Rounded corners */
   font-size: 12px;
   white-space: nowrap;
   z-index: 1000;
-  pointer-events: none; /* Prevent tooltip from interfering with mouse events */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15); /* Softer shadow */
+  opacity: 0; /* Hidden by default */
+  visibility: hidden; /* Hidden by default */
+  transition: opacity 0.2s ease, visibility 0.2s ease; /* Smooth transition */
 }
 
+.draggable-unit:hover .tooltip { /* Show tooltip on hover of the draggable unit */
+  opacity: 1;
+  visibility: visible;
+}
+
+
 .tooltip-message {
-  margin-bottom: 4px; /* Add spacing between messages */
+  margin-bottom: 5px; /* Adjusted spacing */
+  padding: 2px 0;
 }
 
 .tooltip-message:last-child {
-  margin-bottom: 0; /* Remove spacing for the last message */
+  margin-bottom: 0;
 }
 
 .availability-message {
-  color: #d9534f; /* Red color for availability issues */
+  color: #fab1a0; /* Lighter red for tooltip */
 }
 
 .prereq-message {
-  color: #f0ad4e; /* Orange color for prerequisite issues */
+  color: #ffeaa7; /* Lighter orange for tooltip */
 }
 
-.draggable-unit {
-  position: relative; /* Ensure the tooltip is positioned relative to the unit */
+/* Ensure the table container allows for horizontal scrolling if content overflows */
+.schedule-table-container {
+    display: flex; /* Use flex to manage children layout */
+    flex-direction: column; /* Stack table and messages vertically */
+    flex-grow: 1; /* Allow this container to grow */
+    overflow-x: auto; /* Enable horizontal scrolling for the whole container if table is too wide */
+}
+
+/* Specific styling for the div containing the table for better scroll management */
+div.schedule-table-wrapper {
+    overflow-x: auto; /* Ensures the table itself can scroll horizontally if needed */
+    width: 100%;
+}
+
+/* Adjustments for the main page layout to ensure filter bar and unit panel have fixed widths */
+.schedule-page {
+    display: flex;
+    flex-direction: row; /* Main axis is horizontal */
+    align-items: flex-start; /* Align items to the top */
+    padding: 20px;
+    gap: 20px;
+    background-color: #f4f7f9;
+    min-height: 100vh;
+}
+
+/* Filter bar on the left */
+.filter-bar {
+    flex: 0 0 240px; /* Do not grow, do not shrink, basis of 240px */
+    /* Other styles like padding, background, etc., are already defined */
+}
+
+/* Container for the table and messages in the middle */
+.schedule-table-container {
+    flex: 1 1 auto; /* Can grow and shrink, basis is auto */
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Important for flex items that might overflow */
+}
+
+/* Unit panel on the right */
+.alt-courses-container {
+    flex: 0 0 280px; /* Do not grow, do not shrink, basis of 280px */
+    /* Other styles like padding, background, etc., are already defined */
+    max-height: calc(100vh - 40px); /* Consistent with other panels */
+}
+
+/* Ensure the table itself doesn't cause the middle panel to overflow its flex container unnecessarily */
+.schedule-table {
+    min-width: 600px; /* Example: Set a minimum width for the table if it has many columns */
+}
+
+/* Add a wrapper around the main content (table + messages) and the side panel for units */
+.main-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1; /* This wrapper will take up the remaining space */
+    gap: 20px;
+    min-width: 0; /* Prevent overflow issues */
+}
+
+/* Apply this class to the div that wraps schedule-table-container and alt-courses-container in CourseSchedule.js */
+/* Example:
+<div className="main-content-wrapper">
+  <div className="schedule-table-container">...</div>
+  <div className="alt-courses-container">...</div>
+</div>
+*/
+
+.filter-bar.collapsed {
+  /* Styles for the collapsed filter bar */
+  flex-basis: auto; /* Shrink to content (the button) */
+  width: auto; /* Shrink to content */
+  min-width: 0; /* Allow it to shrink fully */
+  padding: 10px; /* Reduced padding for collapsed state */
+  overflow: hidden; /* Keep this */
+  /* height: 50px; REMOVED - This was for vertical collapse */
+  gap: 0; /* No gap needed when only button is visible */
+}
+
+.filter-toggle-button {
+  /* Styles for the toggle button */
+  margin-bottom: 0px; /* Removed bottom margin */
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.5em; /* Increase font size for icons */
+  line-height: 1; /* Adjust line height for better icon centering */
+}
+
+.filter-toggle-button:hover {
+  background-color: #0056b3;
+}
+
+/* Ensure the rest of the filter bar content is hidden when collapsed */
+.filter-bar.collapsed .filter-group,
+.filter-bar.collapsed .export-button,
+.filter-bar.collapsed .import-button {
+  display: none;
+}
+
+.filter-bar.expanded {
+  /* Styles for the expanded filter bar */
+  /* Ensure all content is visible */
+  position: relative; /* Anchor for the absolute positioned button */
+  padding-top: 50px; /* Make space for the button at the top */
+}
+
+.filter-toggle-button {
+  /* Styles for the toggle button */
+  /* margin-bottom: 0px; -- Removed, using fixed positioning or flex alignment */
+  padding: 0; /* Remove padding, size controlled by width/height */
+  background-color: transparent;
+  color: #333; /* Default dark color for icon */
+  border: none;
+  border-radius: 50%; /* Circular button */
+  cursor: pointer;
+  font-size: 1.5em; /* Adjust icon size */
+  line-height: 1; /* Ensure icon is vertically centered */
+  width: 40px; /* Fixed width for circular button */
+  height: 40px; /* Fixed height for circular button */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  /* position: static; by default, will be overridden for expanded state */
+}
+
+.filter-toggle-button:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+}
+
+/* Positioning for the button when the panel is expanded */
+.filter-bar.expanded .filter-toggle-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #555; /* Slightly different color for 'X' if desired */
+  z-index: 10; /* Ensure it's above other content in the filter bar */
+}
+
+/* Styling for the button when the panel is collapsed */
+.filter-bar.collapsed {
+  /* Styles for the collapsed filter bar */
+  flex-basis: auto; /* Shrink to content (the button) */
+  width: auto; /* Shrink to content */
+  min-width: 0; /* Allow it to shrink fully */
+  padding: 10px; /* Reduced padding for collapsed state */
+  overflow: hidden; /* Keep this */
+  gap: 0; /* No gap needed when only button is visible */
+  align-items: center; /* Center the button horizontally */
+  justify-content: center; /* Center the button vertically */
+}
+
+.filter-bar.collapsed .filter-toggle-button {
+  color: #007bff; /* Blue color for hamburger to make it prominent */
+  /* Ensure no absolute positioning from expanded state applies here */
+  position: static; /* Back to normal flow */
+}
+
+/* Ensure the rest of the filter bar content is hidden when collapsed */
+.filter-bar.collapsed .filter-group,
+.filter-bar.collapsed .export-button,
+.filter-bar.collapsed .import-button {
+  display: none;
+}
+
+.print-button,
+.export-button,
+.import-button {
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: normal;
+  transition: background-color 0.3s ease;
+  display: block; /* Make buttons take up full width of their container */
+  width: 100%; /* Ensure full width */
+  text-align: center; /* Center text in button */
+  margin-bottom: 5px; /* Add a little space below each button */
+}
+
+.print-button {
+  background-color: #28a745; /* Green */
+  margin-top: 10px; /* Added top margin */
+}
+
+.export-button {
+  background-color: #007bff; /* Blue */
+}
+
+.import-button {
+  background-color: #6c757d; /* Grey */
+}
+
+.print-button:last-child,
+.export-button:last-child,
+.import-button:last-child {
+  margin-bottom: 0; /* Remove margin for the last button in a group if needed, though each is in its own filter-group */
+}
+
+.print-button:hover {
+  background-color: #218838; /* Darker Green */
+}
+
+.export-button:hover {
+  background-color: #0056b3; /* Darker Blue */
+}
+
+.import-button:hover {
+  background-color: #5a6268; /* Darker Grey */
+}
+
+/* Print-specific styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .schedule-table-container, .schedule-table-container * {
+    visibility: visible;
+  }
+  .schedule-table-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  .filter-bar,
+  .alt-courses-container,
+  .filter-toggle-button,
+  .export-button,
+  .import-button,
+  .print-button {
+    display: none !important;
+  }
 }
 
 .suggestions-panel {
