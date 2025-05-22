@@ -69,9 +69,9 @@ def generate_suggestions_mds2024(student_timetable):
     if "DATA5001" in unit_to_semester and unit_to_semester["DATA5001"] > 1:
         suggestions.append("Move DATA5001 (Data Wrangling) earlier to build essential data handling skills.")
 
-    # ✅ 5. Project or capstone missing
-    if not any("capstone" in u.lower() or "project" in u.lower() for u in unit_to_semester):
-        suggestions.append("Include a project or or 3rd capstone unit in your final semester to demonstrate practical experience.")
+    # ✅ 5. capstone 
+    if "CITS5553" in unit_to_semester:
+        suggestions.append("It is recommended to take CITS5553 – Data Science Capstone Project in your final (third or last) semester, as it requires the completion of at least 24 points of Level 4 or Level 5 units and serves as a culminating experience for students enrolled in the 62530 Master of Data Science program.")
 
     # ✅ 6. Too many units in any semester (>3)
     for i, sem in enumerate(student_timetable):
@@ -81,8 +81,6 @@ def generate_suggestions_mds2024(student_timetable):
 
     # === General MDS tips (fill to 15) ===
     general = [
-        "Practice using real-world datasets from Kaggle or UCI Machine Learning Repository.",
-        "Build a portfolio of visualizations and dashboards using Python or Power BI.",
         "Attend UWA Data Science Society events to network with peers and industry speakers.",
         "Start a GitHub repo to document your Jupyter notebooks and class projects.",
         "Learn cloud data tools like AWS, Azure, or GCP, which are widely used in data roles.",
