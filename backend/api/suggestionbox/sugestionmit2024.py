@@ -60,8 +60,11 @@ def generate_suggestions_mit2024(student_timetable):
         if unit in unit_to_semester and unit_to_semester[unit] > 1:
             suggestions.append(f"Consider taking {unit} earlier. Conversion units are better completed in your first year.")
 
-    if "CITS5508" in unit_to_semester and "CITS5017" not in unit_to_semester:
+    if "CITS5206" in unit_to_semester and "CITS5017" not in unit_to_semester:
         suggestions.append("CITS5017 (Deep Learning) builds on Machine Learning and strengthens your AI track.")
+    
+    if "CITS5206" in unit_to_semester:
+        suggestions.append("It is recommended to take CITS5206 – Information Technology Capstone Project in your final semester, as it requires successful completion of 48 points of Level 4 and Level 5 MIT units. This unit serves as a capstone experience to consolidate your learning and demonstrate your practical skills before graduation")
 
 
     if "CITS5505" in unit_to_semester and unit_to_semester["CITS5505"] > 3:
@@ -70,17 +73,15 @@ def generate_suggestions_mit2024(student_timetable):
     if "PHIL4100" in unit_to_semester and unit_to_semester["PHIL4100"] < 3:
         suggestions.append("PHIL4100 (Ethics) is best taken in the final year when you can reflect critically.")
 
-    if "CITS5206" in unit_to_semester and unit_to_semester["CITS5206"] < 3:
+    if "CITS5206" in unit_to_semester and unit_to_semester["CITS5206"] < 4:
         suggestions.append("CITS5206 (Capstone) should be in your final year to reflect your full learning journey.")
 
     # General tips (fill to 15 suggestions)
     general = [
-        "Start a GitHub portfolio with your project code. Employers value real examples.",
         "Apply for internships by semester 3 to gain industry experience before graduating.",
         "Join clubs like UWA AI Society or Data Science Club to build connections.",
         "Attend UWA tech meetups and industry events for networking and exposure.",
         "Use UWA’s LinkedIn Learning access for free certifications in Python, AI, and cloud.",
-        "Review your plan with a course adviser each year to ensure compliance and balance.",
         "Always keep a list of backup electives in case your preferred units are unavailable."
     ]
 

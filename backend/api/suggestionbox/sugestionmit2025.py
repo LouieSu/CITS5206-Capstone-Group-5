@@ -60,6 +60,9 @@ def generate_suggestions_mit2025(student_timetable):
     # Targeted suggestions
     if "CITS5508" not in unit_to_semester:
         suggestions.append("CITS5508 (Machine Learning) is great for a career in data science or AI roles.")
+    
+    if "CITS5206" in unit_to_semester:
+        suggestions.append("It is recommended to take CITS5206 – Information Technology Capstone Project in your final semester, as it requires successful completion of 48 points of Level 4 and Level 5 MIT units. This unit serves as a capstone experience to consolidate your learning and demonstrate your practical skills before graduation")
 
     if "CITS5508" in unit_to_semester and "CITS5017" not in unit_to_semester:
         suggestions.append("CITS5017 (Deep Learning) builds on Machine Learning and strengthens your AI track.")
@@ -75,12 +78,10 @@ def generate_suggestions_mit2025(student_timetable):
 
     # General suggestions (to reach 15)
     general = [
-        "Start a GitHub portfolio with your project code. Employers value real examples.",
         "Apply for internships by semester 3 to gain industry experience before graduating.",
         "Join clubs like UWA AI Society or Data Science Club to build connections.",
         "Attend UWA tech meetups and industry events for networking and exposure.",
         "Use UWA’s LinkedIn Learning access for free certifications in Python, AI, and cloud.",
-        "Review your plan with a course adviser each year to ensure compliance and balance.",
         "Always keep a list of backup electives in case your preferred units are unavailable."
     ]
 
